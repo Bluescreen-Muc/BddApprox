@@ -1,24 +1,11 @@
 from enum import Enum
 
-class Terminal:
-
-    def __init__(self, uid):
-        self.uid = uid
-        self.var = "TRUE" if uid == 1 else "FALSE"
-        self.low = None
-        self.high = None
-
-    def __str__(self):
-        return "TRUE" if self.uid == 1 else "FALSE"
-
-    def __eq__(self, other):
-        return self.uid == other.uid
+from collections import defaultdict
+import numpy as np
 
 class Node:
-    TRUE = Terminal(1)
-    FALSE = Terminal(0)
 
-    bdd = {"var_order" : list(), "node_pool": set()}
+    bdd = {"var_order" : list(), "node_pool": defaultdict(set)}
 
     uid = 2
     MAX_NUMBER_NODES = 10000
@@ -38,9 +25,6 @@ class Node:
             raise StopIteration
         return (self.low, self.high)[self.iter_index]
 
-
-
-
     def __eq__(self, other):
         if not type(self) == type(other):
             return False
@@ -54,19 +38,22 @@ class Node:
 
     @staticmethod
     def add_node_to_pool(node):
-        Node.bdd['node_pool'].add(node)
+        Node.update_var_order(node.var)
+        if node not in Node.bdd['node_pool'][node.var]:
+            Node.uid += 1
+        Node.bdd['node_pool'][node.var].add(node)
 
     @staticmethod
-    def make_node(var, low, high):
+    def add_node(var, low, high):
         if low.uid == high.uid:
-            Node.add_node_to_pool(low)
+            if isinstance(low, Node):
+                Node.add_node_to_pool(low)
+
             return low
         else:
-            if low == high:
-                Node.uid += 1
-            Node.update_var_order(var)
-            Node.add_node_to_pool(Node(var, low, high))
-            return Node(var, low, high)
+            node = Node(var, low, high)
+            Node.add_node_to_pool(node)
+            return node
 
     @staticmethod
     def update_var_order(var):
@@ -79,42 +66,98 @@ class Bdd(Node):
 
     def __init__(self, root_node):
         self.root_node = root_node
-        Node.make_node(root_node.var, root_node.low, root_node.high)
+        #Node.add_node(root_node.var, root_node.low, root_node.high)
         self.var_order = Node.bdd["var_order"]
         self.nodes = Node.bdd["node_pool"]
 
 
 
-    def count_sat_brute(self, node):
+    def count_sat_from_bottom(self):
         count = 0
-        for x in node:
-            if x.uid == 1:
-                count += 1
-            elif x.uid == 0:
-                pass
-            else:
-                count += self.count_sat_brute(x)
+        tmp = set()
+        for x in self.var_order[::-1]:
+            nodes_with_edge_to_true = {x for x in self.nodes[self.var_order[x]] if x.low.uid == 1 or x.high.uid == 1}
+            count += len(nodes_with_edge_to_true)
+            tmp = tmp.union(nodes_with_edge_to_true)
+            for n in self.nodes[x]:
+                for child in (n.low,n.high):
+                    if child in tmp:
+                        count += 2 ** (self.var_order.index(child.var)-self.var_order.index(n.var) - 1)
+                        tmp = tmp.union(n)
         return count
 
     def print_var_order(self):
         [print(x) for x in self.var_order]
 
     def print_nodes(self):
-        [print(x) for x in self.nodes]
+        for x,y in self.nodes.items():
+            print(x)
+            for node in y:
+                print(node)
 
     def get_true_nodes(self):
-        tmp = [x for x in self.var_order[-1] if ]
-
-        for x in self.var_order[::-1]:
+        pass
 
 
+    @staticmethod
+    def create_random_bdd(depth = 10, concentration = 0.8, truth_ratio = 0.5, var_order = None):
+        if not var_order:
+            var_order = [x+1 for x in range(depth)]
+
+        nodes = [Node(var_order[0], None, None)]
+        root_node = nodes[0]
+        tmp = list()
+        tmp_pool = defaultdict(set)
+        while nodes:
+            for node in nodes:
+
+                if not node.low:
+                    for var in var_order[var_order.index(node.var)+1::]:
+                        if np.random.binomial(1, concentration):
+                            node.low = Node(var, None, None)
+                            tmp.append(node.low)
+                            break
+                    else:
+                        node.low = Node.TRUE if np.random.binomial(1,truth_ratio) else Node.FALSE
+
+                if not node.high:
+                    for var in var_order[var_order.index(node.var)+ 1::]:
+
+                        if np.random.binomial(1, concentration):
+                            node.high = Node(var, None, None)
+                            tmp.append(node.high)
+                            break
+                    else:
+                        node.high = Node.TRUE if np.random.binomial(1, truth_ratio) else Node.FALSE
+                tmp_pool[node.var].add(node)
+            if tmp:
+                nodes = tmp
+                tmp = list()
+            else:
+                nodes = []
+        for var in var_order[::-1]:
+            if var in tmp_pool:
+                for node in tmp_pool[var]:
+                    Node.add_node(node.var, node.low, node.high)
+        # for var in list(Node.bdd["node_pool"].keys())[::-1]:
+        #     Node.bdd["node_pool"][var] = {node.low if node.low == node.high else node for node in Node.bdd["node_pool"][var]}
+        # for var in Node.bdd["node_pool"].keys():
+        #     Node.bdd["node_pool"][var].discard(Node.TRUE)
+        #     Node.bdd["node_pool"][var].discard(Node.FALSE)
+        return root_node
 
 
 
-node = lambda v,l,h: Node.make_node(v, l, h)
+
+
+
+
+node = lambda v,l,h: Node.add_node(v, l, h)
 if __name__ == '__main__':
-    bdd = Bdd(Node(0, node (1, Node.TRUE, Node.FALSE), Node.FALSE))
+    #bdd = Bdd(node(0, node (2, node (3, Node.TRUE, Node.FALSE), node(3, Node.TRUE, Node.FALSE)),node(1, Node.TRUE, Node.FALSE)))
     # bdd.print_var_order()
+    #bdd.print_nodes()
+
+    bdd = Bdd(Bdd.create_random_bdd())
+
     bdd.print_nodes()
-    print(bdd.count_sat_brute(bdd.root_node))
-    print(bdd.get_true_nodes())
