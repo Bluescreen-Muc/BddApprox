@@ -1,10 +1,10 @@
-from collections import defaultdict
-from enum import Enum
+import numpy as np
 
 class Node:
 
     uid = 2
     MAX_NUMBER_NODES = 10000
+
     def __init__(self, var=None, low=None, high=None):
         self.var = var
         self.uid = Node.uid
@@ -59,8 +59,7 @@ class Bdd:
     def node(self, var,low,high):
         node = Node(var,low,high)
         if node.low.uid == node.high.uid:
-            self.node_pool[node.low.uid] = node.low
-            return self.node_pool[node.low.uid]
+            return self.node_pool[low.uid]
         else:
             if var not in self.var_order:
                 self.var_order.insert(0, var)
@@ -68,12 +67,19 @@ class Bdd:
                 self.node_pool[node.uid]=node
                 Node.uid += 1
 
-            return self.node_pool[node.uid]
+            return [x for x in self.node_pool.values() if x == node][0]
+
+    def get_root_node(self):
+        max_uid = max(self.node_pool.keys())
+        return self.node_pool[max_uid]
 
     def print_nodes(self):
-        print("Node list sorted by uid:")
+        output = []
         for uid, node in self.node_pool.items():
-            print(uid, node)
+            output.append([uid, node])
+        print("Node list sorted by uid:")
+        for uid, node in output[::-1]:
+            print(uid,node)
         print("\n")
 
     def print_var_order(self):
@@ -81,8 +87,31 @@ class Bdd:
         for id, var in enumerate(self.var_order,1):
             print("{}. {}".format(id,var))
         print("\n")
+
+    @staticmethod
+    def create_random_bdd_recursive(bdd, depth=12, concentration = 0.8, truth_ratio = 0.5):
+        var = depth
+        if depth == 0:
+            return Terminal(1) if np.random.binomial(1,truth_ratio) else Terminal(0)
+
+
+        else:
+            if np.random.binomial(1, concentration):
+                return bdd.node(var, Bdd.create_random_bdd_recursive(bdd, depth-1, concentration, truth_ratio),Bdd.create_random_bdd_recursive(bdd, depth-1, concentration, truth_ratio))
+
+            else:
+                return Bdd.create_random_bdd_recursive(bdd, depth-1, concentration, truth_ratio)
+
+
 if __name__ == '__main__':
+    # bdd = Bdd()
+    # bdd.node(0,bdd.node(1,bdd.node(2,Terminal(0), Terminal(1)), Terminal(0)), bdd.node(1,bdd.node(2,Terminal(0), Terminal(1)), Terminal(0)))
+    # bdd.print_nodes()
+    # bdd.print_var_order()
+    # print(bdd.get_root_node())
+    # print(bdd.node_pool[3].low.uid)
+
+
     bdd = Bdd()
-    bdd.node(0,bdd.node(1,Terminal(1), Terminal(0)), bdd.node(1,Terminal(1), Terminal(1)))
+    Bdd.create_random_bdd_recursive(bdd)
     bdd.print_nodes()
-    bdd.print_var_order()

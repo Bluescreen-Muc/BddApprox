@@ -6,9 +6,9 @@ import numpy as np
 class Node:
 
     bdd = {"var_order" : list(), "node_pool": defaultdict(set)}
-
     uid = 2
     MAX_NUMBER_NODES = 10000
+
     def __init__(self, var, low, high):
         self.var = var
         self.uid = Node.uid
