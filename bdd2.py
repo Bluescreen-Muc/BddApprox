@@ -11,6 +11,8 @@ class Node:
         self.low = low
         self.high = high
         self.iter_index = -1
+        self.true_paths = 0
+        self.false_paths = 0
 
     def __iter__(self):
         return self
@@ -28,7 +30,8 @@ class Node:
         return self.var * Node.MAX_NUMBER_NODES**2 + self.low.uid * Node.MAX_NUMBER_NODES + self.high.uid
 
     def __str__(self):
-        return '({}<-{}->{})'.format(self.low.var, self.var, self.high.var)
+        return '({}<-{}->{}) True: {}   False: {}'.format(self.low.var if self.low.var != "TERMINAL" else self.low, self.var, self.high.var if self.high.var != "TERMINAL" else self.high, self.true_paths, self.false_paths)
+
 
 class Terminal(Node):
 
@@ -67,8 +70,9 @@ class Bdd:
                 self.node_pool[node.uid]=node
                 Node.uid += 1
 
-            return [x for x in self.node_pool.values() if x == node][0]
-
+            node = [x for x in self.node_pool.values() if x == node][0]
+        node.false_paths, node.true_paths = self.count_paths(node)
+        return node
     def get_root_node(self):
         max_uid = max(self.node_pool.keys())
         return self.node_pool[max_uid]
@@ -88,19 +92,38 @@ class Bdd:
             print("{}. {}".format(id,var))
         print("\n")
 
+
+    def count_paths(self, node):
+        true_count = 0
+        false_count = 0
+        for child in (node.low, node.high):
+            multiplier = 2 ** (abs(self.var_order.index(node.var) - self.var_order.index(child.var)) - 1)
+            if child.uid == 0:
+                false_count += multiplier
+                continue
+            if child.uid == 1:
+                true_count += multiplier
+                continue
+
+            false_count += multiplier*child.false_paths
+            true_count += multiplier*child.true_paths
+        return false_count, true_count
+
+
     @staticmethod
-    def create_random_bdd_recursive(bdd, depth=12, concentration = 0.8, truth_ratio = 0.5):
+    def create_random_bdd_recursive(bdd, depth=3, concentration = 0.8, truth_ratio = 0.5):
         var = depth
+        recursion = lambda: Bdd.create_random_bdd_recursive(bdd, depth-1, concentration, truth_ratio)
         if depth == 0:
             return Terminal(1) if np.random.binomial(1,truth_ratio) else Terminal(0)
 
 
         else:
             if np.random.binomial(1, concentration):
-                return bdd.node(var, Bdd.create_random_bdd_recursive(bdd, depth-1, concentration, truth_ratio),Bdd.create_random_bdd_recursive(bdd, depth-1, concentration, truth_ratio))
+                return bdd.node(var, recursion(),recursion())
 
             else:
-                return Bdd.create_random_bdd_recursive(bdd, depth-1, concentration, truth_ratio)
+                return recursion()
 
 
 if __name__ == '__main__':
