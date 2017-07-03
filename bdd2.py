@@ -7,6 +7,7 @@ class Node:
 
     def __init__(self, var=None, low=None, high=None):
         self.var = var
+        self.parents = 0
         self.uid = Node.uid
         self.low = low
         self.high = high
@@ -30,7 +31,7 @@ class Node:
         return self.var * Node.MAX_NUMBER_NODES**2 + self.low.uid * Node.MAX_NUMBER_NODES + self.high.uid
 
     def __str__(self):
-        return '({}<-{}->{}) True: {}   False: {}'.format(self.low.var if self.low.var != "TERMINAL" else self.low, self.var, self.high.var if self.high.var != "TERMINAL" else self.high, self.true_paths, self.false_paths)
+        return '({}<-{}->{}) True: {}   False: {}   Parents: {}'.format(self.low.var if self.low.var != "TERMINAL" else self.low, self.var, self.high.var if self.high.var != "TERMINAL" else self.high, self.true_paths, self.false_paths, self.parents)
 
 
 class Terminal(Node):
@@ -67,13 +68,25 @@ class Bdd:
             if var not in self.var_order:
                 self.var_order.insert(0, var)
             if node not in self.node_pool.values():
+                node.parents = 1
                 self.node_pool[node.uid]=node
                 Node.uid += 1
+            else:
+                print(self.get_node(node).parents)
+                self.get_node(node).parents += 1
+                print(self.get_node(node).parents)
 
             node = [x for x in self.node_pool.values() if x == node][0]
         node.false_paths, node.true_paths = self.count_paths(node)
         return node
 
+    def get_node(self, node):
+        for k,v in self.node_pool.items():
+            if v == node:
+                print(node.parents)
+                return v
+        else:
+            raise Exception("Node not found")
     # def set_node_true(self, node):
     #     if isinstance(node, Terminal):
     #         return
@@ -108,7 +121,9 @@ class Bdd:
         if node == self.get_root_node():
             raise Exception('Trying to set root node to true')
 
-        node = self.node_pool[node.uid] = 
+        node_to_true = self.node_pool.pop(node.uid)
+
+
 
     def update_counters(self):
         for node in self.get_nodes(key = lambda x: x.uid):
@@ -143,6 +158,7 @@ class Bdd:
     def print_info(self):
         print("Node count: {}".format(len(self.node_pool.values())))
         print("Outputs True: {}, False: {}".format(self.get_root_node().true_paths, self.get_root_node().false_paths))
+
     def count_paths(self, node):
         true_count = 0
         false_count = 0
@@ -161,7 +177,7 @@ class Bdd:
 
 
     @staticmethod
-    def create_random_bdd_recursive(bdd, depth=3, concentration = 0.8, truth_ratio = 0.5):
+    def create_random_bdd_recursive(bdd, depth=3, concentration = 0.5, truth_ratio = 0.5):
         var = depth
         recursion = lambda: Bdd.create_random_bdd_recursive(bdd, depth-1, concentration, truth_ratio)
         if depth == 0:
@@ -175,6 +191,8 @@ class Bdd:
             else:
                 return recursion()
 
+    def create_json_tree(self):
+        pass
 
 if __name__ == '__main__':
     # bdd = Bdd()
@@ -186,12 +204,12 @@ if __name__ == '__main__':
 
 
     bdd = Bdd()
-    np.random.seed(124445)
+    #np.random.seed(124445)
     Bdd.create_random_bdd_recursive(bdd, depth = 9)
     nodes = bdd.get_nodes(key=lambda x: x.false_paths / x.true_paths)
     # print(nodes[0])
-    # bdd.print_info()
-    # bdd.print_nodes()
+    bdd.print_info()
+    bdd.print_nodes()
     bdd.set_node_true(nodes[0])
     # bdd.print_nodes()
     # bdd.print_info()
