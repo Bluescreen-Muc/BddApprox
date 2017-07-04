@@ -75,9 +75,7 @@ class Bdd:
                 self.node_pool[node.uid]=node
                 Node.uid += 1
             else:
-                print(self.get_node(node).parents)
                 self.get_node(node).parents += 1
-                print(self.get_node(node).parents)
 
             node = [x for x in self.node_pool.values() if x == node][0]
         node.false_paths, node.true_paths = self.count_paths(node)
@@ -86,19 +84,9 @@ class Bdd:
     def get_node(self, node):
         for k,v in self.node_pool.items():
             if v == node:
-                print(node.parents)
                 return v
         else:
             raise Exception("Node not found")
-
-    def set_node_true(self, node):
-        if isinstance(node, Terminal):
-            return
-        if node == self.get_root_node():
-            raise Exception('Trying to set root node to true')
-
-        node_to_true = self.node_pool.pop(node.uid)
-
 
 
     def get_root_node(self):
@@ -135,7 +123,7 @@ class Bdd:
         true_count = 0
         false_count = 0
         for child in (node.low, node.high):
-            multiplier = 2 ** (abs(self.var_order.index(node.var) - self.var_order.index(child.var)) - 1)
+            multiplier = 2 ** (abs(self.var_order.index(node.var) - self.var_order.index(child.var)) -1)
             if child.uid == 0:
                 false_count += multiplier
                 continue
@@ -147,26 +135,76 @@ class Bdd:
             true_count += multiplier*child.true_paths
         return false_count, true_count
 
-    def to_json(self, node=None, parent=None, variant=None):
+    def to_json(self, node=None, parent=None, no_false = True, variant=None):
         if not node:
             node = self.get_root_node()
-            d = [{"level": self.var_order.index(node.var), "name": self.get_root_node().var, "parent" : None, "children" : [self.to_json(node.low, node), self.to_json(node.high, node)]}]
+            d = [{"group" : node.uid, "level": self.var_order.index(node.var), "name": self.get_root_node().var, "parent" : None, "children" : [self.to_json(node.low, node, no_false=no_false), self.to_json(node.high, node, no_false=no_false)]}]
             return json.dumps(d)
         if isinstance(node, Terminal):
-            d = {"level": self.var_order.index(parent.var)+1, "name": "T" if node.uid == 1 else "F", "parent": parent.var, "children": None}
+            if node.uid == 0 and no_false:
+                return []
+            d = {"group" : node.uid,"level": self.var_order.index(parent.var)+1, "name": "T" if node.uid == 1 else "F", "parent": parent.var, "children": None}
             return d
         else:
-            d = {"level": self.var_order.index(node.var), "name": node.var, "parent" : parent.var, "children" : [self.to_json(node.low, node), self.to_json(node.high, node)]}
+            d = {"group" : node.uid,"level": self.var_order.index(node.var), "name": node.var, "parent" : parent.var, "children" : [self.to_json(node.low, node, no_false=no_false), self.to_json(node.high, node, no_false=no_false)]}
             return d
+
+    def to_json2(self):
+        node_pool = self.get_nodes(terminal=True, key=lambda x: x.uid)
+        node_pool.pop(0)
+        nodes = []
+        links = []
+        for node in node_pool:
+            nodes.append({'name': node.uid, "group":self.var_order.index(node.var)})
+        for id, node in enumerate(node_pool):
+            if not isinstance(node, Terminal):
+                if not node.low.uid == 0:
+                    links.append({"source": id, "target": node_pool.index(node.low)})
+                if not node.high.uid == 0:
+                    links.append({"source": id, "target": node_pool.index(node.high)})
+        return json.dumps({'nodes':nodes, "links": links})
+
+    @staticmethod
+    def check_bdd(depth=7, nodes=1000):
+        for _ in range(nodes):
+            bdd = Bdd.create_random_bdd_recursive(depth=depth)
+            true_count = 0
+            false_count = 0
+            bits = depth
+            for x in range(2**bits):
+                node = bdd.get_root_node()
+                x = format(x, '0{}b'.format(bits))
+                for level, path in enumerate(x):
+                    if bdd.var_order.index(node.var) > level:
+                        continue
+                    if path == '0':
+                        node = node.low
+                        if node.uid == 1:
+                            true_count += 1
+                            break
+                        elif node.uid == 0:
+                            false_count += 1
+                            break
+                    if path == '1':
+                        node = node.high
+                        if node.uid == 1:
+                            true_count += 1
+                            break
+                        elif node.uid == 0:
+                            false_count += 1
+                            break
+            assert((true_count, false_count)==(bdd.get_root_node().true_paths, bdd.get_root_node().false_paths))
+            return True
 
 
     @staticmethod
     def create_random_bdd_recursive(bdd=None, depth=3, concentration = 0.5, truth_ratio = 0.5):
-        print(bdd)
         if not bdd:
             bdd = Bdd()
             bdd.var_order = [x+1 for x in range(depth)]+["TERMINAL"]
             Bdd.create_random_bdd_recursive(bdd, depth, concentration, truth_ratio)
+            bdd.get_root_node().true_paths *= 2**bdd.var_order.index(bdd.get_root_node().var)
+            bdd.get_root_node().false_paths *= 2 ** bdd.var_order.index(bdd.get_root_node().var)
             return bdd
         recursion = lambda: Bdd.create_random_bdd_recursive(bdd, depth-1, concentration, truth_ratio)
         if depth == 0:
@@ -183,27 +221,10 @@ class Bdd:
 
 
 if __name__ == '__main__':
-    # bdd = Bdd()
-    # bdd.node(0,bdd.node(1,bdd.node(2,Terminal(0), Terminal(1)), Terminal(0)), bdd.node(1,bdd.node(2,Terminal(0), Terminal(1)), Terminal(0)))
-    # bdd.print_nodes()
-    # bdd.print_var_order()
-    # print(bdd.get_root_node())
-    # print(bdd.node_pool[3].low.uid)
-
-
     bdd = Bdd()
-    #np.random.seed(145)
-    bdd = Bdd.create_random_bdd_recursive(depth = 10)
-
-    nodes = bdd.get_nodes(key=lambda x: x.false_paths / x.true_paths)
-    # print(nodes[0])
-    bdd.print_info()
-    bdd.print_nodes()
-    bdd.set_node_true(nodes[0])
-    # bdd.print_nodes()
-    # bdd.print_info()
-    # print(bdd.get_root_node())
-    print('fff')
-    print(bdd.var_order)
+    print(Bdd.check_bdd(depth=16, nodes=10000))
+    bdd=Bdd.create_random_bdd_recursive(depth=16)
     with open('/Users/oliverheidemanns/WebstormProjects/BddApprox/treeData.json', 'w') as file:
-        file.write(bdd.to_json())
+       file.write(bdd.to_json())
+    with open('/Users/oliverheidemanns/WebstormProjects/BddApprox/graph.json', 'w')as file:
+        file.write(bdd.to_json2())
