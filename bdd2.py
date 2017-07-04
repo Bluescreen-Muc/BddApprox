@@ -147,13 +147,13 @@ class Bdd:
             true_count += multiplier*child.true_paths
         return false_count, true_count
 
-    def to_json(self, node=None, parent=None):
+    def to_json(self, node=None, parent=None, variant=None):
         if not node:
             node = self.get_root_node()
             d = [{"level": self.var_order.index(node.var), "name": self.get_root_node().var, "parent" : None, "children" : [self.to_json(node.low, node), self.to_json(node.high, node)]}]
             return json.dumps(d)
         if isinstance(node, Terminal):
-            d = {"level": self.var_order.index(node.var), "name": "T", "parent": parent.var, "children": None}
+            d = {"level": self.var_order.index(parent.var)+1, "name": "T" if node.uid == 1 else "F", "parent": parent.var, "children": None}
             return d
         else:
             d = {"level": self.var_order.index(node.var), "name": node.var, "parent" : parent.var, "children" : [self.to_json(node.low, node), self.to_json(node.high, node)]}
@@ -161,10 +161,13 @@ class Bdd:
 
 
     @staticmethod
-    def create_random_bdd_recursive(bdd, depth=3, concentration = 0.5, truth_ratio = 0.5):
-        var = depth
-        if len(bdd.var_order) ==1:
+    def create_random_bdd_recursive(bdd=None, depth=3, concentration = 0.5, truth_ratio = 0.5):
+        print(bdd)
+        if not bdd:
+            bdd = Bdd()
             bdd.var_order = [x+1 for x in range(depth)]+["TERMINAL"]
+            Bdd.create_random_bdd_recursive(bdd, depth, concentration, truth_ratio)
+            return bdd
         recursion = lambda: Bdd.create_random_bdd_recursive(bdd, depth-1, concentration, truth_ratio)
         if depth == 0:
             return Terminal(1) if np.random.binomial(1,truth_ratio) else Terminal(0)
@@ -172,7 +175,7 @@ class Bdd:
 
         else:
             if np.random.binomial(1, concentration):
-                return bdd.node(len(bdd.var_order)-depth-2, recursion(),recursion())
+                return bdd.node(len(bdd.var_order)-depth, recursion(),recursion())
 
             else:
                 return recursion()
@@ -189,8 +192,8 @@ if __name__ == '__main__':
 
 
     bdd = Bdd()
-    np.random.seed(145)
-    Bdd.create_random_bdd_recursive(bdd, depth = 10)
+    #np.random.seed(145)
+    bdd = Bdd.create_random_bdd_recursive(depth = 10)
 
     nodes = bdd.get_nodes(key=lambda x: x.false_paths / x.true_paths)
     # print(nodes[0])
@@ -202,5 +205,5 @@ if __name__ == '__main__':
     # print(bdd.get_root_node())
     print('fff')
     print(bdd.var_order)
-    with open('treeData.json', 'w') as file:
+    with open('/Users/oliverheidemanns/WebstormProjects/BddApprox/treeData.json', 'w') as file:
         file.write(bdd.to_json())
