@@ -222,9 +222,9 @@ class Bdd:
 
 if __name__ == '__main__':
     bdd = Bdd()
-    print(Bdd.check_bdd(depth=16, nodes=10000))
-    bdd=Bdd.create_random_bdd_recursive(depth=16)
-    with open('/Users/oliverheidemanns/WebstormProjects/BddApprox/treeData.json', 'w') as file:
+    print(Bdd.check_bdd(depth=10, nodes=10000))
+    bdd=Bdd.create_random_bdd_recursive(depth=10)
+    with open('/Users/oliverheidemanns/GitHub/BddApprox/Webstorm/treeData.json', 'w') as file:
        file.write(bdd.to_json())
-    with open('/Users/oliverheidemanns/WebstormProjects/BddApprox/graph.json', 'w')as file:
+    with open('/Users/oliverheidemanns/GitHub/BddApprox/Webstorm/graph.json', 'w')as file:
         file.write(bdd.to_json2())
