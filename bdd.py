@@ -1,6 +1,5 @@
 import numpy as np
-import json
-
+import pygraphviz as pgv
 class Node:
 
     uid = 2
@@ -141,34 +140,39 @@ class Bdd:
             true_count += multiplier*child.true_paths
         return false_count, true_count
 
-    def to_json(self, node=None, parent=None, no_false = True, variant=None):
-        if not node:
-            node = self.get_root_node()
-            d = [{"group" : node.uid, "level": self.var_order.index(node.var), "name": self.get_root_node().var, "parent" : None, "children" : [self.to_json(node.low, node, no_false=no_false), self.to_json(node.high, node, no_false=no_false)]}]
-            return json.dumps(d)
-        if isinstance(node, Terminal):
-            if node.uid == 0 and no_false:
-                return []
-            d = {"group" : node.uid,"level": self.var_order.index(parent.var)+1, "name": "T" if node.uid == 1 else "F", "parent": parent.var, "children": None}
-            return d
-        else:
-            d = {"group" : node.uid,"level": self.var_order.index(node.var), "name": node.var, "parent" : parent.var, "children" : [self.to_json(node.low, node, no_false=no_false), self.to_json(node.high, node, no_false=no_false)]}
-            return d
+    def draw(self):
+        g = pgv.AGraph(strict=False, directed=True)
+        g.node_attr['shape'] = 'circle'
+        g.node_attr['style'] = 'filled'
+        g.node_attr['colorscheme'] = 'set312'
 
-    def to_json2(self):
-        node_pool = self.get_nodes(terminal=True, key=lambda x: x.uid)
-        node_pool.pop(0)
-        nodes = []
-        links = []
-        for node in node_pool:
-            nodes.append({'name': node.uid, "group":self.var_order.index(node.var)})
-        for id, node in enumerate(node_pool):
-            if not isinstance(node, Terminal):
-                if not node.low.uid == 0:
-                    links.append({"source": id, "target": node_pool.index(node.low)})
-                if not node.high.uid == 0:
-                    links.append({"source": id, "target": node_pool.index(node.high)})
-        return json.dumps({'nodes':nodes, "links": links})
+        for node in self.get_nodes(key=lambda x: x.uid, terminal=True):
+            g.add_node('%d' % node.uid)
+            g.get_node(node.uid).attr['fillcolor'] = (self.get_var_index(node.var)%12) + 1
+            if node.uid in [0,1]:
+                g.get_node(node.uid).attr['fillcolor'] = 'White'
+                print(g.get_node(node.uid))
+                g.get_node(node.uid).attr['shape'] = 'doublecircle'
+                g.get_node(node.uid).attr['label'] = ['F','T'][node.uid]
+
+            else:
+                g.get_node(node.uid).attr['label'] = node.var
+
+
+
+
+        for node in self.get_nodes(key=lambda x: x.uid):
+            if isinstance(node, Terminal):
+                continue
+            g.add_edge('%d' % node.uid, '%d' % node.low.uid,style = 'dotted')
+            g.add_edge('%d' % node.uid, '%d' % node.high.uid)
+
+
+
+
+
+        g.draw('test.png', g.layout(prog='dot'))
+
 
 
     def __mul__(self, other):
@@ -259,14 +263,7 @@ class Bdd:
 if __name__ == '__main__':
     bdd = Bdd()
     print(Bdd.check_bdd(depth=10, nodes=10000))
-    bdd = Bdd.create_random_bdd_recursive(depth=10)
-    with open('/Users/oliverheidemanns/GitHub/BddApprox/Webstorm/treeData.json', 'w') as file:
-       file.write(bdd.to_json())
-    with open('/Users/oliverheidemanns/GitHub/BddApprox/Webstorm/graph.json', 'w')as file:
-        file.write(bdd.to_json2())
-    bdd = Bdd.create_random_bdd_recursive(depth=3)
-    bdd2 = Bdd.create_random_bdd_recursive(depth=3)
-    bdd3 = bdd * bdd2
-    bdd.print_nodes()
-    bdd2.print_nodes()
-    bdd3.print_nodes()
+    bdd = Bdd.create_random_bdd_recursive(depth=12)
+    bdd.draw()
+
+
