@@ -3,3 +3,5 @@
 *.xml
 two-nodes.png
 treeData.json
+*.gv
+*.pdf

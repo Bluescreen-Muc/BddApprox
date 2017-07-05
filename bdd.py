@@ -36,6 +36,9 @@ class Node:
             .format(self.low.var if self.low.var != "TERMINAL" else self.low, self.var, self.high.var
         if self.high.var != "TERMINAL" else self.high, self.true_paths, self.false_paths, self.parents)
 
+    @staticmethod
+    def copy_node(node):
+        return Node(node.var, node.low, node.high)
 
 class Terminal(Node):
 
@@ -62,6 +65,8 @@ class Bdd:
         self.node_pool[1] = Terminal(1)
 
 
+    def get_var_index(self,var):
+        return self.var_order.index(var)
 
     def node(self, var,low,high):
         node = Node(var,low,high)
@@ -99,6 +104,7 @@ class Bdd:
             output= [x for x in output if x and not isinstance(x, Terminal)]
 
         return sorted(output, key = key,reverse=reverse) if key else output
+
 
     def print_nodes(self):
         output = []
@@ -164,6 +170,36 @@ class Bdd:
                     links.append({"source": id, "target": node_pool.index(node.high)})
         return json.dumps({'nodes':nodes, "links": links})
 
+
+    def __mul__(self, other):
+        def and_nodes(node1, node2, bdd):
+            if node1.uid == 0 or node2.uid == 0:
+                return bdd.node_pool[0]
+            if node1.uid == 1:
+                if isinstance(node2, Terminal):
+                    return bdd.node_pool[node2.uid]
+                return bdd.node(node2.var, node2.low, node2.high)
+            if node2.uid ==1:
+                if isinstance(node1, Terminal):
+                    return bdd.node_pool[node2.uid]
+                return bdd.node(node1.var, node1.low, node1.high)
+            var_index_node1 = self.get_var_index(node1.var)
+            var_index_node2 = self.get_var_index(node2.var)
+            if var_index_node1 < var_index_node2:
+                return bdd.node(node1.var, and_nodes(node1.low,node2, bdd), and_nodes(node1.high,node2,bdd))
+            elif var_index_node1 == var_index_node2:
+                return bdd.node(node1.var, and_nodes(node1.low,node2.low,bdd),  and_nodes(node1.high,node2.high, bdd))
+            if var_index_node1 > var_index_node2:
+                return bdd.node(node2.var, and_nodes(node1,node2.low, bdd), and_nodes(node1,node2.high,bdd))
+
+        bdd = Bdd()
+        bdd.var_order = self.var_order[::]
+        node_self = Node.copy_node(self.get_root_node())
+        node_other = Node.copy_node(other.get_root_node())
+        and_nodes(node_self, node_other, bdd)
+        return bdd
+
+
     @staticmethod
     def check_bdd(depth=7, nodes=1000):
         for _ in range(nodes):
@@ -223,8 +259,14 @@ class Bdd:
 if __name__ == '__main__':
     bdd = Bdd()
     print(Bdd.check_bdd(depth=10, nodes=10000))
-    bdd=Bdd.create_random_bdd_recursive(depth=10)
+    bdd = Bdd.create_random_bdd_recursive(depth=10)
     with open('/Users/oliverheidemanns/GitHub/BddApprox/Webstorm/treeData.json', 'w') as file:
        file.write(bdd.to_json())
     with open('/Users/oliverheidemanns/GitHub/BddApprox/Webstorm/graph.json', 'w')as file:
         file.write(bdd.to_json2())
+    bdd = Bdd.create_random_bdd_recursive(depth=3)
+    bdd2 = Bdd.create_random_bdd_recursive(depth=3)
+    bdd3 = bdd * bdd2
+    bdd.print_nodes()
+    bdd2.print_nodes()
+    bdd3.print_nodes()
