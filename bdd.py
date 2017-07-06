@@ -1,5 +1,10 @@
+import random
+
 import numpy as np
 import pygraphviz as pgv
+import time
+
+from functions import *
 class Node:
 
     uid = 2
@@ -140,7 +145,9 @@ class Bdd:
             true_count += multiplier*child.true_paths
         return false_count, true_count
 
-    def draw(self):
+    def draw(self, file=None):
+        if not file:
+            file = 'bdd.png'
         g = pgv.AGraph(strict=False, directed=True)
         g.node_attr['shape'] = 'circle'
         g.node_attr['style'] = 'filled'
@@ -148,12 +155,12 @@ class Bdd:
 
         for node in self.get_nodes(key=lambda x: x.uid, terminal=True):
             g.add_node('%d' % node.uid)
-            g.get_node(node.uid).attr['fillcolor'] = (self.get_var_index(node.var)%12) + 1
+            new_node = g.get_node(node.uid)
+            new_node.attr['fillcolor'] = (self.get_var_index(node.var)%12) + 1
             if node.uid in [0,1]:
-                g.get_node(node.uid).attr['fillcolor'] = 'White'
-                print(g.get_node(node.uid))
-                g.get_node(node.uid).attr['shape'] = 'doublecircle'
-                g.get_node(node.uid).attr['label'] = ['F','T'][node.uid]
+                new_node.attr['fillcolor'] = 'White'
+                new_node.attr['shape'] = 'doublecircle'
+                new_node.attr['label'] = ['F','T'][node.uid]
 
             else:
                 g.get_node(node.uid).attr['label'] = node.var
@@ -171,36 +178,33 @@ class Bdd:
 
 
 
-        g.draw('test.png', g.layout(prog='dot'))
+        g.draw(file, g.layout(prog='dot'))
+        positions = {x.uid : g.get_node(x.uid).attr['pos'] for x in self.get_nodes(terminal=True)}
+        print(positions)
 
-
-
-    def __mul__(self, other):
-        def and_nodes(node1, node2, bdd):
-            if node1.uid == 0 or node2.uid == 0:
-                return bdd.node_pool[0]
-            if node1.uid == 1:
-                if isinstance(node2, Terminal):
-                    return bdd.node_pool[node2.uid]
-                return bdd.node(node2.var, node2.low, node2.high)
-            if node2.uid ==1:
-                if isinstance(node1, Terminal):
-                    return bdd.node_pool[node2.uid]
-                return bdd.node(node1.var, node1.low, node1.high)
-            var_index_node1 = self.get_var_index(node1.var)
-            var_index_node2 = self.get_var_index(node2.var)
+    @staticmethod
+    def apply(f, bdd1, bdd2):
+        if bdd1.var_order != bdd2.var_order:
+            raise Exception ("Different Variable Orders")
+        def apply_nodes(f, node1, node2, bdd):
+            for node in [node1, node2]:
+                if node.uid in [0,1]:
+                    node.low = node.high = bdd.node_pool[node.uid]
+            if isinstance(node1, Terminal) and isinstance(node2, Terminal):
+                return bdd.node_pool[int(f(bool(node1.uid), bool(node2.uid)))]
+            var_index_node1 = bdd1.get_var_index(node1.var)
+            var_index_node2 = bdd2.get_var_index(node2.var)
             if var_index_node1 < var_index_node2:
-                return bdd.node(node1.var, and_nodes(node1.low,node2, bdd), and_nodes(node1.high,node2,bdd))
+                return bdd.node(node1.var, apply_nodes(f, node1.low,node2, bdd), apply_nodes(f, node1.high,node2,bdd))
             elif var_index_node1 == var_index_node2:
-                return bdd.node(node1.var, and_nodes(node1.low,node2.low,bdd),  and_nodes(node1.high,node2.high, bdd))
+                return bdd.node(node1.var, apply_nodes(f, node1.low,node2.low,bdd),  apply_nodes(f,node1.high,node2.high, bdd))
             if var_index_node1 > var_index_node2:
-                return bdd.node(node2.var, and_nodes(node1,node2.low, bdd), and_nodes(node1,node2.high,bdd))
+                return bdd.node(node2.var, apply_nodes(f,node1,node2.low, bdd), apply_nodes(f,node1,node2.high,bdd))
 
         bdd = Bdd()
-        bdd.var_order = self.var_order[::]
-        node_self = Node.copy_node(self.get_root_node())
-        node_other = Node.copy_node(other.get_root_node())
-        and_nodes(node_self, node_other, bdd)
+        node1 = bdd1.get_root_node()
+        node2 = bdd2.get_root_node()
+        apply_nodes(f, node1, node2, bdd)
         return bdd
 
 
@@ -219,26 +223,20 @@ class Bdd:
                         continue
                     if path == '0':
                         node = node.low
-                        if node.uid == 1:
-                            true_count += 1
-                            break
-                        elif node.uid == 0:
-                            false_count += 1
-                            break
                     if path == '1':
                         node = node.high
-                        if node.uid == 1:
-                            true_count += 1
-                            break
-                        elif node.uid == 0:
-                            false_count += 1
-                            break
+                    if node.uid == 1:
+                        true_count += 1
+                        break
+                    elif node.uid == 0:
+                        false_count += 1
+                        break
             assert((true_count, false_count)==(bdd.get_root_node().true_paths, bdd.get_root_node().false_paths))
             return True
 
 
     @staticmethod
-    def create_random_bdd_recursive(bdd=None, depth=3, concentration = 0.5, truth_ratio = 0.5):
+    def create_random_bdd_recursive(bdd=None, depth=3, concentration = 0.8, truth_ratio = 0.5):
         if not bdd:
             bdd = Bdd()
             bdd.var_order = [x+1 for x in range(depth)]+["TERMINAL"]
@@ -258,12 +256,42 @@ class Bdd:
             else:
                 return recursion()
 
+    @staticmethod
+    def create_bdd(depth=10, number_of_bdd=1):
+        bdd = Bdd()
+        bdd.var_order = [x + 1 for x in range(depth)] + ["TERMINAL"]
+        info=[]
+        info.append(list(np.random.randint(depth,size=number_of_bdd*2)))
+        for level in range(depth-1):
+            info.append([random.randint(0,depth-1) for _ in range(len(set(info[level])) * 2)])
+        info.append([random.randint(0, 1) for _ in range(len(set(info[depth-1])) * 2)])
+        print(info)
+        for level in range(depth - 1):
+            nodes = [Node(level, None, None) for _ in set(info[level])]
+        for level in range(depth)[::-1]:
+            tmp=[]
+            counter = -2
+            for node in info[level]:
+                if node in tmp:
+                    continue
+                tmp.append(node)
+                counter += 2
+                if level == depth -1:
+                    bdd.node(level+1, bdd.node_pool[info[level+1][counter]], bdd.node_pool[info[level+1][counter+1]])
+                    print(Node(level+1, bdd.node_pool[info[level+1][counter]], bdd.node_pool[info[level+1][counter+1]]))
+                    continue
 
 
 if __name__ == '__main__':
     bdd = Bdd()
-    print(Bdd.check_bdd(depth=10, nodes=10000))
-    bdd = Bdd.create_random_bdd_recursive(depth=12)
-    bdd.draw()
-
+    #print(Bdd.check_bdd(depth=10, nodes=10000))
+    bdd = Bdd.create_random_bdd_recursive(depth=5)
+    bdd.draw("bdd1.png")
+    bdd2 = Bdd.create_random_bdd_recursive(depth=5)
+    bdd2.draw("bdd2.png")
+    bdd3 = Bdd.apply(IMP, bdd, bdd2)
+    bdd3.draw("bdd3.png")
+    start = time.time()
+    Bdd.create_bdd(depth=1000)
+    print(time.time()-start)
 
