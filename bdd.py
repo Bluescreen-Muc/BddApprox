@@ -59,6 +59,10 @@ class Terminal(Node):
     def __str__(self):
         return "TRUE" if self.uid else "FALSE"
 
+    @staticmethod
+    def random_terminal(truth=0.5):
+        return Terminal(1) if np.random.binomial(1,truth) else Terminal(0)
+
 
 class Bdd:
 
@@ -72,8 +76,11 @@ class Bdd:
     def get_var_index(self,var):
         return self.var_order.index(var)
 
-    def node(self, var,low,high):
-        node = Node(var,low,high)
+    def node(self, var,low,high, node=None):
+        if node:
+            node = Node(node.var, node.low, node.high)
+        else:
+            node = Node(var,low,high)
         if node.low.uid == node.high.uid:
             return self.node_pool[low.uid]
         else:
@@ -90,6 +97,24 @@ class Bdd:
         node.false_paths, node.true_paths = self.count_paths(node)
         return node
 
+    def delete_orphans(self):
+        while True:
+            children = []
+            parents = self.get_nodes()
+            for node in parents:
+                children += [node.low.uid, node.high.uid]
+            orphans = [x for x in parents if x.uid not in children]
+            orphans.remove(self.get_root_node())
+            if not orphans:
+                break
+            [self.delete_node(x) for x in orphans]
+
+    def delete_node(self, node):
+        if node.uid not in self.node_pool:
+            raise Exception("delete_node: node not found")
+        del(self.node_pool[node.uid])
+
+
     def get_node(self, node):
         for k,v in self.node_pool.items():
             if v == node:
@@ -102,11 +127,12 @@ class Bdd:
         max_uid = max(self.node_pool.keys())
         return self.node_pool[max_uid]
 
-    def get_nodes(self, key=None, terminal=False, reverse=False):
+    def get_nodes(self, key=None, terminal=False, reverse=False,no_root=False):
         output = self.node_pool.values()
         if not terminal:
             output= [x for x in output if x and not isinstance(x, Terminal)]
-
+        if no_root:
+            output.remove(self.get_root_node())
         return sorted(output, key = key,reverse=reverse) if key else output
 
 
@@ -179,8 +205,7 @@ class Bdd:
 
 
         g.draw(file, g.layout(prog='dot'))
-        positions = {x.uid : g.get_node(x.uid).attr['pos'] for x in self.get_nodes(terminal=True)}
-        print(positions)
+
 
     @staticmethod
     def apply(f, bdd1, bdd2):
@@ -260,27 +285,15 @@ class Bdd:
     def create_bdd(depth=10, number_of_bdd=1):
         bdd = Bdd()
         bdd.var_order = [x + 1 for x in range(depth)] + ["TERMINAL"]
-        info=[]
-        info.append(list(np.random.randint(depth,size=number_of_bdd*2)))
-        for level in range(depth-1):
-            info.append([random.randint(0,depth-1) for _ in range(len(set(info[level])) * 2)])
-        info.append([random.randint(0, 1) for _ in range(len(set(info[depth-1])) * 2)])
-        print(info)
-        for level in range(depth - 1):
-            nodes = [Node(level, None, None) for _ in set(info[level])]
+        number_of_nodes = [2**y for y in range(depth)]
         for level in range(depth)[::-1]:
-            tmp=[]
-            counter = -2
-            for node in info[level]:
-                if node in tmp:
-                    continue
-                tmp.append(node)
-                counter += 2
-                if level == depth -1:
-                    bdd.node(level+1, bdd.node_pool[info[level+1][counter]], bdd.node_pool[info[level+1][counter+1]])
-                    print(Node(level+1, bdd.node_pool[info[level+1][counter]], bdd.node_pool[info[level+1][counter+1]]))
-                    continue
-
+            if level == depth-1:
+                nodes = [bdd.node(level+2, Terminal.random_terminal(), Terminal.random_terminal()) for _ in range(depth)]
+                continue
+            nodes = [bdd.node(level+2, nodes[random.randint(0,depth-1)], nodes[random.randint(0,depth-1)]) for _ in range(depth)]
+        bdd.node(1,nodes[random.randint(0,depth-1)], nodes[random.randint(0,depth-1)])
+        bdd.delete_orphans()
+        return bdd
 
 if __name__ == '__main__':
     bdd = Bdd()
@@ -292,6 +305,8 @@ if __name__ == '__main__':
     bdd3 = Bdd.apply(IMP, bdd, bdd2)
     bdd3.draw("bdd3.png")
     start = time.time()
-    Bdd.create_bdd(depth=1000)
+    bdd = Bdd.create_bdd(depth=40)
+    bdd.draw()
     print(time.time()-start)
+    bdd.draw('bdd2.png')
 
