@@ -5,6 +5,7 @@ import pygraphviz as pgv
 from weakref import WeakValueDictionary
 import time
 
+from evaluation import Stats
 from collections import defaultdict, Counter
 
 from functions import *
@@ -188,7 +189,7 @@ class Bdd:
 
     def rounding(self, depth=1):
         var_order = self.get_vars(reverse=True)
-        info = self.count()
+        info = self.count_rec()
         nodes = defaultdict(list)
         for node in self.get_nodes():
             nodes[node.var].append(node.uid)
@@ -244,10 +245,6 @@ class Bdd:
             g.add_edge('%d' % node.uid, '%d' % node.high.uid)
 
         g.draw(file, g.layout(prog='dot'))
-
-    def stats(self):
-        print("Number of nodes: {}".format(len(list(self.node_pool.values()))))
-        print("True/False: {}".format(self.count_rec()))
 
     @staticmethod
     def apply(f, bdd1, bdd2):
@@ -369,7 +366,7 @@ class Bdd:
         if new_node not in self.node_pool.values():
             return
 
-        del(self.node_pool[old_node.uid])
+        self.node_pool.pop(old_node.uid,0)
 
         for node in self.get_nodes(lambda x: x.uid):
             if node.low.uid == uid_old:
@@ -384,7 +381,6 @@ class Bdd:
         while True:
             change = False
             hashes = defaultdict(list)
-            to_correct = []
             for node in self.get_nodes():
                 hashes[hash(node)].append(node.uid)
 
@@ -393,7 +389,8 @@ class Bdd:
                     change = True
                     node = hashes[key][0]
                     for faulty_node in hashes[key][1::]:
-                        self.set_node(self.node_pool[faulty_node], self.node_pool[node])
+                        if faulty_node in self.node_pool and node in self.node_pool:
+                            self.set_node(self.node_pool[faulty_node], self.node_pool[node])
             if not change:
                 break
 
@@ -424,21 +421,24 @@ class Bdd:
                     node.score = (2,low.score)
 
 
+    @staticmethod
+    def test_rounding(depth, rounding_depth, truth_rate, n):
+        for _ in range(n):
+            bdd = Bdd.create_bdd(depth, truth_rate)
+            nodes = len(list(bdd.node_pool.values()))
+            counter = bdd.count_rec()
+            stats = Stats(nodes, counter)
+
+            bdd.rounding(rounding_depth)
+            print('frrr')
+            nodes = len(list(bdd.node_pool.values()))
+            counter = bdd.count_rec()
+            print(stats.approximation(nodes, counter))
+
+
 
 
 
 if __name__ == '__main__':
     seed = 12
-    while True:
-        # np.random.seed(31)
-        # random.seed(31)
-        bdd1 = Bdd.create_bdd(depth=10, truth_rate = 0.5)
-        bdd2 = Bdd.create_bdd(depth=10, truth_rate=0.5)
-        #bdd1 = Bdd.create_random_bdd_recursive(depth = 20, concentration=0.3)
-        bdd1.draw('bdd1.png')
-        #bdd1.apprrox()
-        bdd1.rounding(depth=1)
-        bdd1.draw('bdd2.png')
-        bdd1.draw()
-        break
-
+    Bdd.test_rounding(30, 1,0.8,10)
