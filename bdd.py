@@ -3,7 +3,7 @@ import random
 import numpy as np
 import pygraphviz as pgv
 from weakref import WeakSet
-import gc
+import sys
 
 import time
 
@@ -24,11 +24,6 @@ class Node:
         self.low = low
         self.high = high
         self.iter_index = -1
-        self.true_paths = 0
-        self.false_paths = 0
-
-    def check_children(self, node):
-        return node.uid == self.low.uid or node.uid == self.high.uid
 
     def __iter__(self):
         return self
@@ -49,9 +44,9 @@ class Node:
         return self.var * Node.MAX_NUMBER_NODES ** 2 + self.low.uid * Node.MAX_NUMBER_NODES + self.high.uid
 
     def __str__(self):
-        return '({}<-{}->{}) True: {}   False: {}' \
+        return '({}<-{}->{}) ' \
             .format(self.low.var if self.low.var != "TERMINAL" else self.low, self.var, self.high.var
-        if self.high.var != "TERMINAL" else self.high, self.true_paths, self.false_paths)
+        if self.high.var != "TERMINAL" else self.high)
 
     @staticmethod
     def copy_node(node):
@@ -93,6 +88,7 @@ class Bdd:
         self.node_pool[0].add(Bdd.TRUE)
         self.root_node = None
         self.max_var = 0
+        self.info = defaultdict(NodeInfo)
 
     def set_max_var(self, n):
         Bdd.max_var == n
@@ -118,6 +114,12 @@ class Bdd:
                 Node.uid += 1
                 return node
 
+    def get_node(self, node):
+        if node in self.node_pool[node.var]:
+            return {node}.intersection(self.node_pool[node.var]).pop()
+        else:
+            return None
+
     def delete_orphans(self):
         while True:
             children = []
@@ -132,11 +134,20 @@ class Bdd:
             else:
                 [self.node_pool.remove(x) for x in orphans]
 
-    def delete_node(self, node):
-        if node.uid not in self.node_pool:
-            raise Exception("delete_node: node not found")
-        del (self.node_pool[node.uid])
+    # def delete_node(self, node):
+    #     if node.uid not in self.node_pool:
+    #         raise Exception("delete_node: node not found")
+    #     del (self.node_pool[node.uid])
 
+    def get_vars(self, terminal=False, from_bottom=True, max=sys.maxsize, min=-1):
+        output = []
+        for var, nodes in self.node_pool.items():
+            if not terminal and var == 0:
+                continue
+            if nodes:
+                output.append(var)
+
+        return list(filter(lambda x: x >= min and x <= max, sorted(output, reverse=from_bottom)))
 
     def print_nodes(self):
         output = []
@@ -149,64 +160,61 @@ class Bdd:
 
 
 
-    # def count_rec(self):
-    #     info = {n.uid: [0,0] for n in self.get_nodes()}
-    #     for id,level in enumerate(self.var_order[::-1]):
-    #         if level == "TERMINAL":
-    #             continue
-    #         for node in filter(lambda x: x.var == level, self.get_nodes()):
-    #             for child in node:
-    #                 if child.uid == 0:
-    #                     info[node.uid][0] += 2**(id-1)
-    #                     continue
-    #                 if child.uid == 1:
-    #                     info[node.uid][1] += 2 ** (id - 1)
-    #                     continue
-    #
-    #                 else:
-    #                     info[node.uid][0] += (2**(self.get_var_index(child.var)- self.get_var_index(node.var)-1)) * info[child.uid][0]
-    #                     info[node.uid][1] += (2 ** (self.get_var_index(child.var) - self.get_var_index(node.var) - 1)) * \
-    #                                          info[child.uid][1]
-    #
-    #     info[self.root_node.uid][0] *= 2 ** (self.get_var_index(self.root_node.var))
-    #     info[self.root_node.uid][1] *= 2 ** (self.get_var_index(self.root_node.var))
-    #
-    #     # output = [sum(info[x.uid][0] for x in self.root_nodes), sum(info[x.uid][1] for x in self.root_nodes)]
-    #     return info[self.root_node.uid]
-    #
-    #
-    # def rounding(self, depth=1):
-    #     var_order = self.get_vars(reverse=True)
-    #     info = self.count_rec()
-    #     nodes = defaultdict(list)
-    #     for node in self.get_nodes():
-    #         nodes[node.var].append(node.uid)
-    #
-    #     for var in var_order[:depth]:
-    #         for uid in nodes[var]:
-    #             if uid in self.node_pool:
-    #                 if self.node_pool[uid].low.uid == 0 or self.node_pool[uid].high.uid == 0:
-    #                     self.set_node_true(self.node_pool[uid])
-    #                 else:
-    #                     self.set_node_true(info[self.node_pool[uid].low.uid][1]) if info[self.node_pool[uid].low.uid][1] < info[self.node_pool[uid].high.uid][1] else self.set_node_true(info[self.node_pool[uid].high.uid][1])
-    #     self.check_duplicates()
-    #
-    #
-    # def get_number_of_nodes(self):
-    #     return len(list(self.node_pool.values()))
-    #
-    # def get_vars(self, reverse = False, Terminal=False):
-    #     output = self.var_order[::]
-    #     if not Terminal:
-    #         output.remove("TERMINAL")
-    #     return output[::-1] if reverse else output
-    #
+    def count_rec(self):
+        var_order = self.get_vars()
+        for var in var_order:
+            for node in self.node_pool[var]:
+                for child in node:
+                    if child.uid == 0:
+                        self.info[node.uid].false_paths += 2**(self.max_var-var)
+                    elif child.uid == 1:
+                        self.info[node.uid].true_paths += 2 ** (self.max_var - var)
+
+                    else:
+                        self.info[node.uid].false_paths += (2**(child.var - node.var - 1))*self.info[child.uid].false_paths
+                        self.info[node.uid].true_paths += (2**(child.var - node.var - 1))*self.info[child.uid].true_paths
+        if isinstance(self.root_node, Terminal):
+            self.info[self.root_node.uid].false_paths = 2**self.max_var if self.root_node == Bdd.FALSE else 0
+            self.info[self.root_node.uid].true_paths = 2 ** self.max_var if self.root_node == Bdd.TRUE else 0
+        else:
+            root_multiplier = 2**(self.root_node.var - 1)
+            self.info[self.root_node.uid].false_paths *= root_multiplier
+            self.info[self.root_node.uid].true_paths *= root_multiplier
+
+
+
+
+
+    def approximation1(self, depth=2):
+        self.count_rec()
+        print(self.max_var)
+        vars_to_round = self.get_vars(terminal=False, from_bottom=True, min=self.max_var-depth+1, max=self.max_var)
+        print(vars_to_round)
+        for var in vars_to_round:
+            for node in self.node_pool[var]:
+                if node.low == Bdd.FALSE or node.high == Bdd.FALSE:
+                    self.set_node(node, Bdd.FALSE)
+
+    def check_duplicates(self):
+        for node in self.get_nodes():
+            if isinstance(node, Terminal):
+                continue
+            if not isinstance(node.low, Terminal) and node.low not in self.node_pool[node.low.var]:
+                print("feeffe")
+                print(node)
+
+            if not isinstance(node.high, Terminal) and node.high not in self.node_pool[node.high.var]:
+                print("feeffe")
 
     def get_nodes(self):
         output = set()
         for x in self.node_pool.values():
             output.update(x)
         return output
+
+    def print_info(self):
+        for node, info in self.info:
+            print(info)
 
     def draw(self, file=None):
         if not file:
@@ -269,30 +277,6 @@ class Bdd:
     #
     #
     #
-    # def count(self):
-    #     bits = len(self.var_order)-1
-    #
-    #     true_count = 0
-    #     false_count = 0
-    #     for x in range(2 ** bits):
-    #         x = format(x, '0{}b'.format(bits))
-    #         node = self.root_node
-    #
-    #         for level, path in enumerate(x):
-    #             if self.var_order.index(node.var) > level:
-    #                 continue
-    #             if path == '0':
-    #                 node = node.low
-    #             if path == '1':
-    #                 node = node.high
-    #             if node.uid == 1:
-    #                 true_count += 1
-    #                 break
-    #             elif node.uid == 0:
-    #                 false_count += 1
-    #                 break
-    #     return (false_count, true_count)
-    #
     # @staticmethod
     # def create_random_bdd_recursive(bdd=None, depth=10, concentration=0.8, truth_ratio=0.1):
     #     if not bdd:
@@ -314,6 +298,7 @@ class Bdd:
     #
     @staticmethod
     def create_bdd(depth=10, truth_rate = 0.5):
+        depth = depth - 1
         bdd = Bdd()
         array = [[[] for _ in range(depth)] for _ in range(depth)]
         for i in range(0,depth)[::-1]:
@@ -355,26 +340,34 @@ class Bdd:
     #             #print(node)
     #             self.set_node_true(node)
     #
-    # def set_node(self, old_node, new_node):
-    #     uid_new = new_node.uid
-    #     uid_old = old_node.uid
-    #
-    #     if isinstance(new_node, Terminal):
-    #         return
-    #     if new_node not in self.node_pool.values():
-    #         return
-    #
-    #     self.node_pool.pop(old_node.uid,0)
-    #
-    #     for node in self.get_nodes(lambda x: x.uid):
-    #         if node.low.uid == uid_old:
-    #             node.low = self.node_pool[uid_new]
-    #         if node.high.uid == uid_old:
-    #             node.high = self.node_pool[uid_new]
-    #         if node.low == node.high:
-    #             #print(node)
-    #             self.set_node(node, new_node)
-    #
+    def set_node(self, old_node, new_node):
+        vars = self.get_vars(terminal=False, from_bottom=True, max=old_node.var - 1)
+        to_do = []
+        for var in vars:
+            for node in self.node_pool[var]:
+                tmp_node = Node.copy_node(node)
+                if node.low == old_node:
+                    # tmp_node = self.get_node(Node(node.var, new_node, node.high))
+                    # if tmp_node:
+                    #     self.set_node(node, tmp_node)
+                    # else:
+                    node.low = new_node
+                if node.high == old_node:
+                    # tmp_node = self.get_node(Node(node.var, node.low, new_node))
+                    # if tmp_node:
+                    #     self.set_node(node, tmp_node)
+                    # else:
+                    node.high = new_node
+                if node.low == node.high:
+                    if node == self.root_node:
+                        self.root_node = node.low
+                    else:
+                        to_do.append(node)
+            # for x in to_do:
+            #     self.set_node(x, x.low)
+        return to_do
+
+
     # def check_duplicates(self):
     #     while True:
     #         change = False
@@ -436,15 +429,29 @@ class Bdd:
     #
     #
 
+class NodeInfo:
+
+    def __init__(self):
+        self.true_paths = 0
+        self.false_paths = 0
+
+    def __str__(self):
+        return "{} {}".format(self.false_paths, self.true_paths)
 
 if __name__ == '__main__':
     while True:
         start = time.time()
-        bdd = Bdd.create_bdd(10)
-        bdd.get_nodes()
+        bdd = Bdd.create_bdd(15)
+        #bdd.check_duplicates()
+        bdd.check_weak_references()
+        bdd.draw()
+        bdd.approximation1(1)
+        bdd.check_duplicates()
+        bdd.draw('bdd1.png')
+        print(bdd.get_vars(terminal=False, from_bottom=True, min=2))
+        # print(bdd.info[bdd.root_node.uid])
         #print(time.time() - start)
         #bdd.delete_orphans()
-        bdd.draw()
         break
         max = 100
         counter = 0
