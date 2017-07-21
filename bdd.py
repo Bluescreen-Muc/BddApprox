@@ -54,10 +54,9 @@ class Node:
 
 
 class Terminal(Node):
-    def __init__(self, terminal):
+    def __init__(self, uid):
         super().__init__()
-        self.var = "TERMINAL"
-        self.uid = 1 if terminal == True else 0
+        self.uid = uid
 
     def __eq__(self, other):
         if not isinstance(other, Terminal):
@@ -72,7 +71,7 @@ class Terminal(Node):
 
     @staticmethod
     def random_terminal(truth=0.5):
-        return Terminal(1) if np.random.binomial(1, truth) else Terminal(0)
+        return Bdd.TRUE if np.random.binomial(1, truth) else Bdd.FALSE
 
     def check_children(self, node):
         return False
@@ -105,12 +104,12 @@ class Bdd:
             return low
 
         else:
-            if node in self.node_pool[node.var]:
+            if node in self.node_pool[hash(node)]:
 
-                return {node}.intersection(self.node_pool[node.var]).pop()
+                return {node}.intersection(self.node_pool[hash(node)]).pop()
 
             else:
-                self.node_pool[node.var].add(node)
+                self.node_pool[hash(node)].add(node)
                 Node.uid += 1
                 return node
 
@@ -139,15 +138,15 @@ class Bdd:
     #         raise Exception("delete_node: node not found")
     #     del (self.node_pool[node.uid])
 
-    def get_vars(self, terminal=False, from_bottom=True, max=sys.maxsize, min=-1):
-        output = []
-        for var, nodes in self.node_pool.items():
-            if not terminal and var == 0:
-                continue
-            if nodes:
-                output.append(var)
-
-        return list(filter(lambda x: x >= min and x <= max, sorted(output, reverse=from_bottom)))
+    # def get_vars(self, terminal=False, from_bottom=True, max=sys.maxsize, min=-1):
+    #     output = []
+    #     for var, nodes in self.node_pool.items():
+    #         if not terminal and var == 0:
+    #             continue
+    #         if nodes:
+    #             output.append(var)
+    #
+    #     return list(filter(lambda x: x >= min and x <= max, sorted(output, reverse=from_bottom)))
 
     def print_nodes(self):
         output = []
@@ -158,12 +157,20 @@ class Bdd:
             print(uid, node)
         print("\n")
 
-
+    def get_vars(self, terminal = FALSE, min=-1, max=sys.maxsize):
+        node_dict = defaultdict(list)
+        for x in self.get_nodes():
+            if not terminal and isinstance(x, Terminal):
+                continue
+            var = self.get_var(x)
+            if var >= min and var<=max:
+                node_dict[self.get_var(x)].append(x)
+        return node_dict
 
     def count_rec(self):
-        var_order = self.get_vars()
-        for var in var_order:
-            for node in self.node_pool[var]:
+        node_dict = self.get_vars(terminal=False)
+        for var in range(1, self.max_var+1)[::-1]:
+            for node in node_dict[var]:
                 for child in node:
                     if child.uid == 0:
                         self.info[node.uid].false_paths += 2**(self.max_var-var)
@@ -183,35 +190,25 @@ class Bdd:
 
 
 
-
-
     def approximation1(self, depth=2):
         self.count_rec()
         print(self.max_var)
-        vars_to_round = self.get_vars(terminal=False, from_bottom=True, min=self.max_var-depth+1, max=self.max_var)
-        print(vars_to_round)
+        nodes_to_change = set()
         for var in vars_to_round:
-            for node in self.node_pool[var]:
-                if node.low == Bdd.FALSE or node.high == Bdd.FALSE:
-                    self.set_node(node, Bdd.FALSE)
-
-    def check_duplicates(self):
-        for node in self.get_nodes():
-            if isinstance(node, Terminal):
-                continue
-            if not isinstance(node.low, Terminal) and node.low not in self.node_pool[node.low.var]:
-                print("feeffe")
-                print(node)
-
-            if not isinstance(node.high, Terminal) and node.high not in self.node_pool[node.high.var]:
-                print("feeffe")
+            for node in list(self.node_pool[var]):
+                if node.low == Bdd.FALSE:
+                    nodes_to_change.add(node)
+                if node.high == Bdd.FALSE:
+                    nodes_to_change.add(node)
+        print(nodes_to_change)
+        for node in nodes_to_change:
+            self.set_node(node, Bdd.FALSE)
 
     def get_nodes(self):
         output = set()
         for x in self.node_pool.values():
             output.update(x)
         return output
-
     def print_info(self):
         for node, info in self.info:
             print(info)
@@ -247,55 +244,25 @@ class Bdd:
             g.add_subgraph([node.uid for node in nodes], rank="same")
         g.draw(file, g.layout(prog='dot'))
 
-    # @staticmethod
-    # def apply(f, bdd1, bdd2):
-    #     if bdd1.var_order != bdd2.var_order:
-    #         raise Exception("Different Variable Orders")
-    #
-    #     def apply_nodes(f, node1, node2, bdd):
-    #         for node in [node1, node2]:
-    #             if node.uid in [0, 1]:
-    #                 node.low = node.high = bdd.node_pool[node.uid]
-    #         if isinstance(node1, Terminal) and isinstance(node2, Terminal):
-    #             return bdd.node_pool[int(f(bool(node1.uid), bool(node2.uid)))]
-    #         var_index_node1 = bdd1.get_var_index(node1.var)
-    #         var_index_node2 = bdd2.get_var_index(node2.var)
-    #         if var_index_node1 < var_index_node2:
-    #             return bdd.node(node1.var, apply_nodes(f, node1.low, node2, bdd),
-    #                             apply_nodes(f, node1.high, node2, bdd))
-    #         elif var_index_node1 == var_index_node2:
-    #             return bdd.node(node1.var, apply_nodes(f, node1.low, node2.low, bdd),
-    #                             apply_nodes(f, node1.high, node2.high, bdd))
-    #         if var_index_node1 > var_index_node2:
-    #             return bdd.node(node2.var, apply_nodes(f, node1, node2.low, bdd),
-    #                             apply_nodes(f, node1, node2.high, bdd))
-    #
-    #     bdd = Bdd()
-    #     bdd.var_order = bdd1.var_order[::]
-    #     bdd.root_node = apply_nodes(f, bdd1.root_node, bdd2.root_node, bdd)
-    #     return bdd
-    #
-    #
-    #
-    # @staticmethod
-    # def create_random_bdd_recursive(bdd=None, depth=10, concentration=0.8, truth_ratio=0.1):
-    #     if not bdd:
-    #         bdd = Bdd()
-    #         bdd.var_order = [x + 1 for x in range(depth)] + ["TERMINAL"]
-    #         bdd.root_node = Bdd.create_random_bdd_recursive(bdd, depth, concentration, truth_ratio)
-    #         return bdd
-    #     recursion = lambda: Bdd.create_random_bdd_recursive(bdd, depth - 1, concentration, truth_ratio)
-    #     if depth == 0:
-    #         return Terminal(1) if np.random.binomial(1, truth_ratio) else Terminal(0)
-    #
-    #
-    #     else:
-    #         if np.random.binomial(1, concentration):
-    #             return bdd.node(len(bdd.var_order) - depth, recursion(), recursion())
-    #
-    #         else:
-    #             return recursion()
-    #
+    @staticmethod
+    def apply(f, bdd1, bdd2):
+        def apply_nodes(f, node1, node2, bdd):
+            if isinstance(node1, Terminal) or isinstance(node2, Terminal):
+                return f(node1,node2)
+            if bdd.get_var(node1) < bdd.get_var(node2):
+                return bdd.node(node1.var, apply_nodes(f, node1.low, node2, bdd),
+                                apply_nodes(f, node1.high, node2, bdd))
+            elif bdd.get_var(node1) == bdd.get_var(node2):
+                return bdd.node(node1.var, apply_nodes(f, node1.low, node2.low, bdd),
+                                apply_nodes(f, node1.high, node2.high, bdd))
+            if bdd.get_var(node1) > bdd.get_var(node2):
+                return bdd.node(node2.var, apply_nodes(f, node1, node2.low, bdd),
+                                apply_nodes(f, node1, node2.high, bdd))
+
+        bdd = Bdd()
+        bdd.root_node = apply_nodes(f, bdd1.root_node, bdd2.root_node, bdd)
+        return bdd
+
     @staticmethod
     def create_bdd(depth=10, truth_rate = 0.5):
         depth = depth - 1
@@ -318,116 +285,35 @@ class Bdd:
             if x._pending_removals:
                 print("FOUND WEAK REFERENCES")
                 x._commit_removals()
-    #
-    # def set_node_true(self, del_node):
-    #     if del_node == self.root_node:
-    #         del_node.low = Bdd.TRUE
-    #         del_node.high = Bdd.TRUE
-    #         return
-    #     if isinstance(del_node, Terminal):
-    #         return
-    #     if del_node not in self.node_pool.values():
-    #         return
-    #
-    #     del(self.node_pool[del_node.uid])
-    #
-    #     for node in self.get_nodes(lambda x: x.uid):
-    #         if node.low.uid == del_node.uid:
-    #             node.low = Bdd.TRUE
-    #         if node.high.uid == del_node.uid:
-    #             node.high = Bdd.TRUE
-    #         if node.low == node.high:
-    #             #print(node)
-    #             self.set_node_true(node)
-    #
+
     def set_node(self, old_node, new_node):
         vars = self.get_vars(terminal=False, from_bottom=True, max=old_node.var - 1)
-        to_do = []
+        to_do_low = set()
+        to_do_high = set()
         for var in vars:
-            for node in self.node_pool[var]:
-                tmp_node = Node.copy_node(node)
+            for node in list(self.node_pool[var]):
                 if node.low == old_node:
-                    # tmp_node = self.get_node(Node(node.var, new_node, node.high))
-                    # if tmp_node:
-                    #     self.set_node(node, tmp_node)
-                    # else:
-                    node.low = new_node
+                    to_do_low.add(node.low)
+
                 if node.high == old_node:
-                    # tmp_node = self.get_node(Node(node.var, node.low, new_node))
-                    # if tmp_node:
-                    #     self.set_node(node, tmp_node)
-                    # else:
-                    node.high = new_node
-                if node.low == node.high:
-                    if node == self.root_node:
-                        self.root_node = node.low
-                    else:
-                        to_do.append(node)
-            # for x in to_do:
-            #     self.set_node(x, x.low)
-        return to_do
+                    to_do_high.add(node.high)
+        print(len(to_do_high), len(to_do_low))
+        for node in to_do_low:
+            node = self.get_node(node)
+            node.low = new_node
+            self.node_pool[node.var].add(node)
+        for node in to_do_high:
+            node = self.get_node(node)
+            node.high = new_node
+            self.node_pool[node.var].add(node)
+
+    def get_var(self, node):
+        if isinstance(node, Terminal):
+            return self.max_var + 1
+        else:
+            return node.var
 
 
-    # def check_duplicates(self):
-    #     while True:
-    #         change = False
-    #         hashes = defaultdict(list)
-    #         for node in self.get_nodes():
-    #             hashes[hash(node)].append(node.uid)
-    #
-    #         for key in hashes.keys():
-    #             if len(hashes[key]) > 1:
-    #                 change = True
-    #                 node = hashes[key][0]
-    #                 for faulty_node in hashes[key][1::]:
-    #                     if faulty_node in self.node_pool and node in self.node_pool:
-    #                         self.set_node(self.node_pool[faulty_node], self.node_pool[node])
-    #         if not change:
-    #             break
-    #
-    # def apprrox(self):
-    #     def score(low,high):
-    #         if low == Bdd.FALSE and high == Bdd.FALSE:
-    #             return 0
-    #         if low == Bdd.FALSE and high == Bdd.TRUE:
-    #             return 1
-    #         if low == Bdd.TRUE and high == Bdd.FALSE:
-    #             return -1
-    #         return 2
-    #
-    #     info = defaultdict(list)
-    #     results = dict()
-    #     for node in self.get_nodes():
-    #         info[node.var].append(node)
-    #     for id, var in enumerate(self.get_vars(reverse=True)):
-    #         for node in info[var]:
-    #             low = node.low
-    #             high = node.high
-    #             if isinstance(low, Terminal):
-    #                 if isinstance(high, Terminal):
-    #                     node.score.append(score(low,high))
-    #                 else:
-    #                     node.score.append(0, high.score) / 2
-    #             else:
-    #                 node.score = (2,low.score)
-    #
-    #
-    # @staticmethod
-    # def test_rounding(depth, rounding_depth, truth_rate, n):
-    #     for _ in range(n):
-    #         bdd = Bdd.create_bdd(depth, truth_rate)
-    #         nodes = len(list(bdd.node_pool.values()))
-    #         counter = bdd.count_rec()
-    #         stats = Stats(nodes, counter)
-    #
-    #         bdd.rounding(rounding_depth)
-    #         print('frrr')
-    #         nodes = len(list(bdd.node_pool.values()))
-    #         counter = bdd.count_rec()
-    #         print(stats.approximation(nodes, counter))
-    #
-    #
-    #
 
 class NodeInfo:
 
@@ -440,36 +326,13 @@ class NodeInfo:
 
 if __name__ == '__main__':
     while True:
-        start = time.time()
-        bdd = Bdd.create_bdd(15)
-        #bdd.check_duplicates()
-        bdd.check_weak_references()
-        bdd.draw()
-        bdd.approximation1(1)
-        bdd.check_duplicates()
-        bdd.draw('bdd1.png')
-        print(bdd.get_vars(terminal=False, from_bottom=True, min=2))
-        # print(bdd.info[bdd.root_node.uid])
-        #print(time.time() - start)
-        #bdd.delete_orphans()
-        break
-        max = 100
-        counter = 0
-        l = []
-        for node in bdd.get_nodes():
-            if isinstance(node, Terminal):
-                continue
-            if node.var < max:
-                l = [node]
-                max = node.var
-                counter = 1
-            elif node.var == max:
-                counter += 1
-                l.append(node)
-        if counter > 1:
-            print ("fef")
-            [print(x) for x in l]
 
-            break
-    # seed = 12
-    # Bdd.test_rounding(30, 1,0.8,10)
+        start = time.time()
+        bdd = Bdd.create_bdd(30)
+        bdd2 = Bdd.create_bdd(30)
+        Bdd.apply(AND, bdd, bdd2)
+        bdd.count_rec()
+        # bdd.draw()
+        print(bdd.info[bdd.root_node.uid])
+
+        break
