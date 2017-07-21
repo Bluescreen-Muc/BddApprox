@@ -3,6 +3,9 @@ import random
 import numpy as np
 import pygraphviz as pgv
 from weakref import WeakSet
+import gc
+
+import time
 
 from evaluation import Stats
 from collections import defaultdict, Counter
@@ -85,10 +88,9 @@ class Bdd:
 
     def __init__(self):
         self.max_var = 0
-        self.var_order = ["TERMINAL"]
-        self.node_pool = set()
-        self.node_pool.add (Bdd.FALSE)
-        self.node_pool.add (Bdd.TRUE)
+        self.node_pool = defaultdict(WeakSet)
+        self.node_pool[0].add(Bdd.FALSE)
+        self.node_pool[0].add(Bdd.TRUE)
         self.root_node = None
         self.max_var = 0
 
@@ -103,19 +105,23 @@ class Bdd:
         if var > self.max_var:
             self.max_var = var
 
-        if node.low.uid == node.high.uid:
+        if node.low == node.high:
             return low
 
         else:
-            self.node_pool.add(node)
-            Node.uid += 1
-            return node
+            if node in self.node_pool[node.var]:
+
+                return {node}.intersection(self.node_pool[node.var]).pop()
+
+            else:
+                self.node_pool[node.var].add(node)
+                Node.uid += 1
+                return node
 
     def delete_orphans(self):
         while True:
             children = []
             parents = self.node_pool
-            print(parents)
             for node in parents:
                 if isinstance(node, Terminal):
                     continue
@@ -131,18 +137,6 @@ class Bdd:
             raise Exception("delete_node: node not found")
         del (self.node_pool[node.uid])
 
-    def get_node(self, get_node):
-        for node in self.node_pool:
-            if get_node == node:
-                return node
-        else:
-            raise Exception("Node not found")
-
-    def get_nodes(self, key=None, terminal=False, reverse=False):
-        output = self.node_pool.values()
-        if not terminal:
-            output = [x for x in output if x and not isinstance(x, Terminal)]
-        return sorted(output, key=key, reverse=reverse) if key else output
 
     def print_nodes(self):
         output = []
@@ -153,15 +147,7 @@ class Bdd:
             print(uid, node)
         print("\n")
 
-    def print_var_order(self):
-        print("Variable Order")
-        for id, var in enumerate(self.var_order, 1):
-            print("{}. {}".format(id, var))
-        print("\n")
 
-    def print_info(self):
-        print("Node count: {}".format(len(self.node_pool.values())))
-        print("Outputs True: {}, False: {}".format(self.get_root_node().true_paths, self.get_root_node().false_paths))
 
     # def count_rec(self):
     #     info = {n.uid: [0,0] for n in self.get_nodes()}
@@ -215,6 +201,13 @@ class Bdd:
     #         output.remove("TERMINAL")
     #     return output[::-1] if reverse else output
     #
+
+    def get_nodes(self):
+        output = set()
+        for x in self.node_pool.values():
+            output.update(x)
+        return output
+
     def draw(self, file=None):
         if not file:
             file = 'bdd.png'
@@ -223,11 +216,11 @@ class Bdd:
         g.node_attr['style'] = 'filled'
         g.node_attr['colorscheme'] = 'set312'
 
-        for node in self.node_pool:
+        for node in self.get_nodes():
 
-            g.add_node('%d' % node.uid)
+            g.add_node('%d' % node.uid, rank=node.var)
             new_node = g.get_node(node.uid)
-            new_node.attr['fillcolor'] =  1
+            new_node.attr['fillcolor'] =  0 if isinstance(node, Terminal) else (node.var % 12 + 1)
             if node.uid in [0, 1]:
                 new_node.attr['fillcolor'] = 'White'
                 new_node.attr['shape'] = 'doublecircle'
@@ -237,12 +230,13 @@ class Bdd:
                 label = node.var
                 g.get_node(node.uid).attr['label'] = label
 
-        for node in self.node_pool:
+        for node in self.get_nodes():
             if isinstance(node, Terminal):
                 continue
             g.add_edge('%d' % node.uid, '%d' % node.low.uid, style='dotted')
             g.add_edge('%d' % node.uid, '%d' % node.high.uid)
-
+        for var, nodes in self.node_pool.items():
+            g.add_subgraph([node.uid for node in nodes], rank="same")
         g.draw(file, g.layout(prog='dot'))
 
     # @staticmethod
@@ -323,15 +317,22 @@ class Bdd:
         bdd = Bdd()
         array = [[[] for _ in range(depth)] for _ in range(depth)]
         for i in range(0,depth)[::-1]:
-            for j in range(depth)[::-1]:
+            for j in range(0,depth)[::-1]:
                 if i == depth-1:
-                    array[i][j] = bdd.node(i+2, Terminal.random_terminal(truth=truth_rate), Terminal.random_terminal())
+                    array[i][j] = bdd.node(i+2, Terminal.random_terminal(truth=truth_rate), Terminal.random_terminal(truth=truth_rate))
                 else:
                     array[i][j] = bdd.node(i+2 ,array[i+1][np.random.randint(depth)],array[i+1][np.random.randint(depth)])
-        bdd.root_node = bdd.node(1, array[0][np.random.randint(depth)],array[0][np.random.randint(depth)])
 
-        bdd.delete_orphans()
+        bdd.root_node = bdd.node(1, array[0][np.random.randint(depth)],array[0][np.random.randint(depth)])
+        array = None
+        bdd.check_weak_references()
         return bdd
+
+    def check_weak_references(self):
+        for x in self.node_pool.values():
+            if x._pending_removals:
+                print("FOUND WEAK REFERENCES")
+                x._commit_removals()
     #
     # def set_node_true(self, del_node):
     #     if del_node == self.root_node:
@@ -437,10 +438,31 @@ class Bdd:
 
 
 if __name__ == '__main__':
-    pass
-    bdd = Bdd.create_bdd(100)
+    while True:
+        start = time.time()
+        bdd = Bdd.create_bdd(10)
+        bdd.get_nodes()
+        #print(time.time() - start)
+        #bdd.delete_orphans()
+        bdd.draw()
+        break
+        max = 100
+        counter = 0
+        l = []
+        for node in bdd.get_nodes():
+            if isinstance(node, Terminal):
+                continue
+            if node.var < max:
+                l = [node]
+                max = node.var
+                counter = 1
+            elif node.var == max:
+                counter += 1
+                l.append(node)
+        if counter > 1:
+            print ("fef")
+            [print(x) for x in l]
 
-    for x in bdd.node_pool:
-        print(x.var)
+            break
     # seed = 12
     # Bdd.test_rounding(30, 1,0.8,10)
