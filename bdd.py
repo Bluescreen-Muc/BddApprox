@@ -199,6 +199,7 @@ class Bdd:
                     to_do.append(node)
         for node in to_do:
             self.set_node(node, Bdd.FALSE)
+        self.update_var_pool_hash_values()
 
 
 
@@ -209,6 +210,9 @@ class Bdd:
         for node, info in self.info:
             print(info)
 
+    def update_var_pool_hash_values(self):
+        for var in self.var_pool:
+            self.var_pool[var] = WeakSet({x for x in self.var_pool[var]})
     def draw(self, file=None):
         if not file:
             file = 'bdd.png'
@@ -286,12 +290,11 @@ class Bdd:
         for node in self.hash_pool.values():
             if isinstance(node, Terminal):
                 continue
-            list.append((node.var, node.low, node.high))
-        print(Counter(list).values())
+            list.append((node.var, node.low.uid, node.high.uid))
+        return (any(filter(lambda x: x >1, Counter(list).values())))
+
     def set_node(self, old_node, new_node):
-        print(old_node, new_node)
         vars = self.get_vars(from_bottom=True, upper=old_node.var-1)
-        print(vars)
         for var in vars:
             for node in self.var_pool[var]:
                 if node.low == old_node:
@@ -345,12 +348,14 @@ class NodeInfo:
         return "{} {}".format(self.false_paths, self.true_paths)
 
 if __name__ == '__main__':
-    start = time.time()
-    bdd = Bdd.create_bdd(10)
-    print(bdd.max_var)
-    print(time.time()-start)
-    print([x for x in  bdd.get_nodes()])
-    bdd.draw()
-    bdd.approximation1(1)
-    bdd.draw('bdd1.png')
-    bdd.check_duplicates()
+    for _ in range(1000):
+        start = time.time()
+        bdd = Bdd.create_bdd(20)
+        bdd.draw()
+        bdd.approximation1(1)
+        if bdd.check_duplicates():
+            print("ERROR")
+            break;
+        bdd.draw('bdd1.png')
+        AND(Bdd.FALSE, Bdd.FALSE)
+        break
