@@ -1,13 +1,10 @@
 
-import random
 import numpy as np
-import pygraphviz as pgv
 from weakref import WeakSet, WeakValueDictionary
 import sys
-
+import gfx
 import time
 
-from evaluation import Stats
 from collections import defaultdict, Counter
 
 from functions import *
@@ -24,6 +21,9 @@ class Node:
         self.low = low
         self.high = high
         self.iter_index = -1
+
+    def is_terminal(self):
+        return self.uid in [0,1]
 
     def __iter__(self):
         return self
@@ -72,8 +72,7 @@ class Terminal(Node):
     def random_terminal(truth=0.5):
         return Bdd.TRUE if np.random.binomial(1, truth) else Bdd.FALSE
 
-    def check_children(self, node):
-        return False
+
 
 class Bdd:
     TRUE = Terminal(1)
@@ -126,7 +125,7 @@ class Bdd:
             children = []
             parents = self.hash_pool
             for node in parents:
-                if isinstance(node, Terminal):
+                if node.is_terminal():
                     continue
                 children += [node.low, node.high]
             orphans = [x for x in parents if x not in children and x != self.root_node]
@@ -179,7 +178,7 @@ class Bdd:
                     else:
                         self.info[node.uid].false_paths += (2**(child.var - node.var - 1))*self.info[child.uid].false_paths
                         self.info[node.uid].true_paths += (2**(child.var - node.var - 1))*self.info[child.uid].true_paths
-        if isinstance(self.root_node, Terminal):
+        if self.root_node.is_terminal():
             self.info[self.root_node.uid].false_paths = 2**self.max_var if self.root_node == Bdd.FALSE else 0
             self.info[self.root_node.uid].true_paths = 2 ** self.max_var if self.root_node == Bdd.TRUE else 0
         else:
@@ -213,41 +212,12 @@ class Bdd:
     def update_var_pool_hash_values(self):
         for var in self.var_pool:
             self.var_pool[var] = WeakSet({x for x in self.var_pool[var]})
-    def draw(self, file=None):
-        if not file:
-            file = 'bdd.png'
-        g = pgv.AGraph(strict=False, directed=True)
-        g.node_attr['shape'] = 'circle'
-        g.node_attr['style'] = 'filled'
-        g.node_attr['colorscheme'] = 'set312'
 
-        for node in self.get_nodes():
-
-            g.add_node('%d' % node.uid, rank=node.var)
-            new_node = g.get_node(node.uid)
-            new_node.attr['fillcolor'] =  0 if isinstance(node, Terminal) else (node.var % 12 + 1)
-            if node.uid in [0, 1]:
-                new_node.attr['fillcolor'] = 'White'
-                new_node.attr['shape'] = 'doublecircle'
-                new_node.attr['label'] = ['F', 'T'][node.uid]
-
-            else:
-                label = node.var
-                g.get_node(node.uid).attr['label'] = label
-
-        for node in self.get_nodes():
-            if isinstance(node, Terminal):
-                continue
-            g.add_edge('%d' % node.uid, '%d' % node.low.uid, style='dotted')
-            g.add_edge('%d' % node.uid, '%d' % node.high.uid)
-        for var in self.var_pool.keys():
-            g.add_subgraph([node.uid for node in self.var_pool[var]], rank="same")
-        g.draw(file, g.layout(prog='dot'))
 
     @staticmethod
     def apply(f, bdd1, bdd2):
         def apply_nodes(f, node1, node2, bdd):
-            if isinstance(node1, Terminal) or isinstance(node2, Terminal):
+            if node1.is_terminal() or node2.is_terminal():
                 return f(node1,node2)
             if bdd.get_var(node1) < bdd.get_var(node2):
                 return bdd.node(node1.var, apply_nodes(f, node1.low, node2, bdd),
@@ -288,7 +258,7 @@ class Bdd:
     def check_duplicates(self):
         list = []
         for node in self.hash_pool.values():
-            if isinstance(node, Terminal):
+            if node.is_terminal():
                 continue
             list.append((node.var, node.low.uid, node.high.uid))
         return (any(filter(lambda x: x >1, Counter(list).values())))
@@ -331,7 +301,7 @@ class Bdd:
         #     self.hash_pool[node.var].add(node)
 
     def get_var(self, node):
-        if isinstance(node, Terminal):
+        if node.is_terminal():
             return self.max_var + 1
         else:
             return node.var
@@ -350,12 +320,12 @@ class NodeInfo:
 if __name__ == '__main__':
     for _ in range(1000):
         start = time.time()
-        bdd = Bdd.create_bdd(20)
-        bdd.draw()
+        bdd = Bdd.create_bdd(10)
+        gfx.draw(bdd)
         bdd.approximation1(1)
+        gfx.draw(bdd)
         if bdd.check_duplicates():
             print("ERROR")
             break;
-        bdd.draw('bdd1.png')
-        AND(Bdd.FALSE, Bdd.FALSE)
+
         break

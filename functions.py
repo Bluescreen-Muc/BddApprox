@@ -28,6 +28,19 @@ def OR(x1,x2):
 def XOR(x1,x2):
     return operator.xor(x1,x2)
 
+def NOT(x1):
+    for node in x1.hash_pool.values():
+        if node.uid in [0,1]:
+            continue
+        if node.low.uid == 0:
+            node.low = Bdd.TRUE
+        elif node.low.uid == 1:
+            node.low = Bdd.FALSE
+        if node.high.uid == 1:
+            node.high = Bdd.FALSE
+        elif node.high.uid == 0:
+            node.high = Bdd.TRUE
+
 def IMP(x1, x2):
     return (not(x1) or x2)
 
