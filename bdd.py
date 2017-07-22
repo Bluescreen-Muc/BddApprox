@@ -161,7 +161,7 @@ class Bdd:
 
     def get_vars(self, lower=-1, upper=sys.maxsize, from_bottom=True):
         output = []
-        for x in range(lower,min(self.max_var, upper+1)):
+        for x in range(lower,min(self.max_var+1, upper+1)):
             if self.var_pool[x]:
                 output.append(x)
         return output[::-1] if from_bottom else output
@@ -191,17 +191,16 @@ class Bdd:
 
     def approximation1(self, depth=2):
         self.count_rec()
-        vars = self.get_vars(upper = self.max_var-depth)
-        print(vars)
-        # for var in vars_to_round:
-        #     for node in list(self.hash_pool[var]):
-        #         if node.low == Bdd.FALSE:
-        #             nodes_to_change.add(node)
-        #         if node.high == Bdd.FALSE:
-        #             nodes_to_change.add(node)
-        # print(nodes_to_change)
-        # for node in nodes_to_change:
-        #     self.set_node(node, Bdd.FALSE)
+        vars_to_check = self.get_vars(lower = self.max_var-depth+1)
+        to_do = []
+        for var in vars_to_check:
+            for node in list(self.var_pool[var]):
+                if node.low == Bdd.FALSE or node.high == Bdd.FALSE:
+                    to_do.append(node)
+        for node in to_do:
+            self.set_node(node, Bdd.FALSE)
+
+
 
     def get_nodes(self):
         return self.hash_pool.values()
@@ -282,27 +281,51 @@ class Bdd:
         if self.hash_pool._pending_removals:
             print("FOUND WEAK REFERENCES")
             self.hash_pool._commit_removals()
-
+    def check_duplicates(self):
+        list = []
+        for node in self.hash_pool.values():
+            if isinstance(node, Terminal):
+                continue
+            list.append((node.var, node.low, node.high))
+        print(Counter(list).values())
     def set_node(self, old_node, new_node):
-        vars = self.get_vars(from_bottom=True, max=old_node.var - 1)
-        to_do_low = set()
-        to_do_high = set()
+        print(old_node, new_node)
+        vars = self.get_vars(from_bottom=True, upper=old_node.var-1)
+        print(vars)
         for var in vars:
-            for node in list(self.hash_pool[var]):
+            for node in self.var_pool[var]:
                 if node.low == old_node:
-                    to_do_low.add(node.low)
-
+                    tmp_node = Node(node.var, new_node, node.high)
+                    node_hash = hash(tmp_node)
+                    if node_hash in self.hash_pool:
+                        self.set_node(node, self.hash_pool[node_hash])
+                    else:
+                        node = self.hash_pool.pop(hash(node))
+                        node.low = new_node
+                        self.hash_pool[hash(node)] = node
                 if node.high == old_node:
-                    to_do_high.add(node.high)
-        print(len(to_do_high), len(to_do_low))
-        for node in to_do_low:
-            node = self.get_node(node)
-            node.low = new_node
-            self.hash_pool[node.var].add(node)
-        for node in to_do_high:
-            node = self.get_node(node)
-            node.high = new_node
-            self.hash_pool[node.var].add(node)
+                    tmp_node = Node(node.var, node.low, new_node)
+                    node_hash = hash(tmp_node)
+                    if node_hash in self.hash_pool:
+                        self.set_node(node, self.hash_pool[node_hash])
+
+                    else:
+                        node = self.hash_pool.pop(hash(node))
+                        node.high = new_node
+                        self.hash_pool[hash(node)] = node
+                if node.high == node.low:
+                    self.set_node(node, new_node)
+        #         if node.high == old_node:
+        #             to_do_high.add(node.high)
+        # print(len(to_do_high), len(to_do_low))
+        # for node in to_do_low:
+        #     node = self.get_node(node)
+        #     node.low = new_node
+        #     self.hash_pool[node.var].add(node)
+        # for node in to_do_high:
+        #     node = self.get_node(node)
+        #     node.high = new_node
+        #     self.hash_pool[node.var].add(node)
 
     def get_var(self, node):
         if isinstance(node, Terminal):
@@ -323,9 +346,11 @@ class NodeInfo:
 
 if __name__ == '__main__':
     start = time.time()
-    bdd = Bdd.create_bdd(1000)
+    bdd = Bdd.create_bdd(10)
+    print(bdd.max_var)
     print(time.time()-start)
     print([x for x in  bdd.get_nodes()])
     bdd.draw()
-    bdd.approximation1(2)
-
+    bdd.approximation1(1)
+    bdd.draw('bdd1.png')
+    bdd.check_duplicates()
