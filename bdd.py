@@ -4,11 +4,10 @@ from weakref import WeakSet, WeakValueDictionary
 import sys
 import gfx
 import time
-
+from evaluation import *
 from collections import defaultdict, Counter
 
-from functions import *
-
+from functools import partial
 
 
 
@@ -119,6 +118,11 @@ class Bdd:
                 Node.uid += 1
                 return node
 
+    def node_count(self):
+        return len(list(self.hash_pool.values())) - 2
+
+    def depth(self):
+        return self.max_var
 
     def delete_orphans(self):
         while True:
@@ -166,6 +170,7 @@ class Bdd:
         return output[::-1] if from_bottom else output
 
     def count_rec(self):
+        self.info.clear()
         vars = self.get_vars()
         for var in vars:
             for node in self.var_pool[var]:
@@ -187,18 +192,21 @@ class Bdd:
             self.info[self.root_node.uid].true_paths *= root_multiplier
 
 
-
-    def approximation1(self, depth=2):
-        self.count_rec()
-        vars_to_check = self.get_vars(lower = self.max_var-depth+1)
+    @staticmethod
+    def approximation1(bdd, depth=1):
+        bdd.count_rec()
+        vars_to_check = bdd.get_vars(lower = bdd.max_var-depth+1)
         to_do = []
         for var in vars_to_check:
-            for node in list(self.var_pool[var]):
-                if node.low == Bdd.FALSE or node.high == Bdd.FALSE:
+            for node in list(bdd.var_pool[var]):
+                if node.low == Bdd.TRUE or node.high == Bdd.TRUE:
                     to_do.append(node)
-        for node in to_do:
-            self.set_node(node, Bdd.FALSE)
-        self.update_var_pool_hash_values()
+                else:
+                    to_do.append(node.low) if bdd.info[node.low.uid].true_paths > bdd.info[node.high.uid].true_paths \
+                        else to_do.append(node.high)
+            for node in to_do:
+                bdd.set_node(node, Bdd.TRUE)
+        bdd.update_var_pool_hash_values()
 
 
 
@@ -288,17 +296,6 @@ class Bdd:
                         self.hash_pool[hash(node)] = node
                 if node.high == node.low:
                     self.set_node(node, new_node)
-        #         if node.high == old_node:
-        #             to_do_high.add(node.high)
-        # print(len(to_do_high), len(to_do_low))
-        # for node in to_do_low:
-        #     node = self.get_node(node)
-        #     node.low = new_node
-        #     self.hash_pool[node.var].add(node)
-        # for node in to_do_high:
-        #     node = self.get_node(node)
-        #     node.high = new_node
-        #     self.hash_pool[node.var].add(node)
 
     def get_var(self, node):
         if node.is_terminal():
@@ -313,19 +310,26 @@ class NodeInfo:
     def __init__(self):
         self.true_paths = 0
         self.false_paths = 0
+        self.parents = []
 
     def __str__(self):
         return "{} {}".format(self.false_paths, self.true_paths)
 
 if __name__ == '__main__':
-    for _ in range(1000):
-        start = time.time()
-        bdd = Bdd.create_bdd(10)
-        gfx.draw(bdd)
-        bdd.approximation1(1)
-        gfx.draw(bdd)
-        if bdd.check_duplicates():
-            print("ERROR")
-            break;
+    # for _ in range(1000):
+    #     start = time.time()
+    #     bdd = Bdd.create_bdd(20)
+    #     print('dde')
+    #     gfx.draw(bdd, info=True)
+    #     bdd.approximation1(3)
+    #     print(time.time()-start)
+    #     #gfx.draw(bdd, 'bdd1.png')
+    #     # if bdd.check_duplicates():
+    #     #     print("ERROR")
+    #     #     break;
+    #     break
+    bdd = Bdd.create_bdd(10)
+    print(bdd.depth())
+    gfx.draw(bdd)
 
-        break
+

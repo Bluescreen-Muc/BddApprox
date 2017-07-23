@@ -1,5 +1,7 @@
 import pygraphviz as pgv
-def draw(bdd, file=None):
+import sys
+def draw(bdd, file=None, info=False):
+
     from bdd import Terminal
     if not file:
         file = 'bdd.png'
@@ -19,7 +21,7 @@ def draw(bdd, file=None):
             new_node.attr['label'] = ['F', 'T'][node.uid]
 
         else:
-            label = node.var
+            label = node.var if not info else sys.getrefcount(node)-3 #bdd.info[node.uid]
             g.get_node(node.uid).attr['label'] = label
 
     for node in bdd.get_nodes():
