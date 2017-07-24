@@ -193,20 +193,33 @@ class Bdd:
 
 
     @staticmethod
-    def approximation1(bdd, depth=1):
+    def approximation1(bdd, level=1):
+        vars_to_check = bdd.get_vars(upper=bdd.max_var-level, from_bottom=True)
+        found_node = False
+        for var in vars_to_check:
+            if found_node:
+                break
+            for node in list(bdd.var_pool[var]):
+                if node.low == Bdd.FALSE or node.high == Bdd.FALSE:
+                    found_node = True
+                    break
+        if not found_node:
+            bdd.root_node.low = Bdd.TRUE
+            bdd.root_node.high = Bdd.TRUE
+            bdd.count_rec()
+            return
+
         bdd.count_rec()
-        vars_to_check = bdd.get_vars(lower = bdd.max_var-depth+1)
-        to_do = []
+        vars_to_check = bdd.get_vars(lower = bdd.max_var-level+1)
+
         for var in vars_to_check:
             for node in list(bdd.var_pool[var]):
                 if node.low == Bdd.TRUE or node.high == Bdd.TRUE:
-                    to_do.append(node)
+                    bdd.set_node(node, Bdd.TRUE)
                 else:
-                    to_do.append(node.low) if bdd.info[node.low.uid].true_paths > bdd.info[node.high.uid].true_paths \
-                        else to_do.append(node.high)
-            for node in to_do:
-                bdd.set_node(node, Bdd.TRUE)
-        bdd.update_var_pool_hash_values()
+                    bdd.set_node(node.low, Bdd.TRUE) if bdd.info[node.low.uid].true_paths > bdd.info[node.high.uid].true_paths \
+                        else bdd.set_node(node.high, Bdd.TRUE)
+                bdd.update_var_pool_hash_values()
 
 
 
@@ -243,21 +256,22 @@ class Bdd:
 
     @staticmethod
     def create_bdd(depth=10, truth_rate = 0.5):
-        depth = depth - 1
-        bdd = Bdd()
-        array = [[[] for _ in range(depth)] for _ in range(depth)]
-        for i in range(0,depth)[::-1]:
-            for j in range(0,depth)[::-1]:
-                if i == depth-1:
-                    array[i][j] = bdd.node(i+2, Terminal.random_terminal(truth=truth_rate), Terminal.random_terminal(truth=truth_rate))
-                else:
-                    array[i][j] = bdd.node(i+2 ,array[i+1][np.random.randint(depth)],array[i+1][np.random.randint(depth)])
+        while True:
+            depth = depth - 1
+            bdd = Bdd()
+            array = [[[] for _ in range(depth)] for _ in range(depth)]
+            for i in range(0,depth)[::-1]:
+                for j in range(0,depth)[::-1]:
+                    if i == depth-1:
+                        array[i][j] = bdd.node(i+2, Terminal.random_terminal(truth=truth_rate), Terminal.random_terminal(truth=truth_rate))
+                    else:
+                        array[i][j] = bdd.node(i+2 ,array[i+1][np.random.randint(depth)],array[i+1][np.random.randint(depth)])
 
-        bdd.root_node = bdd.node(1, array[0][np.random.randint(depth)],array[0][np.random.randint(depth)])
-        array = None
-        bdd.check_weak_references()
-
-        return bdd
+            bdd.root_node = bdd.node(1, array[0][np.random.randint(depth)],array[0][np.random.randint(depth)])
+            if not bdd.root_node.is_terminal():
+                array = None
+                bdd.check_weak_references()
+                return bdd
 
     def check_weak_references(self):
         if self.hash_pool._pending_removals:
