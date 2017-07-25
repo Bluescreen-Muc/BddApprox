@@ -201,23 +201,9 @@ class Bdd:
 
     @staticmethod
     def approximation1(bdd, level=1):
-        # vars_to_check = bdd.get_vars(upper=bdd.max_var-level, from_bottom=True)
-        # found_node = False
-        # for var in vars_to_check:
-        #     if found_node:
-        #         break
-        #     for node in list(bdd.var_pool[var]):
-        #         if node.low == Bdd.FALSE or node.high == Bdd.FALSE:
-        #             found_node = True
-        #             break
-        # if not found_node:
-        #     bdd.root_node.low = Bdd.TRUE
-        #     bdd.root_node.high = Bdd.TRUE
-        #     bdd.count_rec()
-        #     return
-
         bdd.count_rec()
         vars_to_check = bdd.get_vars(lower = bdd.max_var-level+1)
+        changes = {'true': 0, 'false': 0}
 
         for var in vars_to_check:
             for node in list(bdd.var_pool[var]):
@@ -262,6 +248,7 @@ class Bdd:
         bdd.max_var = max(bdd1.max_var, bdd2.max_var)
         bdd.root_node = apply_nodes(f, bdd1.root_node, bdd2.root_node, bdd)
         return bdd
+
 
     @staticmethod
     def create_bdd(depth=10, truth_rate = 0.5):
@@ -360,13 +347,19 @@ if __name__ == '__main__':
     # print(bdd.depth())
     # gfx.draw(bdd)
     #
-    bdd = Bdd.create_bdd(1000)
+    bdd = Bdd.create_bdd(25)
     #gfx.draw(bdd, 'bdd1.png')
     bdd_old = copy.copy(bdd)
-
-    #gfx.draw(bdd_old, 'bdd2.png')
-    #bdd.approximation1(bdd, level=3)
+    bdd.count_rec()
+    print(bdd.node_count())
+    #gfx.draw(bdd_old, 'bdd1.png')
+    bdd.approximation1(bdd, level=5)
     #gfx.draw(bdd, 'bdd2.png')
-    bdd.update_var_pool_hash_values()
-    # bdd3 = (Bdd.apply(AND, NOT(bdd_old), bdd))
-    # gfx.draw(bdd3, 'bdd3.png')
+
+    print(bdd.info[bdd.root_node.uid])
+    bdd3 = (Bdd.apply(AND, NOT(bdd_old), bdd))
+    #gfx.draw(bdd3, 'bdd3.png')
+    bdd3.count_rec()
+    bdd3.node_count()
+    print(bdd.node_count())
+    print(bdd3.info[bdd3.root_node.uid])
