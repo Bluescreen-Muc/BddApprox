@@ -1,8 +1,6 @@
 import pygraphviz as pgv
 import sys
 def draw(bdd, file=None, info=False):
-
-    from bdd import Terminal
     if not file:
         file = 'bdd.png'
     g = pgv.AGraph(strict=False, directed=True)
