@@ -44,6 +44,7 @@ def NOT(x1):
                 node.high = Bdd.TRUE
             x1.hash_pool[hash(node)] = node
         x1.update_var_pool_hash_values()
+    return x1
 
 def IMP(x1, x2):
     return (not(x1) or x2)

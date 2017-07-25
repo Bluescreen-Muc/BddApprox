@@ -1,5 +1,5 @@
 
-import numpy as np
+from copy import copy
 from weakref import WeakSet, WeakValueDictionary
 import sys
 import gfx
@@ -90,11 +90,8 @@ class Bdd:
     def set_max_var(self, n):
         Bdd.max_var == n
 
-    def node(self, var, low, high, node=None):
-        if node:
-            node = Node(node.var, node.low, node.high)
-        else:
-            node = Node(var, low, high)
+    def node(self, var, low, high):
+        node = Node(var, low, high)
         if var > self.max_var:
             self.max_var = var
 
@@ -175,6 +172,32 @@ class Bdd:
             self.info[self.root_node.uid].false_paths *= root_multiplier
             self.info[self.root_node.uid].true_paths *= root_multiplier
 
+    def __copy__(self):
+        bdd = Bdd()
+        node_list= dict()
+        node_list[1] = Bdd.TRUE
+        node_list[0] = Bdd.FALSE
+        for var in self.get_vars(from_bottom=True):
+            for node in self.var_pool[var]:
+                if node.is_terminal():
+                    continue
+                if node == self.root_node:
+                    bdd.root_node = bdd.node(node.var, node_list[hash(node.low)], node_list[hash(node.high)])
+                else:
+                    node_list[hash(node)] = bdd.node(node.var, node_list[hash(node.low)], node_list[hash(node.high)])
+        return bdd
+
+
+    def get_node_by_uid(self, uid):
+        for x in self.hash_pool.values():
+            if x.uid == uid:
+                return x
+        if x.uid == 0:
+            return Bdd.FALSE
+        if x.uid == 1:
+            return Bdd.TRUE
+        print('oops')
+        return None
 
     @staticmethod
     def approximation1(bdd, level=1):
@@ -218,7 +241,6 @@ class Bdd:
     def update_var_pool_hash_values(self):
         for var in self.var_pool:
             self.var_pool[var] = WeakSet({x for x in self.var_pool[var]})
-
 
     @staticmethod
     def apply(f, bdd1, bdd2):
@@ -278,25 +300,30 @@ class Bdd:
             for node in self.var_pool[var]:
                 if node.low == old_node:
                     tmp_node = Node(node.var, new_node, node.high)
-                    node_hash = hash(tmp_node)
-                    if node_hash in self.hash_pool:
-                        self.set_node(node, self.hash_pool[node_hash])
+                    if tmp_node.high == tmp_node.low:
+                        self.set_node(node, new_node)
                     else:
-                        node = self.hash_pool.pop(hash(node))
-                        node.low = new_node
-                        self.hash_pool[hash(node)] = node
+                        node_hash = hash(tmp_node)
+                        if node_hash in self.hash_pool:
+                            self.set_node(node, self.hash_pool[node_hash])
+                        else:
+                            node = self.hash_pool.pop(hash(node))
+                            node.low = new_node
+                            self.hash_pool[hash(node)] = node
                 if node.high == old_node:
                     tmp_node = Node(node.var, node.low, new_node)
-                    node_hash = hash(tmp_node)
-                    if node_hash in self.hash_pool:
-                        self.set_node(node, self.hash_pool[node_hash])
-
+                    if tmp_node.high == tmp_node.low:
+                        self.set_node(node, new_node)
                     else:
-                        node = self.hash_pool.pop(hash(node))
-                        node.high = new_node
-                        self.hash_pool[hash(node)] = node
-                if node.high == node.low:
-                    self.set_node(node, new_node)
+                        node_hash = hash(tmp_node)
+                        if node_hash in self.hash_pool:
+                            self.set_node(node, self.hash_pool[node_hash])
+
+                        else:
+                            node = self.hash_pool.pop(hash(node))
+                            node.high = new_node
+                            self.hash_pool[hash(node)] = node
+
 
     def get_var(self, node):
         if node.is_terminal():
@@ -333,11 +360,13 @@ if __name__ == '__main__':
     # print(bdd.depth())
     # gfx.draw(bdd)
     #
-    bdd = Bdd.create_bdd(30)
-    gfx.draw(bdd, 'bdd1.png')
-    bdd_old = copy.deepcopy(bdd)
+    bdd = Bdd.create_bdd(1000)
+    #gfx.draw(bdd, 'bdd1.png')
+    bdd_old = copy.copy(bdd)
 
+    #gfx.draw(bdd_old, 'bdd2.png')
     #bdd.approximation1(bdd, level=3)
-    gfx.draw(bdd, 'bdd2.png')
-    bdd3 = (Bdd.apply(AND, bdd, Bdd.create_bdd(30)))
-    gfx.draw(bdd3, 'bdd3.png')
+    #gfx.draw(bdd, 'bdd2.png')
+    bdd.update_var_pool_hash_values()
+    # bdd3 = (Bdd.apply(AND, NOT(bdd_old), bdd))
+    # gfx.draw(bdd3, 'bdd3.png')
