@@ -6,8 +6,7 @@ import gfx
 import time
 from evaluation import *
 from collections import defaultdict, Counter
-
-from functools import partial
+from functions import *
 
 
 
@@ -138,21 +137,6 @@ class Bdd:
             else:
                 [self.hash_pool.remove(x) for x in orphans]
 
-    # def delete_node(self, node):
-    #     if node.uid not in self.hash_pool:
-    #         raise Exception("delete_node: node not found")
-    #     del (self.hash_pool[node.uid])
-
-    # def get_vars(self, terminal=False, from_bottom=True, max=sys.maxsize, min=-1):
-    #     output = []
-    #     for var, nodes in self.hash_pool.items():
-    #         if not terminal and var == 0:
-    #             continue
-    #         if nodes:
-    #             output.append(var)
-    #
-    #     return list(filter(lambda x: x >= min and x <= max, sorted(output, reverse=from_bottom)))
-
     def print_nodes(self):
         output = []
         for uid, node in self.hash_pool.items():
@@ -194,20 +178,20 @@ class Bdd:
 
     @staticmethod
     def approximation1(bdd, level=1):
-        vars_to_check = bdd.get_vars(upper=bdd.max_var-level, from_bottom=True)
-        found_node = False
-        for var in vars_to_check:
-            if found_node:
-                break
-            for node in list(bdd.var_pool[var]):
-                if node.low == Bdd.FALSE or node.high == Bdd.FALSE:
-                    found_node = True
-                    break
-        if not found_node:
-            bdd.root_node.low = Bdd.TRUE
-            bdd.root_node.high = Bdd.TRUE
-            bdd.count_rec()
-            return
+        # vars_to_check = bdd.get_vars(upper=bdd.max_var-level, from_bottom=True)
+        # found_node = False
+        # for var in vars_to_check:
+        #     if found_node:
+        #         break
+        #     for node in list(bdd.var_pool[var]):
+        #         if node.low == Bdd.FALSE or node.high == Bdd.FALSE:
+        #             found_node = True
+        #             break
+        # if not found_node:
+        #     bdd.root_node.low = Bdd.TRUE
+        #     bdd.root_node.high = Bdd.TRUE
+        #     bdd.count_rec()
+        #     return
 
         bdd.count_rec()
         vars_to_check = bdd.get_vars(lower = bdd.max_var-level+1)
@@ -215,7 +199,8 @@ class Bdd:
         for var in vars_to_check:
             for node in list(bdd.var_pool[var]):
                 if node.low == Bdd.TRUE or node.high == Bdd.TRUE:
-                    bdd.set_node(node, Bdd.TRUE)
+                    continue
+                    #bdd.set_node(node, Bdd.TRUE)
                 else:
                     bdd.set_node(node.low, Bdd.TRUE) if bdd.info[node.low.uid].true_paths > bdd.info[node.high.uid].true_paths \
                         else bdd.set_node(node.high, Bdd.TRUE)
@@ -238,19 +223,21 @@ class Bdd:
     @staticmethod
     def apply(f, bdd1, bdd2):
         def apply_nodes(f, node1, node2, bdd):
-            if node1.is_terminal() or node2.is_terminal():
+            if node1.is_terminal() and node2.is_terminal():
                 return f(node1,node2)
+
             if bdd.get_var(node1) < bdd.get_var(node2):
                 return bdd.node(node1.var, apply_nodes(f, node1.low, node2, bdd),
                                 apply_nodes(f, node1.high, node2, bdd))
             elif bdd.get_var(node1) == bdd.get_var(node2):
                 return bdd.node(node1.var, apply_nodes(f, node1.low, node2.low, bdd),
                                 apply_nodes(f, node1.high, node2.high, bdd))
-            if bdd.get_var(node1) > bdd.get_var(node2):
+            elif bdd.get_var(node1) > bdd.get_var(node2):
                 return bdd.node(node2.var, apply_nodes(f, node1, node2.low, bdd),
                                 apply_nodes(f, node1, node2.high, bdd))
 
         bdd = Bdd()
+        bdd.max_var = max(bdd1.max_var, bdd2.max_var)
         bdd.root_node = apply_nodes(f, bdd1.root_node, bdd2.root_node, bdd)
         return bdd
 
@@ -328,7 +315,7 @@ class NodeInfo:
 
     def __str__(self):
         return "{} {}".format(self.false_paths, self.true_paths)
-
+import copy
 if __name__ == '__main__':
     # for _ in range(1000):
     #     start = time.time()
@@ -342,8 +329,15 @@ if __name__ == '__main__':
     #     #     print("ERROR")
     #     #     break;
     #     break
-    bdd = Bdd.create_bdd(10)
-    print(bdd.depth())
-    gfx.draw(bdd)
+    # bdd = Bdd.create_bdd(10)
+    # print(bdd.depth())
+    # gfx.draw(bdd)
+    #
+    bdd = Bdd.create_bdd(30)
+    gfx.draw(bdd, 'bdd1.png')
+    bdd_old = copy.deepcopy(bdd)
 
-
+    #bdd.approximation1(bdd, level=3)
+    gfx.draw(bdd, 'bdd2.png')
+    bdd3 = (Bdd.apply(AND, bdd, Bdd.create_bdd(30)))
+    gfx.draw(bdd3, 'bdd3.png')

@@ -29,17 +29,21 @@ def XOR(x1,x2):
 
 def NOT(x1):
     from bdd import Bdd
-    for node in x1.hash_pool.values():
-        if node.uid in [0,1]:
-            continue
-        if node.low.uid == 0:
-            node.low = Bdd.TRUE
-        elif node.low.uid == 1:
-            node.low = Bdd.FALSE
-        if node.high.uid == 1:
-            node.high = Bdd.FALSE
-        elif node.high.uid == 0:
-            node.high = Bdd.TRUE
+    for var in x1.get_vars(from_bottom=True):
+        for node in x1.var_pool[var]:
+            if node.uid in [0,1] or (node.low.uid not in [0,1] and node.high.uid not in [0,1]):
+                continue
+            node = x1.hash_pool.pop(hash(node))
+            if node.low.uid == 0:
+                node.low = Bdd.TRUE
+            elif node.low.uid == 1:
+                node.low = Bdd.FALSE
+            if node.high.uid == 1:
+                node.high = Bdd.FALSE
+            elif node.high.uid == 0:
+                node.high = Bdd.TRUE
+            x1.hash_pool[hash(node)] = node
+        x1.update_var_pool_hash_values()
 
 def IMP(x1, x2):
     return (not(x1) or x2)

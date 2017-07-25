@@ -12,8 +12,7 @@ from enum import Enum
 import time
 
 
-class Methods(Enum):
-    ROUNDING = 1
+
 
 class ApproxInfo:
     def __init__(self, node_count, bdd_depth, node_reduction, chance_wrong_output, chance_false_true_output, truth_ratio):
@@ -59,9 +58,9 @@ def evaluate(f, bdd):
                       chance_false_true_output=chance_false_true_output, truth_ratio=truth_ratio)
 
 
-def approximation_eval(f, n=100, min_depth=10, max_depth=10, min_truth=0.5, max_truth=0.5, file='stats.txt', digits=2, min_levels=2, max_levels=2, method = Methods.ROUNDING):
+def approximation_eval(f, n=100, min_depth=10, max_depth=10, min_truth=0.5, max_truth=0.5, file='stats.txt', digits=2, min_levels=2, max_levels=2, method = "UNKNOWN"):
     from gfx import draw
-    fields = ['node_count', 'bdd_depth', 'node_reduction', 'chance_wrong_output', 'chance_false_true_output', 'truth_ratio', 'levels', 'time']
+    fields = ['node_count', 'bdd_depth', 'node_reduction', 'chance_wrong_output', 'chance_false_true_output', 'truth_ratio', 'levels', 'time', 'method']
     if not os.path.isfile(file):
         with open(file, 'w') as csv_file:
             writer = csv.DictWriter(csv_file, fieldnames=fields)
@@ -81,6 +80,7 @@ def approximation_eval(f, n=100, min_depth=10, max_depth=10, min_truth=0.5, max_
                 result_dict = result.to_dict(digits=digits)
                 result_dict['levels'] = level
                 result_dict['time'] = round(process_time,2)
+                result_dict['method'] = method
                 writer.writerow(result_dict)
 
 
@@ -96,8 +96,9 @@ if __name__ == '__main__':
 
     np.random.seed(1234)
     while True:
-        approximation_eval(Bdd.approximation1, min_depth=10, max_depth=100, min_truth=5, max_truth=95, n=50, min_levels=1, max_levels=3)
+        #approximation_eval(Bdd.approximation1, min_depth=10, max_depth=100, min_truth=5, max_truth=95, n=500, min_levels=1, max_levels=3, file='stats2.txt', method='ROUNDING_DOWN_3')
         break
-    data = load_csv('stats.txt')
-    sns.lmplot(y = 'chance_false_true_output', x='node_reduction',data=data, hue='levels')
+    data = load_csv('stats2.txt')
+    sns.lmplot(y = 'chance_wrong_output', x='node_reduction',data=data, hue='method')
+    sns.lmplot(y='time', x='node_count', data=data, hue='method')
     plt.show()
