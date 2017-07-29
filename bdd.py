@@ -6,7 +6,7 @@ import gfx
 import time
 from evaluation import *
 from collections import defaultdict, Counter
-from functions import *
+import gc
 
 
 
@@ -162,6 +162,7 @@ class Bdd:
                         self.info[node.uid].true_paths += 2 ** (self.max_var - var)
 
                     else:
+                        self.info[child.uid].parents.append(node)
                         self.info[node.uid].false_paths += (2**(child.var - node.var - 1))*self.info[child.uid].false_paths
                         self.info[node.uid].true_paths += (2**(child.var - node.var - 1))*self.info[child.uid].true_paths
         if self.root_node.is_terminal():
@@ -171,6 +172,7 @@ class Bdd:
             root_multiplier = 2**(self.root_node.var - 1)
             self.info[self.root_node.uid].false_paths *= root_multiplier
             self.info[self.root_node.uid].true_paths *= root_multiplier
+        return self.info[self.root_node.uid].false_paths,  self.info[self.root_node.uid].true_paths
 
     def __copy__(self):
         bdd = Bdd()
@@ -199,23 +201,39 @@ class Bdd:
         print('oops')
         return None
 
+    def get_ancestors(self, node, counter = 0):
+        for ref_node in gc.get_referrers(node):
+            print(ref_node)
+
+
+
+
     @staticmethod
-    def approximation1(bdd, level=1):
+    def rounding_up(bdd, level=1):
         bdd.count_rec()
         vars_to_check = bdd.get_vars(lower = bdd.max_var-level+1)
-        changes = {'true': 0, 'false': 0}
 
         for var in vars_to_check:
             for node in list(bdd.var_pool[var]):
                 if node.low == Bdd.TRUE or node.high == Bdd.TRUE:
                     continue
-                    #bdd.set_node(node, Bdd.TRUE)
+
                 else:
                     bdd.set_node(node.low, Bdd.TRUE) if bdd.info[node.low.uid].true_paths > bdd.info[node.high.uid].true_paths \
                         else bdd.set_node(node.high, Bdd.TRUE)
-                bdd.update_var_pool_hash_values()
+                    bdd.update_var_pool_hash_values()
+    @staticmethod
+    def rounding(bdd, level=1):
+        bdd.count_rec()
+        vars_to_check = bdd.get_vars(lower=bdd.max_var - level + 1)
 
-
+        for var in vars_to_check:
+            for node in list(bdd.var_pool[var]):
+                if not node.low.is_terminal():
+                    bdd.set_node(node.low, Bdd.TRUE) if bdd.info[node.low.uid].path_difference() >= 0 else bdd.set_node(node.low, Bdd.FALSE)
+                if not node.high.is_terminal():
+                    bdd.set_node(node.high, Bdd.TRUE) if bdd.info[node.high.uid].path_difference() >= 0 else bdd.set_node(
+                    node.high, Bdd.FALSE)
 
     def get_nodes(self):
         return self.hash_pool.values()
@@ -273,18 +291,29 @@ class Bdd:
         if self.hash_pool._pending_removals:
             print("FOUND WEAK REFERENCES")
             self.hash_pool._commit_removals()
-    def check_duplicates(self):
+
+    def check_bdd(self):
         list = []
+        for x in self.get_vars():
+            for node in self.var_pool[x]:
+                if node not in self.var_pool[x]:
+                    return True
         for node in self.hash_pool.values():
+            # if node not in self.hash_pool.values():
+            #     return True
             if node.is_terminal():
                 continue
             list.append((node.var, node.low.uid, node.high.uid))
+            if node.low == node.high:
+                return True
+            if node.low.var == node.var or node.high.var == node.var:
+                return True
         return (any(filter(lambda x: x >1, Counter(list).values())))
 
     def set_node(self, old_node, new_node):
         vars = self.get_vars(from_bottom=True, upper=old_node.var-1)
         for var in vars:
-            for node in self.var_pool[var]:
+            for node in list(self.var_pool[var]):
                 if node.low == old_node:
                     tmp_node = Node(node.var, new_node, node.high)
                     if tmp_node.high == tmp_node.low:
@@ -295,8 +324,11 @@ class Bdd:
                             self.set_node(node, self.hash_pool[node_hash])
                         else:
                             node = self.hash_pool.pop(hash(node))
+                            self.var_pool[node.var].remove(node)
                             node.low = new_node
                             self.hash_pool[hash(node)] = node
+                            self.var_pool[node.var].add(node)
+                            self.update_var_pool_hash_values()
                 if node.high == old_node:
                     tmp_node = Node(node.var, node.low, new_node)
                     if tmp_node.high == tmp_node.low:
@@ -308,9 +340,11 @@ class Bdd:
 
                         else:
                             node = self.hash_pool.pop(hash(node))
+                            self.var_pool[node.var].remove(node)
                             node.high = new_node
                             self.hash_pool[hash(node)] = node
-
+                            self.var_pool[node.var].add(node)
+                            self.update_var_pool_hash_values()
 
     def get_var(self, node):
         if node.is_terminal():
@@ -327,39 +361,23 @@ class NodeInfo:
         self.false_paths = 0
         self.parents = []
 
+    def path_difference(self):
+        return self.true_paths - self.false_paths
+
     def __str__(self):
         return "{} {}".format(self.false_paths, self.true_paths)
-import copy
-if __name__ == '__main__':
-    # for _ in range(1000):
-    #     start = time.time()
-    #     bdd = Bdd.create_bdd(20)
-    #     print('dde')
-    #     gfx.draw(bdd, info=True)
-    #     bdd.approximation1(3)
-    #     print(time.time()-start)
-    #     #gfx.draw(bdd, 'bdd1.png')
-    #     # if bdd.check_duplicates():
-    #     #     print("ERROR")
-    #     #     break;
-    #     break
-    # bdd = Bdd.create_bdd(10)
-    # print(bdd.depth())
-    # gfx.draw(bdd)
-    #
-    bdd = Bdd.create_bdd(25)
-    #gfx.draw(bdd, 'bdd1.png')
-    bdd_old = copy.copy(bdd)
-    bdd.count_rec()
-    print(bdd.node_count())
-    #gfx.draw(bdd_old, 'bdd1.png')
-    bdd.approximation1(bdd, level=5)
-    #gfx.draw(bdd, 'bdd2.png')
 
-    print(bdd.info[bdd.root_node.uid])
-    bdd3 = (Bdd.apply(AND, NOT(bdd_old), bdd))
-    #gfx.draw(bdd3, 'bdd3.png')
-    bdd3.count_rec()
-    bdd3.node_count()
-    print(bdd.node_count())
-    print(bdd3.info[bdd3.root_node.uid])
+if __name__ == '__main__':
+    count = 0
+    while True:
+        count += 1
+        bdd = Bdd.create_bdd(10)
+        #gfx.draw(bdd, 'bdd1.png')
+        #Bdd.rounding(bdd, 2)
+        Bdd.rounding_up(bdd, np.random.randint(31))
+        gfx.draw(bdd, 'bdd2.png')
+
+        #bdd.get_ancestors(bdd.var_pool[10].pop())
+        break
+        if bdd.check_bdd():
+            break

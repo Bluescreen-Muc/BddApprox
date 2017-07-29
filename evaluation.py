@@ -12,10 +12,10 @@ from enum import Enum
 import time
 
 
-
+class Counter:
+    count = 0
 
 class ApproxInfo:
-    COUNTER = 0
     def __init__(self, node_count, bdd_depth, node_reduction, chance_wrong_output, chance_false_true_output, truth_ratio):
         self.node_count = node_count
         self.truth_ratio = truth_ratio
@@ -59,7 +59,9 @@ def evaluate(f, bdd):
                       chance_false_true_output=chance_false_true_output, truth_ratio=truth_ratio)
 
 
-def approximation_eval(f, n=100, min_depth=10, max_depth=10, min_truth=0.5, max_truth=0.5, file='stats.txt', digits=2, min_levels=2, max_levels=2, method = "UNKNOWN"):
+def approximation_eval(f, n=100, min_depth=10, max_depth=10, min_truth=0.5, max_truth=0.5, file='stats.txt', digits=2, min_levels=1, max_levels=None, method = "UNKNOWN"):
+    if not max_levels:
+        max_levels = max_depth
     fields = ['node_count', 'bdd_depth', 'node_reduction', 'chance_wrong_output', 'chance_false_true_output', 'truth_ratio', 'levels', 'time', 'method']
     if not os.path.isfile(file):
         with open(file, 'w') as csv_file:
@@ -69,11 +71,11 @@ def approximation_eval(f, n=100, min_depth=10, max_depth=10, min_truth=0.5, max_
     with open(file, 'a') as csv_file:
         writer = csv.DictWriter(csv_file, fieldnames=fields)
         for _ in range(n):
-            ApproxInfo.COUNTER += 1
-            print(ApproxInfo.COUNTER)
+            Counter.count += 1
+            print(Counter.count)
             depth = np.random.randint(min_depth, max_depth + 1)
             truth_rate = np.random.randint(int(min_truth), int(max_truth) + 1) / 100
-            level = np.random.randint(min_levels, max_levels+1)
+            level = min(depth-1, np.random.randint(min_levels, max_levels+1))
             bdd = Bdd.create_bdd(depth=depth, truth_rate=truth_rate)
             process_time = time.time()
             result= evaluate(partial(f, level=level), bdd)
@@ -96,12 +98,22 @@ def load_csv(file):
 if __name__ == '__main__':
     from bdd import Bdd
 
-    #np.random.seed(1234)
-    while True:
-        approximation_eval(Bdd.approximation1, min_depth=10, max_depth=100, min_truth=5, max_truth=95, n=500, min_levels=1, max_levels=10, file='stats.txt', method='ROUNDING_UP')
+    np.random.seed(12345)
+    # while True:
+    #     approximation_eval(Bdd.rounding_up, min_depth=10, max_depth=100, min_truth=5, max_truth=95, n=500, file='stats.txt', method='ROUNDING_UP')
 
-    # data = load_csv('stats.txt')
-    # data = data[data['truth_ratio'] > 80]
-    # sns.lmplot(y = 'chance_false_true_output', x='node_reduction',data=data)#, hue='levels')
-    # sns.lmplot(y='time', x='node_count', data=data, hue='levels')
-    # plt.show()
+
+    data = load_csv('stats.txt')
+    #data = data[data['chance_wrong_output'] < 20]
+    data['quality'] = data['node_reduction'] - data['chance_wrong_output']
+    data['depth_level_ratio'] = data['levels'] / data['bdd_depth']
+    #data = data[data['depth_level_ratio'] >0.8]
+
+    data = data[data['truth_ratio'] > 50]
+    data = data[data['bdd_depth'] > 20]
+    #data = data[data['node_reduction'] < 95]
+    #
+    sns.lmplot(y = 'node_reduction', x='depth_level_ratio',data=data)#, hue='levels')
+    #sns.lmplot(y='chance_wrong_output', x='node_reduction', data=data)#, hue='levels')
+    #sns.lmplot(y='time', x='node_count', data=data, hue='levels')
+    plt.show()

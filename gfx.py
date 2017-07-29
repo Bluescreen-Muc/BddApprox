@@ -1,5 +1,6 @@
 import pygraphviz as pgv
-import sys
+import gc
+
 def draw(bdd, file=None, info=False):
     if not file:
         file = 'bdd.png'
@@ -19,7 +20,7 @@ def draw(bdd, file=None, info=False):
             new_node.attr['label'] = ['F', 'T'][node.uid]
 
         else:
-            label = node.var if not info else sys.getrefcount(node)-3 #bdd.info[node.uid]
+            label = node.var if not info else bdd.get_ancestors(node)#len(gc.get_referrers(node))-2 #bdd.info[node.uid]
             g.get_node(node.uid).attr['label'] = label
 
     for node in bdd.get_nodes():
