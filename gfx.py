@@ -20,7 +20,7 @@ def draw(bdd, file=None, info=False):
             new_node.attr['label'] = ['F', 'T'][node.uid]
 
         else:
-            label = node.var if not info else bdd.info[node.uid].paths#(bdd.info[node.uid].true_paths, bdd.info[node.uid].false_paths)#len(gc.get_referrers(node))-2 #bdd.info[node.uid]
+            label = node.var if not info else (bdd.info[node.uid].paths,bdd.info[node.uid].false_paths, bdd.info[node.uid].true_paths)#len(gc.get_referrers(node))-2 #bdd.info[node.uid]
             g.get_node(node.uid).attr['label'] = label
 
     for node in bdd.get_nodes():

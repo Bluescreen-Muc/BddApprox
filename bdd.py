@@ -122,20 +122,6 @@ class Bdd:
     def depth(self):
         return self.max_var
 
-    def delete_orphans(self):
-        while True:
-            children = []
-            parents = self.hash_pool
-            for node in parents:
-                if node.is_terminal():
-                    continue
-                children += [node.low, node.high]
-            orphans = [x for x in parents if x not in children and x != self.root_node]
-            if not orphans:
-                break
-            else:
-                [self.hash_pool.remove(x) for x in orphans]
-
     def print_nodes(self):
         output = []
         for uid, node in self.hash_pool.items():
@@ -154,10 +140,12 @@ class Bdd:
 
     def count_rec(self):
         for info in self.info.values():
-            info.true_paths = info.false_paths = 0
+            info.true_paths = 0
+            info.false_paths = 0
+
         vars = self.get_vars()
         for var in vars:
-            for node in self.var_pool[var]:
+            for node in list(self.var_pool[var]):
                 for child in node:
                     if child.uid == 0:
                         self.info[node.uid].false_paths += 2**(self.max_var-var)
@@ -213,15 +201,14 @@ class Bdd:
     def count_paths(self):
         for info in self.info.values():
             info.paths = 0
-        print(self.depth())
-        paths = 2**self.depth()
+        paths = int(2**self.depth())
         self.info[self.root_node.uid].paths = paths
         vars = self.get_vars(self.root_node.var + 1, from_bottom=False)
         for var in vars:
             for node in self.var_pool[var]:
                 paths = 0
                 for parent in self.info[node.uid].parents:
-                    paths += self.info[parent.uid].paths / 2
+                    paths += self.info[parent.uid].paths // 2
                 self.info[node.uid].paths = paths
 
 
@@ -246,31 +233,82 @@ class Bdd:
         bdd.count_paths()
         wrong_true = 0
         wrong_false = 0
-        vars_to_check = bdd.get_vars(lower=bdd.max_var - level)
-
+        vars_to_check = bdd.get_vars(lower=bdd.max_var - level+1, from_bottom=False)
         for var in vars_to_check:
+
             for node in list(bdd.var_pool[var]):
+                print(node)
                 if not node.low.is_terminal():
+                    false_paths = bdd.info[node.low.uid].false_paths
+                    true_paths = bdd.info[node.low.uid].true_paths
+                    paths = bdd.info[node.uid].paths / 2
                     if bdd.info[node.low.uid].path_difference() >= 0:
-                        print("TRUE")
-                        wrong_true += bdd.info[node.low.uid].false_paths * bdd.info[node.low.uid].paths
-                        bdd.set_node(node.low, Bdd.TRUE)
+                        wrong_true += (false_paths/(false_paths+true_paths)) * paths
+                        node.low = Bdd.TRUE
+                        if node.low == node.high:
+                            bdd.set_node(node, node.low)
+
 
                     else:
-                        print("FALSE")
-                        wrong_false += bdd.info[node.low.uid].true_paths * bdd.info[node.low.uid].paths
-                        bdd.set_node(node.low, Bdd.FALSE)
-
+                        wrong_false += (true_paths/(true_paths+false_paths)) * paths
+                        node.low = Bdd.FALSE
+                        if node.low == node.high:
+                            bdd.set_node(node, node.low)
                 if not node.high.is_terminal():
+                    false_paths = bdd.info[node.high.uid].false_paths
+                    true_paths = bdd.info[node.high.uid].true_paths
+                    paths = bdd.info[node.uid].paths / 2
                     if bdd.info[node.high.uid].path_difference() >= 0:
-                        print("TRUE")
-                        wrong_true += bdd.info[node.high.uid].false_paths * bdd.info[node.high.uid].paths
-                        bdd.set_node(node.high, Bdd.TRUE)
+                        wrong_true += (false_paths / (false_paths + true_paths)) * paths
+                        node.high = Bdd.TRUE
+                        if node.low == node.high:
+                            bdd.set_node(node, node.low)
+                        #bdd.remap_node_child(node, Bdd.TRUE, "HIGH")
                     else:
-                        print("FALSE")
-                        wrong_false += bdd.info[node.low.uid].true_paths * bdd.info[node.low.uid].paths
-                        bdd.set_node(node.high, Bdd.FALSE)
+                        wrong_false += (true_paths / (true_paths + false_paths)) * paths
+                        #bdd.remap_node_child(node, Bdd.FALSE, "HIGH")
+                        node.high = Bdd.FALSE
+                        if node.low == node.high:
+                            bdd.set_node(node, node.high)
+                        # bdd.count_rec()
+                        # bdd.count_paths()
+
         print(wrong_false, wrong_true)
+        return wrong_false, wrong_true
+
+    def remap_node_child(self, node, child, position):
+        node = self.hash_pool[hash(node)]
+        if position not in ["LOW", "HIGH"]:
+            print('error')
+            return
+        tmp_node = Node(node.var, node.low, node.high)
+
+        if position == "LOW":
+            tmp_node.low = child
+        elif position == "HIGH":
+            tmp_node.high = child
+
+        if tmp_node.low == tmp_node.high:
+            print('same')
+            print(tmp_node)
+            print(tmp_node.low)
+            self.set_node(node, tmp_node.low)
+
+        elif hash(tmp_node) in self.hash_pool:
+            print('hash')
+            self.set_node(node, self.hash_pool[hash(tmp_node)])
+
+        else:
+            node = self.hash_pool.pop(hash(node))
+            self.var_pool[node.var].remove(node)
+            node.low = tmp_node.low
+            node.high = tmp_node.high
+            print(node)
+            self.hash_pool[hash(node)] = node
+            self.var_pool[node.var].add(node)
+
+
+
 
     def get_nodes(self):
         return self.hash_pool.values()
@@ -402,7 +440,6 @@ class NodeInfo:
     def __init__(self):
         self.true_paths = 0
         self.false_paths = 0
-        self.parents = []
         self.paths = 0
         self.parents = WeakSet()
 
@@ -414,17 +451,28 @@ class NodeInfo:
 
 if __name__ == '__main__':
     count = 0
-    while True:
+    np.random.seed(2222)
+    for _ in range(1):
         count += 1
 
-        bdd = Bdd.create_bdd(10)
-        Bdd.rounding_up(bdd,2)
+        bdd = Bdd.create_bdd(5)
+        bdd.count_paths()
+        bdd.count_rec()
+        gfx.draw(bdd, info=True)
+
+
+        Bdd.rounding_up(bdd, 2)
         bdd.count_paths()
 
+        bdd.count_rec()
+        gfx.draw(bdd, 'bdd2r.png', info=True)
+        #break
+        #if bdd.check_bdd():
+        #    break
         #bdd.rounding_up(bdd,2)
-        gfx.draw(bdd, info=True)
+        #gfx.draw(bdd, info=True)
         #gfx.draw(bdd, 'bdd1.png')
         #Bdd.rounding(bdd, 10)
         #gfx.draw(bdd, 'bdd2.png', info=True)
         #Bdd.rounding_up(bdd, np.random.randint(15))
-        break
+

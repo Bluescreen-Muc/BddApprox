@@ -7,10 +7,8 @@ import seaborn as sns
 from functools import partial
 import pandas as pd
 import matplotlib.pyplot as plt
-from enum import Enum
 
 import time
-
 
 class Counter:
     count = 0
@@ -47,19 +45,20 @@ def evaluate(f, bdd):
     node_stats_before_approx = bdd.info[bdd.root_node.uid]
     node_count_before_approx = bdd.node_count()
     sum_paths = node_stats_before_approx.false_paths + node_stats_before_approx.true_paths
-    f(bdd)
-    bdd.count_rec()
+    (wrong_false, wrong_true) = f(bdd)
     truth_ratio = (node_stats_before_approx.true_paths / sum_paths) * 100
-    node_stats_after_approx = bdd.info[bdd.root_node.uid]
     node_count_after_approx = bdd.node_count()
     node_reduction = (1 - node_count_after_approx / node_count_before_approx) * 100
-    chance_wrong_output = ((node_stats_after_approx.true_paths - node_stats_before_approx.true_paths) / sum_paths) * 100
-    chance_false_true_output = ((node_stats_after_approx.true_paths - node_stats_before_approx.true_paths) / node_stats_after_approx.true_paths) * 100
+    chance_wrong_output = ((wrong_true + wrong_false) / sum_paths) * 100
+    chance_false_true_output = wrong_true / (node_stats_before_approx.true_paths + wrong_true) * 100
     return ApproxInfo(node_count=node_count_before_approx, bdd_depth=bdd.depth(), node_reduction=node_reduction, chance_wrong_output=chance_wrong_output,
                       chance_false_true_output=chance_false_true_output, truth_ratio=truth_ratio)
 
 
-def approximation_eval(f, n=100, min_depth=10, max_depth=10, min_truth=0.5, max_truth=0.5, file='stats.txt', digits=2, min_levels=1, max_levels=None, method = "UNKNOWN"):
+def approximation_eval(f, n=100, min_depth=10, max_depth=10, min_truth=0.5, max_truth=0.5, file='stats.txt', digits=2, min_levels=1, max_levels=None):
+    METHOD_DICT = {Bdd.rounding_up: "ROUNDING_UP", Bdd.rounding: "ROUNDING"}
+    method = METHOD_DICT[f] if f in METHOD_DICT else "UNKNOWN"
+
     if not max_levels:
         max_levels = max_depth
     fields = ['node_count', 'bdd_depth', 'node_reduction', 'chance_wrong_output', 'chance_false_true_output', 'truth_ratio', 'levels', 'time', 'method']
@@ -98,10 +97,10 @@ def load_csv(file):
 if __name__ == '__main__':
     from bdd import Bdd
 
-    np.random.seed(12345)
-    # while True:
-    #     approximation_eval(Bdd.rounding_up, min_depth=10, max_depth=100, min_truth=5, max_truth=95, n=500, file='stats.txt', method='ROUNDING_UP')
-
+    #np.random.seed(12345)
+    while True:
+        approximation_eval(Bdd.rounding, min_depth=10, max_depth=50, min_truth=5, max_truth=95, n=500, file='stats.txt')
+        break
 
     data = load_csv('stats.txt')
     #data = data[data['chance_wrong_output'] < 20]
@@ -113,7 +112,7 @@ if __name__ == '__main__':
     data = data[data['bdd_depth'] > 20]
     #data = data[data['node_reduction'] < 95]
     #
-    sns.lmplot(y = 'node_reduction', x='depth_level_ratio',data=data)#, hue='levels')
+    sns.lmplot(y = 'node_reduction', x='chance_wrong_output',data=data)#, hue='levels')
     #sns.lmplot(y='chance_wrong_output', x='node_reduction', data=data)#, hue='levels')
     #sns.lmplot(y='time', x='node_count', data=data, hue='levels')
     plt.show()
