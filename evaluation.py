@@ -45,12 +45,14 @@ def evaluate(f, bdd):
     node_stats_before_approx = bdd.info[bdd.root_node.uid]
     node_count_before_approx = bdd.node_count()
     sum_paths = node_stats_before_approx.false_paths + node_stats_before_approx.true_paths
+    truth_ratio = (node_stats_before_approx.true_paths / sum_paths) * 100                  
     (wrong_false, wrong_true) = f(bdd)
-    truth_ratio = (node_stats_before_approx.true_paths / sum_paths) * 100
+
+    print(truth_ratio)
     node_count_after_approx = bdd.node_count()
     node_reduction = (1 - node_count_after_approx / node_count_before_approx) * 100
     chance_wrong_output = ((wrong_true + wrong_false) / sum_paths) * 100
-    chance_false_true_output = wrong_true / (node_stats_before_approx.true_paths + wrong_true) * 100
+    chance_false_true_output = 1#wrong_true / (node_stats_before_approx.true_paths + wrong_true) * 100
     return ApproxInfo(node_count=node_count_before_approx, bdd_depth=bdd.depth(), node_reduction=node_reduction, chance_wrong_output=chance_wrong_output,
                       chance_false_true_output=chance_false_true_output, truth_ratio=truth_ratio)
 
@@ -76,6 +78,9 @@ def approximation_eval(f, n=100, min_depth=10, max_depth=10, min_truth=0.5, max_
             truth_rate = np.random.randint(int(min_truth), int(max_truth) + 1) / 100
             level = min(depth-1, np.random.randint(min_levels, max_levels+1))
             bdd = Bdd.create_bdd(depth=depth, truth_rate=truth_rate)
+            if Counter.count == 22:
+                import gfx
+                gfx.draw(bdd, 'bdd1.png')
             process_time = time.time()
             result= evaluate(partial(f, level=level), bdd)
             process_time = time.time() - process_time
@@ -85,6 +90,9 @@ def approximation_eval(f, n=100, min_depth=10, max_depth=10, min_truth=0.5, max_
                 result_dict['time'] = round(process_time,2)
                 result_dict['method'] = method
                 writer.writerow(result_dict)
+            if Counter.count == 22:
+                import gfx
+                gfx.draw(bdd)
 
 
 
@@ -99,7 +107,7 @@ if __name__ == '__main__':
 
     #np.random.seed(12345)
     while True:
-        approximation_eval(Bdd.rounding, min_depth=10, max_depth=50, min_truth=5, max_truth=95, n=500, file='stats.txt')
+        approximation_eval(Bdd.rounding_up, min_depth=10, max_depth=50, min_truth=5, max_truth=95, n=50, file='stats.txt')
         break
 
     data = load_csv('stats.txt')
@@ -109,10 +117,10 @@ if __name__ == '__main__':
     #data = data[data['depth_level_ratio'] >0.8]
 
     data = data[data['truth_ratio'] > 50]
-    data = data[data['bdd_depth'] > 20]
+    #data = data[data['bdd_depth'] > 20]
     #data = data[data['node_reduction'] < 95]
     #
-    sns.lmplot(y = 'node_reduction', x='chance_wrong_output',data=data)#, hue='levels')
+    sns.lmplot(y = 'node_reduction', x='chance_wrong_output',data=data, hue='method')
     #sns.lmplot(y='chance_wrong_output', x='node_reduction', data=data)#, hue='levels')
     #sns.lmplot(y='time', x='node_count', data=data, hue='levels')
     plt.show()

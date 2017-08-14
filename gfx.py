@@ -1,6 +1,8 @@
 import pygraphviz as pgv
 import gc
 
+ANIMATION_COUNTER = 0
+
 def draw(bdd, file=None, info=False):
     if not file:
         file = 'bdd.png'
