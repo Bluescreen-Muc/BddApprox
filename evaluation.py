@@ -63,7 +63,7 @@ def approximation_eval(f, n=100, min_depth=10, max_depth=10, min_truth=0.5, max_
 
     if not max_levels:
         max_levels = max_depth
-    fields = ['node_count', 'bdd_depth', 'node_reduction', 'chance_wrong_output', 'chance_false_true_output', 'truth_ratio', 'levels', 'time', 'method']
+    fields = ['node_count', 'bdd_depth', 'node_reduction', 'chance_wrong_output', 'chance_false_true_output', 'truth_ratio', 'levels', 'time', 'approx_method']
     if not os.path.isfile(file):
         with open(file, 'w') as csv_file:
             writer = csv.DictWriter(csv_file, fieldnames=fields)
@@ -88,7 +88,7 @@ def approximation_eval(f, n=100, min_depth=10, max_depth=10, min_truth=0.5, max_
                 result_dict = result.to_dict(digits=digits)
                 result_dict['levels'] = level
                 result_dict['time'] = round(process_time,2)
-                result_dict['method'] = method
+                result_dict['approx_method'] = method
                 writer.writerow(result_dict)
             if Counter.count == 22:
                 import gfx
@@ -107,7 +107,7 @@ if __name__ == '__main__':
 
     #np.random.seed(12345)
     while True:
-        approximation_eval(Bdd.rounding_up, min_depth=10, max_depth=50, min_truth=5, max_truth=95, n=50, file='stats.txt')
+        #approximation_eval(Bdd.rounding_up, min_depth=10, max_depth=100, min_truth=5, max_truth=95, n=500, file='stats.txt')
         break
 
     data = load_csv('stats.txt')
@@ -120,7 +120,8 @@ if __name__ == '__main__':
     #data = data[data['bdd_depth'] > 20]
     #data = data[data['node_reduction'] < 95]
     #
-    sns.lmplot(y = 'node_reduction', x='chance_wrong_output',data=data, hue='method')
+    sns.lmplot(y = 'node_reduction', x='chance_wrong_output',data=data, hue='approx_method')
+    sns.lmplot(y='quality', x='depth_level_ratio', data=data, hue='approx_method')
     #sns.lmplot(y='chance_wrong_output', x='node_reduction', data=data)#, hue='levels')
     #sns.lmplot(y='time', x='node_count', data=data, hue='levels')
     plt.show()

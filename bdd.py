@@ -8,7 +8,7 @@ from evaluation import *
 from collections import defaultdict, Counter
 import gc
 
-from functions import AND
+from fun import *
 
 
 class Node:
@@ -187,7 +187,7 @@ class Bdd:
         paths = int(2**self.depth())
         self.info[self.root_node.uid].paths = paths
         if self.root_node.is_terminal():
-            return
+            return {x.uid: self.info[x.uid].paths for x in self.hash_pool.values() if x.uid not in [0, 1]}
         vars = self.get_vars(self.root_node.var + 1, from_bottom=False)
         for var in vars:
             for node in self.var_pool[var]:
@@ -276,20 +276,11 @@ class Bdd:
                 if not node.low.is_terminal():
                     if bdd.info[node.low.uid].path_difference() >= 0:
                         bdd.set_node(node.low, Bdd.TRUE)
-                        #bdd.remap_node_child(node, Bdd.TRUE, "LOW")
-                        #node.low = Bdd.TRUE
-
-                        # if node.low == node.high:
-                        #     bdd.set_node2(node, node.low)
 
 
 
                     else:
                         bdd.set_node(node.low, Bdd.FALSE)
-                        #node.low = Bdd.FALSE
-                        #bdd.remap_node_child(node, Bdd.FALSE, "LOW")
-                        # if node.low == node.high:
-                        #     bdd.set_node2(node, node.low)
 
 
 
@@ -298,18 +289,10 @@ class Bdd:
                     if bdd.info[node.high.uid].path_difference() >= 0:
 
                         bdd.set_node(node.high, Bdd.TRUE)
-                        #bdd.remap_node_child(node, Bdd.TRUE, "HIGH")
-                        #node.high = Bdd.TRUE
-
 
                     else:
 
                         bdd.set_node(node.high, Bdd.FALSE)
-                        #bdd.remap_node_child(node, Bdd.FALSE, "HIGH")
-                        #node.high = Bdd.FALSE
-
-                        # if node.low == node.high:
-                        #     bdd.set_node2(node, node.high)
 
 
         stats_after = dict()
@@ -437,6 +420,36 @@ class Bdd:
         bdd.root_node = apply_nodes(f, bdd1.root_node, bdd2.root_node, bdd)
         return bdd
 
+    @staticmethod
+    def Var(x):
+        bdd = Bdd()
+        bdd.root_node = bdd.node(x, Bdd.FALSE, Bdd.TRUE)
+        return bdd
+
+    @staticmethod
+    def random_function(n = 3, max = 10, repeat = 1):
+        result = None
+        for _ in range(repeat):
+            var = np.random.random_integers(1,max,n)
+            bdds = [Bdd.Var(int(x)) for x in var]
+            tmp = bdds.pop()
+            funcs = np.random.choice(functions, n-1)
+            for i, func in enumerate(funcs):
+                if func == NOT:
+                    tmp = NOT(tmp)
+
+                else:
+                    tmp = Bdd.apply(func, tmp, bdds.pop())
+            if not result:
+                result = tmp
+            else:
+                func = np.random.choice(functions)
+                if func == NOT:
+                    result = NOT(result)
+                else:
+                    result = Bdd.apply(func, result, tmp)
+
+        return result
 
     @staticmethod
     def create_bdd(depth=10, truth_rate = 0.5):
@@ -481,7 +494,7 @@ class Bdd:
                 return True
         return (any(filter(lambda x: x >1, Counter(list).values())))
 
-    def set_node(self, old_node, new_node, animation=True):
+    def set_node(self, old_node, new_node, animation=False):
         if old_node == self.root_node:
             self.root_node = new_node
             return
@@ -577,34 +590,15 @@ class NodeInfo:
     def __str__(self):
         return "{} {}".format(self.false_paths, self.true_paths)
 
+
 if __name__ == '__main__':
     count = 0
 
-    for _ in range(1):
-        count += 1
-        #np.random.seed(count)
-        bdd = Bdd.create_bdd(10)
-        bdd.count_paths()
-        bdd.count_rec()
-        gfx.draw(bdd, info=True)
-
-
-        Bdd.rounding_up(bdd, 2)
-        gfx.draw(bdd, 'bdd1.png', info=True)
-        # bdd.check_correct_parents()
-        #
-        # print(count)
-        # bdd.count_paths()
-        #
-        # bdd.count_rec()
-        # gfx.draw(bdd, 'bdd2.png', info=True)
-        #break
-        #if bdd.check_bdd():
-        #    break
-        #bdd.rounding_up(bdd,2)
-        #gfx.draw(bdd,'bdd1.png', info=True)
-        #gfx.draw(bdd, 'bdd1.png')
-        #Bdd.rounding(bdd, 10)
-        #gfx.draw(bdd, 'bdd2.png', info=True)
-        #Bdd.rounding_up(bdd, np.random.randint(15))
-
+    bdd = Bdd.create_bdd(5)
+    gfx.draw(bdd, 'bdd1.png')
+    bdd = NOT(bdd)
+    gfx.draw(bdd, 'bdd2.png')
+    gfx.draw(bdd)
+    # for _ in range(1):
+    #     bdd = Bdd.random_function(n=50, max=60, repeat=4)
+    #     gfx.draw(bdd)
