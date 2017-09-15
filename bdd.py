@@ -3,20 +3,23 @@ from copy import copy
 from weakref import WeakSet, WeakValueDictionary
 import sys
 import gfx
-import time
+from scipy.stats import norm, truncnorm
+from scipy import stats
 from evaluation import *
 from collections import defaultdict, Counter
 import gc
 
 from fun import *
-
-
+from stati import norm_distr
 class Node:
     uid = 2
     MAX_NUMBER_NODES = 10000
-    def __init__(self, var=None, low=None, high=None):
+    def __init__(self, var=None, low=None, high=None, uid=None):
         self.var = var
-        self.uid = Node.uid
+        if not uid:
+            self.uid = Node.uid
+        else:
+            self.uid = uid
         self.low = low
         self.high = high
         self.iter_index = -1
@@ -92,8 +95,8 @@ class Bdd:
     def set_max_var(self, n):
         self.max_var == n
 
-    def node(self, var, low, high):
-        node = Node(var, low, high)
+    def node(self, var, low, high, uid=None):
+        node = Node(var, low, high, uid)
         if var > self.max_var:
             self.max_var = var
 
@@ -174,13 +177,53 @@ class Bdd:
                 if node.is_terminal():
                     continue
                 if node == self.root_node:
-                    bdd.root_node = bdd.node(node.var, node_list[hash(node.low)], node_list[hash(node.high)])
+                    bdd.root_node = bdd.node(node.var, node_list[hash(node.low)], node_list[hash(node.high)], uid=node.uid)
                 else:
-                    node_list[hash(node)] = bdd.node(node.var, node_list[hash(node.low)], node_list[hash(node.high)])
+                    node_list[hash(node)] = bdd.node(node.var, node_list[hash(node.low)], node_list[hash(node.high)], uid=node.uid)
         return bdd
 
+    def calculate_score(self, dom_variant=1):
+        self.count_paths()
+        self.count_rec()
+        self.count_dom_score(variant=dom_variant)
+        all_true = self.info[self.root_node.uid].paths
+        node_count = self.node_count()
+        for node in self.hash_pool.values():
+            if node.is_terminal():
+                continue
+            if node.low.is_terminal() or node.high.is_terminal():
+                continue
+            if node.low.var == node.high.var:
+                scores = []
+                info = self.info[node.uid]
+                node_true = info.truth_ratio() * info.paths
+                for child in node:
+                    if child.is_terminal():
+                        break
+                    child_true = self.info[child.uid].truth_ratio() * info.paths
+                    child_score = child_true - node_true
+                    scores.append(child_score/all_true)
+
+                    info.score = scores
+                    info.score = [((info.dom_score[i])/node_count) / x for i,x in enumerate(info.score) if x != 0]
+        gfx.draw(self, 'bdd3.png', info=True)
+        if self.info[self.root_node.uid].score[1] > 1:
+            self.set_node(self.root_node, self.root_node.low)
+            self.count_paths()
+            self.count_rec()
+            self.count_dom_score(variant=dom_variant)
+            gfx.draw(self, 'bdd4.png', info=True)
 
 
+    def count_dom_score(self, variant=2):
+        for node in self.hash_pool.values():
+            if node.is_terminal():
+                continue
+            result = []
+            result.append(self.nodes_dominated(node.high, variant=variant))
+            result.append(self.nodes_dominated(node.low, variant=variant))
+
+            self.info[node.uid].dom_score = result
     def count_paths(self):
         for info in self.info.values():
             info.paths = 0
@@ -198,13 +241,12 @@ class Bdd:
                 self.info[node.uid].paths = paths
         return {x.uid : self.info[x.uid].paths for x in self.hash_pool.values() if x.uid not in [0,1]}
 
-
     @staticmethod
     def rounding_up(bdd, level=1):
         bdd.count_rec()
         true_paths = bdd.info[bdd.root_node.uid].true_paths
 
-        vars_to_check = bdd.get_vars(lower = bdd.max_var-level+1)
+        vars_to_check = bdd.get_vars(lower = bdd.max_var-level+1, from_bottom=True)
 
         for var in vars_to_check:
             for node in list(bdd.var_pool[var]):
@@ -222,48 +264,7 @@ class Bdd:
 
     @staticmethod
     def rounding(bdd, level=1):
-        stats_before = dict()
-        false_true_before = bdd.count_rec()
-        paths_before = bdd.count_paths()
-        for uid in paths_before.keys():
-            low_uid = bdd.uid_pool[uid].low.uid
-            high_uid = bdd.uid_pool[uid].high.uid
-            if low_uid == 1:
-                false_before = 0
-            elif low_uid == 0:
-                false_before = paths_before[uid] / 2
-
-            else:
-                false_before = paths_before[uid] / 2 * (false_true_before[low_uid][0] / (false_true_before[low_uid][0] + false_true_before[low_uid][1]))
-
-            if high_uid == 1:
-                pass
-            elif high_uid == 0:
-                false_before += paths_before[uid] / 2
-            else:
-                false_before += paths_before[uid] / 2 * (
-                                false_true_before[high_uid][0] / (false_true_before[high_uid][0] + false_true_before[high_uid][1]))
-
-            if low_uid == 1:
-                true_before = paths_before[uid] / 2
-            elif low_uid == 0:
-                true_before = 0
-
-            else:
-                true_before = paths_before[uid] / 2 * (
-            false_true_before[low_uid][1] / (false_true_before[low_uid][0] + false_true_before[low_uid][1]))
-
-            if high_uid == 1:
-                true_before += paths_before[uid] / 2
-            elif high_uid == 0:
-                pass
-
-            else:
-                true_before += paths_before[uid] / 2 * (false_true_before[high_uid][1] / (false_true_before[high_uid][0] + false_true_before[high_uid][1]))
-
-            stats_before[uid]=[false_before, true_before]
         vars_to_check = bdd.get_vars(lower=bdd.max_var - level+1, from_bottom=False)
-
         for var in vars_to_check:
 
             for uid in list(x.uid for x in bdd.var_pool[var]):
@@ -295,56 +296,6 @@ class Bdd:
                         bdd.set_node(node.high, Bdd.FALSE)
 
 
-        stats_after = dict()
-        false_true_after = bdd.count_rec()
-        paths_after = bdd.count_paths()
-        for uid in paths_after.keys():
-            low_uid = bdd.uid_pool[uid].low.uid
-            high_uid = bdd.uid_pool[uid].high.uid
-            if low_uid == 1:
-                false_after = 0
-            elif low_uid == 0:
-                false_after = paths_before[uid] / 2
-
-            else:
-                false_after = (paths_after[uid] / 2 * (false_true_after[low_uid][0] / (false_true_after[low_uid][0] + false_true_after[low_uid][1])))
-
-            if high_uid == 1:
-                pass
-            elif high_uid == 0:
-                false_after += paths_before[uid] / 2
-
-            else:
-                false_after += (paths_after[uid] / 2 * (false_true_after[high_uid][0] / (false_true_after[high_uid][0] + false_true_after[high_uid][1])))
-
-
-            if low_uid == 1:
-                true_after = paths_before[uid] / 2
-            elif low_uid == 0:
-                true_after = 0
-
-            else:
-                true_after = (paths_after[uid] / 2 * (false_true_after[low_uid][1] / (false_true_after[low_uid][0]+ false_true_after[low_uid][1])))
-
-
-            if high_uid == 1:
-                true_after += paths_before[uid] / 2
-            elif high_uid == 0:
-                pass
-
-            else:
-                true_after += paths_after[uid] / 2 * (false_true_after[high_uid][1] / (false_true_after[high_uid][0] + false_true_after[high_uid][1]))
-
-            stats_after[uid] = [false_after, true_after]
-
-        same_nodes = set(paths_before.keys()).intersection(set(paths_after.keys()))
-        true_difference = 0
-        false_difference = 0
-        for uid in same_nodes:
-
-            false_difference +=  abs(stats_before[uid][0] - stats_after[uid][0])
-            true_difference += abs(stats_before[uid][1]-stats_after[uid][1])
-        print(false_difference, true_difference)
 
         return 0, 0
 
@@ -404,7 +355,13 @@ class Bdd:
         def apply_nodes(f, node1, node2, bdd):
             if node1.is_terminal() and node2.is_terminal():
                 return f(node1,node2)
-
+            if node1.is_terminal() or node2.is_terminal():
+                if f == AND:
+                    if node1.uid == 0 or node2.uid == 0:
+                        return Bdd.FALSE
+                elif f == OR:
+                    if node1.uid == 1 or node2.uid == 1:
+                        return Bdd.TRUE
             if bdd.get_var(node1) < bdd.get_var(node2):
                 return bdd.node(node1.var, apply_nodes(f, node1.low, node2, bdd),
                                 apply_nodes(f, node1.high, node2, bdd))
@@ -419,6 +376,16 @@ class Bdd:
         bdd.max_var = max(bdd1.max_var, bdd2.max_var)
         bdd.root_node = apply_nodes(f, bdd1.root_node, bdd2.root_node, bdd)
         return bdd
+    def add_subtree(self, node):
+        if node.uid == 0:
+            return Bdd.FALSE
+        elif node.uid == 1:
+            return Bdd.TRUE
+
+        self.node(node.var, self.add_subtree(node.low), self.add_subtree((node.high)))
+        return node
+
+
 
     @staticmethod
     def Var(x):
@@ -427,13 +394,14 @@ class Bdd:
         return bdd
 
     @staticmethod
-    def random_function(n = 3, max = 10, repeat = 1):
+    def random_function(func_size=10, depth=50, nodes=2000, file='random.pkl'):
         result = None
-        for _ in range(repeat):
-            var = np.random.random_integers(1,max,n)
+        while True:
+            #var = np.random.random_integers(1,depth,func_size)
+            var = np.random.choice(np.arange(1,depth), func_size,replace=False)
             bdds = [Bdd.Var(int(x)) for x in var]
             tmp = bdds.pop()
-            funcs = np.random.choice(functions, n-1)
+            funcs = np.random.choice(functions, func_size-1)
             for i, func in enumerate(funcs):
                 if func == NOT:
                     tmp = NOT(tmp)
@@ -441,14 +409,21 @@ class Bdd:
                 else:
                     tmp = Bdd.apply(func, tmp, bdds.pop())
             if not result:
-                result = tmp
+                result = copy(tmp)
             else:
                 func = np.random.choice(functions)
                 if func == NOT:
                     result = NOT(result)
                 else:
+                    print(tmp.node_count())
+                    print(result.node_count())
                     result = Bdd.apply(func, result, tmp)
+                    print()
+                    if result.node_count() > nodes:
+                        break
 
+        if result.node_count() == 0:
+            return Bdd.random_function(func_size,depth,nodes)
         return result
 
     @staticmethod
@@ -470,6 +445,38 @@ class Bdd:
                 array = None
                 bdd.check_weak_references()
                 return bdd
+
+    @staticmethod
+    def create_bdd2(y_func, depth=20, n=1000, scale=0, loc=0):
+        def generate_list(prob_func):
+            node_list = defaultdict(int)
+            while True:
+                for x in  prob_func.rvs(size=n):
+                    node_list[x] += 1
+                for x in sorted(node_list.keys()):
+                    sum_free_nodes = 2 + sum(2 * node_list[y] for y in range(0,x))
+                    sum_nodes = sum(node_list[y] for y in range(0,x+1))
+                    if sum_free_nodes < sum_nodes:
+                        node_list[x] += sum_free_nodes - sum_nodes
+                    print(sum_free_nodes)
+                break
+            return node_list
+
+        depth = max(2, depth)
+        n = min(2**(depth)-2, n)
+        xk = np.arange(0, depth-1)
+        pk = norm_distr(depth, scale, loc)
+        custm = stats.rv_discrete(name='custm', values=(xk, pk))
+        node_list = generate_list(custm)
+        print(node_list)
+        plt.plot(xk,pk)
+        xn = []
+        yn = []
+        for key in sorted(list(node_list.keys())):
+            yn += [node_list[key]]
+            xn += [key]
+        plt.plot(xn,yn)
+        plt.show()
 
     def check_weak_references(self):
         if self.hash_pool._pending_removals:
@@ -494,7 +501,7 @@ class Bdd:
                 return True
         return (any(filter(lambda x: x >1, Counter(list).values())))
 
-    def set_node(self, old_node, new_node, animation=False):
+    def set_node(self, old_node, new_node):
         if old_node == self.root_node:
             self.root_node = new_node
             return
@@ -520,9 +527,6 @@ class Bdd:
                             self.add_parent(new_node, node)
                             self.hash_pool[hash(node)] = node
                             self.var_pool[node.var].add(node)
-                            if animation:
-                                gfx.draw(self, 'animation{}.png'.format(gfx.ANIMATION_COUNTER))
-                                gfx.ANIMATION_COUNTER += 1
 
                 if node.high == old_node:
                     tmp_node = Node(node.var, node.low, new_node)
@@ -543,7 +547,60 @@ class Bdd:
 
     def get_parents(self, node):
         return self.info[node.uid].parents
+    def nodes_dominated_slow(self, node):
+        bdd = copy(self)
+        node_count = bdd.node_count()
+        for n in bdd.uid_pool.values():
 
+            if n.is_terminal():
+                continue
+
+            if n.low.uid == node.uid:
+
+                n.low = None
+            if n.high.uid  == node.uid:
+                n.high = None
+        return node_count - bdd.node_count()
+
+    def nodes_dominated(self, node, variant=1):
+
+        nodes_gone = []
+        if node.is_terminal():
+            return 1
+        nodes_to_check = [node]
+        nodes_waiting = dict()
+        while True:
+            if not nodes_to_check:
+                break
+
+            node = nodes_to_check.pop()
+            if node.is_terminal():
+                continue
+            if len(self.info[node.uid].parents) == 1:
+                nodes_gone.append(node)
+                for child in node:
+                    if child.is_terminal():
+                        continue
+                    nodes_to_check.append(child)
+            else:
+                if not node in nodes_waiting:
+                    nodes_waiting[node] = len(self.info[node.uid].parents) - 1
+                else:
+                    nodes_waiting[node] -= 1
+                    if nodes_waiting[node] == 0:
+                        nodes_gone.append(node)
+                        for child in node:
+                            if child.is_terminal():
+                                continue
+                            nodes_to_check.append(child)
+        if variant == 1:
+            output = len(nodes_gone) + 1
+        elif variant == 2:
+            output = len(nodes_gone) + 1 + sum(1/(x+1) for x in nodes_waiting.values() if x != 0)
+        return output
+
+    def create_test ():
+        n = np.random.randint()
     def check_correct_parents(self):
         gc.collect()
         for node in self.hash_pool.values():
@@ -576,6 +633,26 @@ class Bdd:
         node = self.hash_pool[hash(node)]
         self.info[node.uid].parents.discard(parent)
 
+
+    def check_subtree_methods(self):
+        for node in self.hash_pool.values():
+            if node == self.root_node or node.is_terminal():
+                continue
+            time1 = time.time()
+            sub1 = self.nodes_dominated_slow(node)
+            time1 = time.time() - time1
+            time2 = time.time()
+            sub2 = self.nodes_dominated(node)
+            time2 = time.time() - time2
+            assert(self.nodes_dominated(node)==self.nodes_dominated_slow(node))
+        print(time1/time2)
+
+    def skew(self):
+        for var in self.get_vars(from_bottom=False):
+            pass
+
+
+
 class NodeInfo:
 
     def __init__(self):
@@ -583,22 +660,56 @@ class NodeInfo:
         self.false_paths = 0
         self.paths = 0
         self.parents = WeakSet()
+        self.score = 0
+        self.dom_score = 0
 
     def path_difference(self):
         return self.true_paths - self.false_paths
+
+    def truth_ratio(self):
+        return self.true_paths / (self.true_paths + self.false_paths)
+
+    def false_ratio(self):
+        return self.false_paths / (self.true_paths + self.false_paths)
 
     def __str__(self):
         return "{} {}".format(self.false_paths, self.true_paths)
 
 
+def trunc(mean, std, a,b ):
+    a, b = (a - mean) / std, (b - mean) / std
 if __name__ == '__main__':
-    count = 0
+    #Bdd.create_bdd2(norm_distr, depth=11, n= 100, scale=1, loc=-20)
+    #rnp.random.seed(333333333)
+    start = time.time()
+    bdd = Bdd.random_function(func_size=3, depth=10, nodes=20)
+    print(bdd.node_count())
+    #bdd2 = Bdd.random_function(func_size=15, depth=40, nodes=700)
+    print(time.time() - start)
+    gfx.draw(bdd, dot=True)
+    #bdd3 = Bdd.apply(AND, bdd, bdd2)
+    #print(bdd3.node_count())
 
-    bdd = Bdd.create_bdd(5)
-    gfx.draw(bdd, 'bdd1.png')
-    bdd = NOT(bdd)
-    gfx.draw(bdd, 'bdd2.png')
-    gfx.draw(bdd)
+    # count = 0
+    # start = time.time()
+
+    # while True:
+    #     bdd = Bdd.create_bdd(10)
+    #     bdd.count_paths()
+    #     bdd.count_rec()
+    #
+    #
+    #     break
+    #
+    #
+    #gfx.draw(bdd)
+    # bdd2 = NOT(copy(bdd))
+    # print(Bdd.rounding_up(bdd,2)[1])
+    # bdd.count_rec()
+    # gfx.draw(bdd, 'bdd2.png', info = True)
+    # bdd3 = Bdd.apply(AND, bdd2, bdd)
+    # bdd3.count_rec()
+    # gfx.draw(bdd3, 'bdd3.png', info=True)
+
     # for _ in range(1):
-    #     bdd = Bdd.random_function(n=50, max=60, repeat=4)
-    #     gfx.draw(bdd)
+

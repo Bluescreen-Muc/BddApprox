@@ -1,0 +1,162 @@
+digraph "" {
+	node [colorscheme=set312,
+		label="\N",
+		shape=circle,
+		style=filled
+	];
+	{
+		graph [rank=same];
+		752		 [fillcolor=9,
+			label=8,
+			rank=8];
+		756		 [fillcolor=9,
+			label=8,
+			rank=8];
+	}
+	{
+		graph [rank=same];
+		753		 [fillcolor=8,
+			label=7,
+			rank=7];
+		757		 [fillcolor=8,
+			label=7,
+			rank=7];
+		761		 [fillcolor=8,
+			label=7,
+			rank=7];
+	}
+	{
+		graph [rank=same];
+		754		 [fillcolor=7,
+			label=6,
+			rank=6];
+		766		 [fillcolor=7,
+			label=6,
+			rank=6];
+		770		 [fillcolor=7,
+			label=6,
+			rank=6];
+	}
+	{
+		graph [rank=same];
+		755		 [fillcolor=10,
+			label=9,
+			rank=9];
+	}
+	{
+		graph [rank=same];
+		758		 [fillcolor=6,
+			label=5,
+			rank=5];
+		762		 [fillcolor=6,
+			label=5,
+			rank=5];
+		767		 [fillcolor=6,
+			label=5,
+			rank=5];
+		771		 [fillcolor=6,
+			label=5,
+			rank=5];
+	}
+	{
+		graph [rank=same];
+		759		 [fillcolor=5,
+			label=4,
+			rank=4];
+		763		 [fillcolor=5,
+			label=4,
+			rank=4];
+		768		 [fillcolor=5,
+			label=4,
+			rank=4];
+		772		 [fillcolor=5,
+			label=4,
+			rank=4];
+	}
+	{
+		graph [rank=same];
+		760		 [fillcolor=4,
+			label=3,
+			rank=3];
+		764		 [fillcolor=4,
+			label=3,
+			rank=3];
+		769		 [fillcolor=4,
+			label=3,
+			rank=3];
+		773		 [fillcolor=4,
+			label=3,
+			rank=3];
+	}
+	{
+		graph [rank=same];
+		765		 [fillcolor=3,
+			label=2,
+			rank=2];
+		774		 [fillcolor=3,
+			label=2,
+			rank=2];
+	}
+	{
+		graph [rank=same];
+		775		 [fillcolor=2,
+			label=1,
+			rank=1];
+	}
+	0	 [fillcolor=White,
+		label=F,
+		rank=None,
+		shape=doublecircle];
+	1	 [fillcolor=White,
+		label=T,
+		rank=None,
+		shape=doublecircle];
+	752 -> 0	 [style=dotted];
+	752 -> 1;
+	753 -> 0	 [style=dotted];
+	753 -> 752;
+	754 -> 0	 [style=dotted];
+	754 -> 753;
+	755 -> 0	 [style=dotted];
+	755 -> 1;
+	756 -> 1;
+	756 -> 755	 [style=dotted];
+	757 -> 0	 [style=dotted];
+	757 -> 756;
+	758 -> 754	 [style=dotted];
+	758 -> 757;
+	759 -> 0	 [style=dotted];
+	759 -> 758;
+	760 -> 0	 [style=dotted];
+	760 -> 759;
+	761 -> 0	 [style=dotted];
+	761 -> 1;
+	762 -> 754	 [style=dotted];
+	762 -> 761;
+	763 -> 0	 [style=dotted];
+	763 -> 762;
+	764 -> 0	 [style=dotted];
+	764 -> 763;
+	765 -> 760	 [style=dotted];
+	765 -> 764;
+	766 -> 0	 [style=dotted];
+	766 -> 757;
+	767 -> 757;
+	767 -> 766	 [style=dotted];
+	768 -> 0	 [style=dotted];
+	768 -> 767;
+	769 -> 0	 [style=dotted];
+	769 -> 768;
+	770 -> 0	 [style=dotted];
+	770 -> 761;
+	771 -> 761;
+	771 -> 770	 [style=dotted];
+	772 -> 0	 [style=dotted];
+	772 -> 771;
+	773 -> 0	 [style=dotted];
+	773 -> 772;
+	774 -> 769	 [style=dotted];
+	774 -> 773;
+	775 -> 765	 [style=dotted];
+	775 -> 774;
+}

@@ -43,4 +43,4 @@ def BOOL_TO_BDD(x):
     from bdd import Bdd
     return Bdd.FALSE if not x else Bdd.TRUE
 
-functions = [AND, OR, NOT]
+functions = [AND, OR]

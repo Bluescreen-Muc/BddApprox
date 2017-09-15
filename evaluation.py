@@ -77,8 +77,9 @@ def approximation_eval(f, n=100, min_depth=10, max_depth=10, min_truth=0.5, max_
             depth = np.random.randint(min_depth, max_depth + 1)
             truth_rate = np.random.randint(int(min_truth), int(max_truth) + 1) / 100
             level = min(depth-1, np.random.randint(min_levels, max_levels+1))
-            bdd = Bdd.create_bdd(depth=depth, truth_rate=truth_rate)
-            if Counter.count == 22:
+            #bdd = Bdd.create_bdd(depth=depth, truth_rate=truth_rate)
+            bdd = Bdd.random_function(repeat = 10)
+            if Counter.count == 2:
                 import gfx
                 gfx.draw(bdd, 'bdd1.png')
             process_time = time.time()
@@ -90,7 +91,7 @@ def approximation_eval(f, n=100, min_depth=10, max_depth=10, min_truth=0.5, max_
                 result_dict['time'] = round(process_time,2)
                 result_dict['approx_method'] = method
                 writer.writerow(result_dict)
-            if Counter.count == 22:
+            if Counter.count == 2:
                 import gfx
                 gfx.draw(bdd)
 
@@ -99,18 +100,21 @@ def approximation_eval(f, n=100, min_depth=10, max_depth=10, min_truth=0.5, max_
 def load_csv(file):
     return pd.read_csv(file)
 
+def create_bdd_dataset(file="dataset.pkl", n=10, nodes=1000):
+    for _ in range(n):
+        bdd = Bdd.random_function(nodes=1000)
 
 
 
 if __name__ == '__main__':
     from bdd import Bdd
 
-    #np.random.seed(12345)
+    np.random.seed(125)
     while True:
-        #approximation_eval(Bdd.rounding_up, min_depth=10, max_depth=100, min_truth=5, max_truth=95, n=500, file='stats.txt')
+        approximation_eval(Bdd.rounding_up, min_depth=10, max_depth=75, min_truth=5, max_truth=95, n=500, file='stats2.txt')
         break
 
-    data = load_csv('stats.txt')
+    data = load_csv('stats2.txt')
     #data = data[data['chance_wrong_output'] < 20]
     data['quality'] = data['node_reduction'] - data['chance_wrong_output']
     data['depth_level_ratio'] = data['levels'] / data['bdd_depth']
@@ -121,7 +125,7 @@ if __name__ == '__main__':
     #data = data[data['node_reduction'] < 95]
     #
     sns.lmplot(y = 'node_reduction', x='chance_wrong_output',data=data, hue='approx_method')
-    sns.lmplot(y='quality', x='depth_level_ratio', data=data, hue='approx_method')
+    #sns.lmplot(y='quality', x='truth_ratio', data=data)#hue='approx_method')
     #sns.lmplot(y='chance_wrong_output', x='node_reduction', data=data)#, hue='levels')
     #sns.lmplot(y='time', x='node_count', data=data, hue='levels')
     plt.show()

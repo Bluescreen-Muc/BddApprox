@@ -1,9 +1,13 @@
 import pygraphviz as pgv
 import gc
+import re
 
 ANIMATION_COUNTER = 0
-
-def draw(bdd, file=None, info=False):
+def load_bdd_dataset(file):
+    with open(file) as file:
+        line = file.readline()
+        print(line)
+def draw(bdd, file=None, info=False, dot=False):
     if not file:
         file = 'bdd.png'
     g = pgv.AGraph(strict=False, directed=True)
@@ -22,7 +26,7 @@ def draw(bdd, file=None, info=False):
             new_node.attr['label'] = ['F', 'T'][node.uid]
 
         else:
-            label = node.var if not info else (bdd.info[node.uid].paths,bdd.info[node.uid].false_paths, bdd.info[node.uid].true_paths)#len(gc.get_referrers(node))-2 #bdd.info[node.uid]
+            label = node.var if not info else ("D:{}\nP:{}\nFT:{} {}\nS:{}".format(bdd.info[node.uid].dom_score,bdd.info[node.uid].paths,bdd.info[node.uid].false_paths, bdd.info[node.uid].true_paths, bdd.info[node.uid].score))#len(bdd.info[node.uid].parents))#len(gc.get_referrers(node))-2) #bdd.info[node.uid]
             g.get_node(node.uid).attr['label'] = label
 
     for node in bdd.get_nodes():
@@ -32,4 +36,13 @@ def draw(bdd, file=None, info=False):
         g.add_edge('%d' % node.uid, '%d' % node.high.uid)
     for var in bdd.var_pool.keys():
         g.add_subgraph([node.uid for node in bdd.var_pool[var]], rank="same")
-    g.draw(file, g.layout(prog='dot'))
+    if not dot:
+        g.draw(file, g.layout(prog='dot'))
+    else:
+        g.write("file.dot")
+
+if __name__ == '__main__':
+    file = "/Users/oliverheidemanns/Desktop/Bachelor/OCaml/test.dot"
+    png_file = "/Users/oliverheidemanns/Desktop/Bachelor/OCaml/test.png"
+    G = pgv.AGraph(file)
+    G.draw(png_file, G.layout(prog='dot'))
