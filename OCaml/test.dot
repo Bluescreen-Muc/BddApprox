@@ -1,0 +1,123 @@
+digraph "" {
+	node [colorscheme=set312,
+		label="\N",
+		shape=circle,
+		style=filled
+	];
+{
+graph [rank=same];
+2220107	[fillcolor=2, label="0 0", rank=1];
+}
+{
+graph [rank=same];
+2220106	[fillcolor=3, label="0 0", rank=2];
+}
+{
+graph [rank=same];
+2220095	[fillcolor=4, label="0 0", rank=3];
+2220105	[fillcolor=4, label="0 0", rank=3];
+}
+{
+graph [rank=same];
+2220104	[fillcolor=5, label="0 0", rank=4];
+}
+{
+graph [rank=same];
+2220102	[fillcolor=6, label="0 0", rank=5];
+}
+{
+graph [rank=same];
+2220091	[fillcolor=8, label="0 0", rank=6];
+2220103	[fillcolor=8, label="0 0", rank=6];
+2220101	[fillcolor=8, label="0 0", rank=6];
+2220094	[fillcolor=8, label="0 0", rank=6];
+}
+{
+graph [rank=same];
+2220093	[fillcolor=9, label="0 0", rank=7];
+2220090	[fillcolor=9, label="0 0", rank=7];
+2220100	[fillcolor=9, label="0 0", rank=7];
+}
+{
+graph [rank=same];
+2220089	[fillcolor=10, label="0 0", rank=8];
+2220099	[fillcolor=10, label="0 0", rank=8];
+2220085	[fillcolor=10, label="0 0", rank=8];
+}
+{
+graph [rank=same];
+2220098	[fillcolor=11, label="0 0", rank=9];
+2220088	[fillcolor=11, label="0 0", rank=9];
+2220092	[fillcolor=11, label="0 0", rank=9];
+2220084	[fillcolor=11, label="0 0", rank=9];
+}
+{
+graph [rank=same];
+2220087	[fillcolor=1, label="0 0", rank=10];
+2220083	[fillcolor=1, label="0 0", rank=10];
+}
+{
+graph [rank=same];
+2220086	[fillcolor=4, label="0 0", rank=11];
+2220082	[fillcolor=4, label="0 0", rank=11];
+2220097	[fillcolor=4, label="0 0", rank=11];
+}
+{
+graph [rank=same];
+2220096	[fillcolor=5, label="0 0", rank=12];
+}
+0	 [fillcolor=White, label=F, rank=None, shape=doublecircle];
+1	 [fillcolor=White, label=T, rank=None, shape=doublecircle];
+2220084 -> 2220083 		[style=dotted];
+2220084 -> 1
+2220100 -> 0 		[style=dotted];
+2220100 -> 2220099
+2220105 -> 2220104 		[style=dotted];
+2220105 -> 2220091
+2220097 -> 2220096 		[style=dotted];
+2220097 -> 0
+2220102 -> 2220094 		[style=dotted];
+2220102 -> 2220101
+2220107 -> 0 		[style=dotted];
+2220107 -> 2220106
+2220082 -> 0 		[style=dotted];
+2220082 -> 1
+2220096 -> 1 		[style=dotted];
+2220096 -> 0
+2220083 -> 2220082 		[style=dotted];
+2220083 -> 1
+2220086 -> 1 		[style=dotted];
+2220086 -> 0
+2220092 -> 2220086 		[style=dotted];
+2220092 -> 0
+2220094 -> 2220093 		[style=dotted];
+2220094 -> 1
+2220085 -> 2220084 		[style=dotted];
+2220085 -> 0
+2220101 -> 2220100 		[style=dotted];
+2220101 -> 1
+2220099 -> 2220098 		[style=dotted];
+2220099 -> 0
+2220088 -> 2220087 		[style=dotted];
+2220088 -> 0
+2220090 -> 0 		[style=dotted];
+2220090 -> 2220089
+2220103 -> 0 		[style=dotted];
+2220103 -> 1
+2220106 -> 2220105 		[style=dotted];
+2220106 -> 2220095
+2220087 -> 0 		[style=dotted];
+2220087 -> 2220086
+2220104 -> 2220103 		[style=dotted];
+2220104 -> 2220102
+2220095 -> 2220094 		[style=dotted];
+2220095 -> 2220091
+2220091 -> 2220090 		[style=dotted];
+2220091 -> 2220085
+2220093 -> 0 		[style=dotted];
+2220093 -> 2220092
+2220098 -> 2220097 		[style=dotted];
+2220098 -> 0
+2220089 -> 2220088 		[style=dotted];
+2220089 -> 0
+}

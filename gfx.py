@@ -42,7 +42,7 @@ def draw(bdd, file=None, info=False, dot=False):
         g.write("file.dot")
 
 if __name__ == '__main__':
-    file = "/Users/oliverheidemanns/Desktop/Bachelor/OCaml/test.dot"
-    png_file = "/Users/oliverheidemanns/Desktop/Bachelor/OCaml/test.png"
+    file = "/Users/oliverheidemanns/GitHub/BddApprox/OCaml/test.dot"
+    png_file = "/Users/oliverheidemanns/GitHub/BddApprox/OCaml/test.png"
     G = pgv.AGraph(file)
     G.draw(png_file, G.layout(prog='dot'))

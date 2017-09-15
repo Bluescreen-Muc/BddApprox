@@ -146,8 +146,10 @@ let op funct op1 op2 =
 	| _ -> raise (ExpectedUnaryError)
 
 let connected_to_terminal node = if node.uid == 1 || node.uid == 0 then 0 else let output = ref 0 in 
-	if (low node).node == True || (high node).node == True then output := !output + 2;
-	if (low node).node == False || (high node).node == False then output := !output + 1;
+	begin
+		if (low node).node == True || (high node).node == True then output := !output + 2;
+		if (low node).node == False || (high node).node == False then output := !output + 1;
+	end;
 	!output
 
 let is_terminal bdd =
@@ -184,7 +186,8 @@ let opnot table bdd = let to_do = ref [] in
 		begin
 			to_do := (x,y)::!to_do;
 		end) table;
-	List.iter (fun (x,y) -> Hashtbl.remove table x;  switch_terminals y; Hashtbl.add table (hash y.node) y) !to_do;
+	List.iter (fun (x,y) -> Hashtbl.remove table x) !to_do;
+	List.iter (fun (x,y) -> switch_terminals y; Hashtbl.add table (hash y.node) y) !to_do;
 	bdd
 
 
@@ -194,7 +197,7 @@ let create_random_bdd ?(n = 5) depth =
 	let bdds = ref [] in 
 	Ints.iter (fun x -> bdds := [create_single_bdd x] @ !bdds) vars;
 	List.fold_left (fun acc x -> let funct = random_funct() in 
-		if funct == NOT then opnot !table acc
+		if funct == NOT then apply (random_funct ~opnot: false ()) (opnot !table acc) (fst x) !table
 		else apply funct acc (fst x) !table) (fst (List.hd !bdds)) (List.tl !bdds)
 
 let node_count table = Hashtbl.length table
@@ -350,7 +353,6 @@ module BddData = struct
  				end
 	done;
 	create !table {depth=depth; truth_rate=0.0; node_count=0; root=(!result)}
-
 end
 
 type formula = 
