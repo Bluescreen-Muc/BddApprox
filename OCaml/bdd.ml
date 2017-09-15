@@ -10,7 +10,6 @@ type variable = int (* 1..max_var *)
 type bdd = { uid: int; mutable node : node }
 and node = True | False | Node of {var: int; mutable low: bdd; mutable high: bdd; mutable info: node_info}
 type bdd_info = {mutable depth: int; mutable truth_rate: float; mutable node_count: int; mutable root: bdd}
-
 let functions = [|AND; OR; NOT|]
 
 let empty_info () = {paths=0;true_paths=0;false_paths=0}
@@ -195,30 +194,10 @@ let get_bdd_id str = let reg = Str.regexp "\\(^[0-9]+\\), " in
 	let output = Str.matched_group 1 str in 
 	output
 
-let hash_entry_to_string x y = Printf.sprintf "UID:%d VAR:%d LOW_UID:%d HIGH_UID:%d" y.uid (var y) (low y).uid (high y).uid  
-
-let bdd_to_string table =  let output = ref "" in 
-	Hashtbl.iter (fun x y -> output := (!output ^ (hash_entry_to_string x y)) ^ ",") table;
-	Str.string_before !output ((String.length !output) -1) 
-
 let get_some x =
  	match x with
  	| Some x -> x
  	| None -> raise (ExpectationVsRealityError "expected something")
-
-let save_bdd file table = let bdd_id = if Sys.file_exists file then
-	let chan = open_in file in
-	let last_line = ref "" in
-	try
-  		while true do
-    		last_line := input_line chan;
-  		done; 1
-	with | End_of_file ->
-			close_in chan;
-  			(int_of_string (get_bdd_id !last_line)) + 1
-   	else 1 in let  oc = open_out_gen [Open_creat; Open_text; Open_append] 0o640 file in
-	Printf.fprintf oc "%d, [%s]\n" bdd_id (bdd_to_string table);   (* write something *)   
-  	close_out oc
 
 let create_var_map table = let var_table = ref (Hashtbl.create 10) in 
 	Hashtbl.iter(fun x y -> if not (is_terminal y) then  Hashtbl.add !var_table (var y) (y)) table;
@@ -234,6 +213,10 @@ let get_low bdd = match bdd.node with
 		| Node n1, Node n2 -> if n1.info.true_paths > n2.info.true_paths then n.low <- one else n.high <- one
 	end
 	|_ -> ()
+
+let sort_table_keys ?(reverse=false) table = let output = ref [] in 
+	Hashtbl.iter (fun x y -> if not (List.mem x !output) then output := x :: !output) table;
+	List.sort compare !output
 
 
 module BddData = struct
@@ -251,6 +234,9 @@ module BddData = struct
 
 	let get_info data = data.info
 	let set_info data info = data.info <- info 
+
+	let get_truth_rate data = data.info.truth_rate
+	let set_truth_rate data x = data.info.truth_rate <- x
 
 	let empty () = { bdd = create_empty_bdd (); info = {depth=0; truth_rate=0.0; node_count= 0; root=zero}}
 
@@ -298,8 +284,23 @@ module BddData = struct
 			| Node n1 -> n1.info.paths
 			| _ -> 0
 
-	let count_false_true data = let table = ref data.bdd in let info = ref data.info in let var_map = create_var_map !table in
+	let count_false_true data =
+
+		let table = ref data.bdd in let info = ref data.info in let var_map = create_var_map !table in
 		let depth = !info.depth  in
+
+		let reset_paths table= 
+			Hashtbl.iter (fun x y -> 
+			match y.node with
+			| Node n -> 
+			begin
+				n.info.true_paths <- 0;
+				n.info.false_paths <- 0;
+				n.info.paths <- 0;
+			end
+			| True | False -> () ) table
+		in reset_paths !table;
+
 		for i = depth downto 1 do
 			try
   				let values = Hashtbl.find_all var_map i in 
@@ -327,6 +328,12 @@ module BddData = struct
   			with Not_found -> ()
 		done
 
+	let fill_info data = 
+		data.info.node_count <- count_nodes data;
+		count_false_true data;
+		let root = get_root data in 
+		data.info.truth_rate <- float_of_int(true_paths root) /. (float_of_int (false_paths root) +. float_of_int(true_paths root))
+
 	let create_random_function depth n =
 		reset_max_var ();
 		let result = ref (create_random_bdd depth) in
@@ -346,17 +353,66 @@ module BddData = struct
  					print_int (Hashtbl.length !table);
  					print_newline()
  				end
-	done;
-	create !table {depth=depth; truth_rate=0.0; node_count=0; root=(!result)}
+		done;
+		create !table {depth=depth; truth_rate=0.0; node_count=0; root=(!result)}
 
-	let rounding_up data from_level = let table = data.bdd in let depth = (get_depth data) in let var_map = create_var_map table in 
+	let to_dot_file ?(lf = (fun x -> string_of_int (var x))) file data = let table = get_table data in let oc = open_out file in 
+		let create_rank_string rank values label_function = let output = ref "{\ngraph [rank=same];\n" in 
+			List.iter (fun x -> let str = Printf.sprintf "%d	[fillcolor=%d, label=%s, rank=%d];\n" x.uid ((var x) mod 11 + 1) (label_function x) rank in 
+			output := !output ^ str) values;
+			output := !output ^ "}\n";
+			!output
+
+		in let rank = ref 0 in 
+  		Printf.fprintf oc "digraph \"\" {
+		node [colorscheme=set312,
+		label=\"\\N\",
+		shape=circle,
+		style=filled
+		];\n";
+		let var_map = create_var_map table in let keys = sort_table_keys var_map in 
+		List.iter (fun x -> rank := !rank + 1; 
+		let values = (Hashtbl.find_all var_map x) in let str = (create_rank_string !rank values lf) in Printf.fprintf oc "%s" str) keys;
+		Printf.fprintf oc "0	 [fillcolor=White, label=F, rank=None, shape=doublecircle];\n1	 [fillcolor=White, label=T, rank=None, shape=doublecircle];\n";
+		Hashtbl.iter (fun x y -> if y.uid > 1 then let uid = y.uid in let low_uid = (low y).uid in let high_uid = (high y).uid in 
+		let str = Printf.sprintf "%d -> %d 		[style=dotted];\n%d -> %d\n" uid low_uid uid high_uid in Printf.fprintf oc "%s" str) table;
+		Printf.fprintf oc "}"; 
+		close_out oc
+
+	let save_bdd file data = let table = get_table data in 
+		
+		let print_info_string data = Printf.sprintf "Node_count: %d; Truth_rate: %f; Root: %d; Depth: %d" (count_nodes data) (count_truth_rate data) (get_root data).uid (get_depth data) in 
+
+		let hash_entry_to_string x y = Printf.sprintf "UID:%d VAR:%d LOW_UID:%d HIGH_UID:%d" y.uid (var y) (low y).uid (high y).uid in
+
+		let bdd_to_string table =  let output = ref "" in 
+			Hashtbl.iter (fun x y -> output := (!output ^ (hash_entry_to_string x y)) ^ ";") table;
+			Str.string_before !output ((String.length !output) -1) in
+
+		let bdd_id = if Sys.file_exists file then
+		let chan = open_in file in
+		let last_line = ref "" in
+		try
+  			while true do
+    			last_line := input_line chan;
+  			done; 1
+		with | End_of_file ->
+			close_in chan;
+  			(int_of_string (get_bdd_id !last_line)) + 1
+   		else 1 in let  oc = open_out_gen [Open_creat; Open_text; Open_append] 0o640 file in
+		Printf.fprintf oc "%d, [%s], %s\n" bdd_id (bdd_to_string table) (print_info_string data);   (* write something *)   
+  		close_out oc
+
+	let rounding data from_level approx_function = let table = data.bdd in let depth = (get_depth data) in let var_map = create_var_map table in 
 		count_false_true data;
 		for i = from_level to depth do
 			try
 				let values = Hashtbl.find_all var_map i in 
-				List.iter (fun x -> get_low x)values;
+				List.iter (fun x -> approx_function x)values;
 			with _ -> ()
 		done
+
+	let print_info data = Printf.printf "Depth: %d Truth_rate: %f Nodes: %d Root: %d" (get_depth data) (get_truth_rate data) data.info.node_count data.info.root.uid
 
 	let replace data new_table new_info = 
 		set_info data new_info;
@@ -397,34 +453,9 @@ let rec build = let table = ref (create_empty_bdd ()) in function
   | Fnot f -> mk_not (build f)
 
  *)
-let sort_table_keys ?(reverse=false) table = let output = ref [] in 
-	Hashtbl.iter (fun x y -> if not (List.mem x !output) then output := x :: !output) table;
-	List.sort compare !output
-
-let create_rank_string rank values label_function = let output = ref "{\ngraph [rank=same];\n" in 
-	List.iter (fun x -> let str = Printf.sprintf "%d	[fillcolor=%d, label=%s, rank=%d];\n" x.uid ((var x) mod 11 + 1) (label_function x) rank in 
-	output := !output ^ str) values;
-	output := !output ^ "}\n";
-	!output
 
 let paths_labeling bdd = 
 	Printf.sprintf "\"%d %d\"" (false_paths bdd) (true_paths bdd) 
-
-let to_dot_file ?(lf = (fun x -> string_of_int (var x))) file table = let oc = open_out file in let rank = ref 0 in 
-  Printf.fprintf oc "digraph \"\" {
-	node [colorscheme=set312,
-		label=\"\\N\",
-		shape=circle,
-		style=filled
-	];\n";
-	let var_map = create_var_map table in let keys = sort_table_keys var_map in 
-	List.iter (fun x -> rank := !rank + 1; 
-	let values = (Hashtbl.find_all var_map x) in let str = (create_rank_string !rank values lf) in Printf.fprintf oc "%s" str) keys;
-	Printf.fprintf oc "0	 [fillcolor=White, label=F, rank=None, shape=doublecircle];\n1	 [fillcolor=White, label=T, rank=None, shape=doublecircle];\n";
-	Hashtbl.iter (fun x y -> if y.uid > 1 then let uid = y.uid in let low_uid = (low y).uid in let high_uid = (high y).uid in 
-	let str = Printf.sprintf "%d -> %d 		[style=dotted];\n%d -> %d\n" uid low_uid uid high_uid in Printf.fprintf oc "%s" str) table;
-	Printf.fprintf oc "}"; 
-	close_out oc
 
 let speed_test () =
 	let t = Sys.time () in 
@@ -433,8 +464,15 @@ let speed_test () =
 	done;
 	Printf.printf "Execution time: %fs\n" (Sys.time() -. t)
 
-let test () = let data = BddData.create_random_function 15 10000 in 
-to_dot_file ~lf:paths_labeling "test.dot" (BddData.get_table data); 
-BddData.rounding_up data 10;
-BddData.rebuild data; 
-to_dot_file ~lf:paths_labeling "test2.dot" (BddData.get_table data); 
+let test () = 
+	Random.init 12345;
+	let data = BddData.create_random_function 15 10000 in 
+	BddData.to_dot_file ~lf:paths_labeling "test.dot" data; 
+	BddData.rounding data 10 get_low;
+	BddData.rebuild data; 
+	BddData.fill_info data;
+	BddData.count_false_true data;
+	BddData.to_dot_file ~lf:paths_labeling "test2.dot" data; 
+	BddData.save_bdd "test.txt" data;
+	BddData.print_info data;
+	data
