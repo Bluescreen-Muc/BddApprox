@@ -1,0 +1,81 @@
+digraph "" {
+	node [colorscheme=set312,
+		label="\N",
+		shape=circle,
+		style=filled
+	];
+{
+graph [rank=same];
+660106	[fillcolor=2, label="0 0", rank=1];
+}
+{
+graph [rank=same];
+660105	[fillcolor=3, label="0 0", rank=2];
+660097	[fillcolor=3, label="0 0", rank=2];
+}
+{
+graph [rank=same];
+660104	[fillcolor=4, label="0 0", rank=3];
+}
+{
+graph [rank=same];
+660103	[fillcolor=5, label="0 0", rank=4];
+660096	[fillcolor=5, label="0 0", rank=4];
+}
+{
+graph [rank=same];
+660102	[fillcolor=6, label="0 0", rank=5];
+660095	[fillcolor=6, label="0 0", rank=5];
+}
+{
+graph [rank=same];
+660101	[fillcolor=7, label="0 0", rank=6];
+}
+{
+graph [rank=same];
+660100	[fillcolor=8, label="0 0", rank=7];
+}
+{
+graph [rank=same];
+660094	[fillcolor=11, label="0 0", rank=8];
+660099	[fillcolor=11, label="0 0", rank=8];
+}
+{
+graph [rank=same];
+660098	[fillcolor=2, label="0 0", rank=9];
+}
+{
+graph [rank=same];
+660093	[fillcolor=3, label="0 0", rank=10];
+}
+0	 [fillcolor=White, label=F, rank=None, shape=doublecircle];
+1	 [fillcolor=White, label=T, rank=None, shape=doublecircle];
+660100 -> 660099 		[style=dotted];
+660100 -> 660094
+660104 -> 0 		[style=dotted];
+660104 -> 660103
+660093 -> 0 		[style=dotted];
+660093 -> 1
+660097 -> 660096 		[style=dotted];
+660097 -> 0
+660095 -> 0 		[style=dotted];
+660095 -> 660094
+660096 -> 660095 		[style=dotted];
+660096 -> 0
+660105 -> 660104 		[style=dotted];
+660105 -> 0
+660106 -> 660105 		[style=dotted];
+660106 -> 660097
+660098 -> 0 		[style=dotted];
+660098 -> 1
+660102 -> 0 		[style=dotted];
+660102 -> 660101
+660101 -> 660100 		[style=dotted];
+660101 -> 660094
+660099 -> 660098 		[style=dotted];
+660099 -> 1
+660103 -> 660102 		[style=dotted];
+660103 -> 0
+660094 -> 660093 		[style=dotted];
+660094 -> 1
+}

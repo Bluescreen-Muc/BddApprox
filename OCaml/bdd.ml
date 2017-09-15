@@ -12,7 +12,9 @@ and node = True | False | Node of {var: int; mutable low: bdd; mutable high: bdd
 type bdd_info = {mutable depth: int; mutable truth_rate: float; mutable node_count: int; mutable root: bdd}
 
 let functions = [|AND; OR; NOT|]
+
 let empty_info () = {paths=0;true_paths=0;false_paths=0}
+
 let random_funct ?(opnot = true) ()= 
     if opnot == true then let n = Random.int (Array.length functions) in Array.get functions n
 	else let n = Random.int ((Array.length functions)-1) in Array.get functions (n)
@@ -31,14 +33,12 @@ let reset_max_var () = max_var := 0
 
 let max_nodes = 100000
 
-
 let node b = b.node
 
 let equal x y = match x, y with
   | Node n1, Node n2 -> 
       n1.var == n2.var && n1.low == n2.low && n1.high == n2.high
   | _ -> x == y
-
 
 let hash = function
   | True -> 1
@@ -51,12 +51,9 @@ let genuid = fun () -> incr cur_uid
 let zero = { uid = 0; node = False }
 let one = { uid = 1; node = True }
 
-
-
 let var bdd = match bdd.node with
   | False | True -> !max_var + 1
   | Node n -> n.var
-
 
 let low bdd = match bdd.node with
   | Node n -> n.low
@@ -73,8 +70,6 @@ module H = struct
   let equal {uid = u;node = n} {uid = u2;node = n2} = equal n n2
   let hash {uid = u;node = n} = hash n 
 end
-
-(* module Ht = Hashtbl.Make() *)
 
 let random_terminal () = if Random.bool () then one else zero
 
@@ -109,15 +104,11 @@ let add_node table node = let bdd = {uid = !cur_uid; node=node} in
   Hashtbl.find table (hash bdd.node)
   with _ -> genuid (); Hashtbl.add table (hash bdd.node) bdd; bdd
 
-
 let create_single_bdd var = 
 	let t = ref (Hashtbl.create 10) in 
     ignore(Hashtbl.add !t  0 zero);
     ignore(Hashtbl.add !t 1 one);
     (add_node !t (Node{var=var; low=zero; high=one;info=empty_info()}), !t)
-    
-
-    
 
 module Int = struct 
    type t = int 
@@ -157,9 +148,7 @@ let is_terminal bdd =
 	| Node x -> false
 	| True | False -> true
 
-
 let switch_terminal terminal = if terminal == zero then one else if terminal == one then zero else raise (BddInputError "switch_terminals")
-
 
 let switch_terminals bdd = match bdd.node with
 	| Node n -> 
@@ -189,7 +178,6 @@ let opnot table bdd = let to_do = ref [] in
 	List.iter (fun (x,y) -> Hashtbl.remove table x) !to_do;
 	List.iter (fun (x,y) -> switch_terminals y; Hashtbl.add table (hash y.node) y) !to_do;
 	bdd
-
 
 let create_random_bdd ?(n = 5) depth =
 	let table = ref (create_empty_bdd ()) in 
@@ -232,28 +220,37 @@ let save_bdd file table = let bdd_id = if Sys.file_exists file then
 	Printf.fprintf oc "%d, [%s]\n" bdd_id (bdd_to_string table);   (* write something *)   
   	close_out oc
 
-
-
 let create_var_map table = let var_table = ref (Hashtbl.create 10) in 
 	Hashtbl.iter(fun x y -> if not (is_terminal y) then  Hashtbl.add !var_table (var y) (y)) table;
 	!var_table
 
+let get_low bdd = match bdd.node with
+	|Node n -> 
+	begin
+		match n.low.node, n.high.node with 
+		| True, _ | _, True -> ()
+		| False ,  n1 -> n.high <- one
+		| Node n1, False -> n.low <- one
+		| Node n1, Node n2 -> if n1.info.true_paths > n2.info.true_paths then n.low <- one else n.high <- one
+	end
+	|_ -> ()
+
 
 module BddData = struct
 
-	type bdd_dataset = {bdd: (int, bdd) Hashtbl.t; info: bdd_info}
+	type bdd_dataset = {mutable bdd: (int, bdd) Hashtbl.t; mutable info: bdd_info}
 
-	let bdd data = data.bdd
-
+	let get_table data = data.bdd
+	let set_table data table = data.bdd <- table
+	
 	let get_depth data = data.info.depth
 	let set_depth data x = data.info.depth <- x
-
-
 
 	let get_root data = data.info.root
 	let set_root data root = data.info.root <- root
 
-	let info data = data.info 
+	let get_info data = data.info
+	let set_info data info = data.info <- info 
 
 	let empty () = { bdd = create_empty_bdd (); info = {depth=0; truth_rate=0.0; node_count= 0; root=zero}}
 
@@ -275,7 +272,6 @@ module BddData = struct
     	let root = add_node !data (Node{var=var; low=zero; high=one;info=empty_info()})
 		in { bdd = !table; info = {depth=var; truth_rate=0.0; node_count= 0; root=root}}
     
-
 	let count_nodes x = x.info.node_count <- Hashtbl.length x.bdd; x.info.node_count
 
 	let count_truth_rate x = let table = x.bdd in let info = x.info in
@@ -289,7 +285,6 @@ module BddData = struct
 		) table;
 		info.truth_rate <- (float_of_int !true_hits) /. ((float_of_int !true_hits) +. (float_of_int !false_hits));
 		info.truth_rate
-
 
 	let count_paths data = 
 		let rec inner_count_paths bdd paths = 
@@ -324,8 +319,8 @@ module BddData = struct
 							let var_diff = (var n.high) - (var x) in 
 								n.info.true_paths <- n.info.true_paths + (pow 2 (var_diff - 1)) * (true_paths (high x));
 								n.info.false_paths <- n.info.false_paths + (pow 2 (var_diff - 1)) * (false_paths (high x));
-
   						end;
+  						n.info.paths <- n.info.true_paths + n.info.false_paths; 
   					end
   				| True | False -> raise  (NoTerminalAllowed "count_false_true")
   				) values
@@ -353,7 +348,32 @@ module BddData = struct
  				end
 	done;
 	create !table {depth=depth; truth_rate=0.0; node_count=0; root=(!result)}
+
+	let rounding_up data from_level = let table = data.bdd in let depth = (get_depth data) in let var_map = create_var_map table in 
+		count_false_true data;
+		for i = from_level to depth do
+			try
+				let values = Hashtbl.find_all var_map i in 
+				List.iter (fun x -> get_low x)values;
+			with _ -> ()
+		done
+
+	let replace data new_table new_info = 
+		set_info data new_info;
+		set_table data new_table
+
+	let rebuild data = let depth = (get_depth data) in let table = ref (create_empty_bdd()) in let result = ref (apply AND (get_root data) one !table) in 
+		(* create !table {depth=depth; truth_rate=0.0; node_count=0; root=(!result)} *)
+		set_table data !table;
+		set_info data {depth=depth; truth_rate=0.0; node_count=0; root=(!result)} 
 end
+
+let get_lowest_child x = 
+	if (low x) == one || (high x) == one then (-1)
+	else if (low x) == zero then 1 else if (high x) == zero then 0 
+	else if true_paths (low x) > true_paths (high x) then 1 else 0
+
+
 
 type formula = 
   | Ffalse 
@@ -380,6 +400,7 @@ let rec build = let table = ref (create_empty_bdd ()) in function
 let sort_table_keys ?(reverse=false) table = let output = ref [] in 
 	Hashtbl.iter (fun x y -> if not (List.mem x !output) then output := x :: !output) table;
 	List.sort compare !output
+
 let create_rank_string rank values label_function = let output = ref "{\ngraph [rank=same];\n" in 
 	List.iter (fun x -> let str = Printf.sprintf "%d	[fillcolor=%d, label=%s, rank=%d];\n" x.uid ((var x) mod 11 + 1) (label_function x) rank in 
 	output := !output ^ str) values;
@@ -388,7 +409,7 @@ let create_rank_string rank values label_function = let output = ref "{\ngraph [
 
 let paths_labeling bdd = 
 	Printf.sprintf "\"%d %d\"" (false_paths bdd) (true_paths bdd) 
-(* let print_var_map map = let output = ref "" in VarMap.iter (fun x y -> output := output ^ Printf.sprintf "%s : %y") *)
+
 let to_dot_file ?(lf = (fun x -> string_of_int (var x))) file table = let oc = open_out file in let rank = ref 0 in 
   Printf.fprintf oc "digraph \"\" {
 	node [colorscheme=set312,
@@ -397,15 +418,23 @@ let to_dot_file ?(lf = (fun x -> string_of_int (var x))) file table = let oc = o
 		style=filled
 	];\n";
 	let var_map = create_var_map table in let keys = sort_table_keys var_map in 
-	List.iter (fun x -> rank := !rank + 1; let values = (Hashtbl.find_all var_map x) in let str = (create_rank_string !rank values lf) in Printf.fprintf oc "%s" str) keys;
+	List.iter (fun x -> rank := !rank + 1; 
+	let values = (Hashtbl.find_all var_map x) in let str = (create_rank_string !rank values lf) in Printf.fprintf oc "%s" str) keys;
 	Printf.fprintf oc "0	 [fillcolor=White, label=F, rank=None, shape=doublecircle];\n1	 [fillcolor=White, label=T, rank=None, shape=doublecircle];\n";
 	Hashtbl.iter (fun x y -> if y.uid > 1 then let uid = y.uid in let low_uid = (low y).uid in let high_uid = (high y).uid in 
-		let str = Printf.sprintf "%d -> %d 		[style=dotted];\n%d -> %d\n" uid low_uid uid high_uid in Printf.fprintf oc "%s" str) table;
+	let str = Printf.sprintf "%d -> %d 		[style=dotted];\n%d -> %d\n" uid low_uid uid high_uid in Printf.fprintf oc "%s" str) table;
 	Printf.fprintf oc "}"; 
 	close_out oc
+
 let speed_test () =
 	let t = Sys.time () in 
 	for i = 1 to 1000000 do
 	ignore(create_random_bdd 100);
 	done;
 	Printf.printf "Execution time: %fs\n" (Sys.time() -. t)
+
+let test () = let data = BddData.create_random_function 15 10000 in 
+to_dot_file ~lf:paths_labeling "test.dot" (BddData.get_table data); 
+BddData.rounding_up data 10;
+BddData.rebuild data; 
+to_dot_file ~lf:paths_labeling "test2.dot" (BddData.get_table data); 
