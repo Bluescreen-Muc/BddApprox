@@ -167,7 +167,6 @@ let switch_terminals bdd = match bdd.node with
 		end;
 	| _ -> ()
 
-
 let rec apply funct bdd1 bdd2 table =
 	match bdd1.node, bdd2.node with
 	| Node n1, Node n2 -> 
@@ -194,7 +193,9 @@ let create_random_bdd ?(n = 5) depth =
 	let vars = create_random_rumbers n depth in 
 	let bdds = ref [] in 
 	Ints.iter (fun x -> bdds := [create_single_bdd x] @ !bdds) vars;
-	List.fold_left (fun acc x -> let funct = (random_funct ~opnot:false ()) in  apply funct acc (fst x) !table) (fst (List.hd !bdds)) (List.tl !bdds)
+	List.fold_left (fun acc x -> let funct = random_funct() in 
+		if funct == NOT then opnot !table acc
+		else apply funct acc (fst x) !table) (fst (List.hd !bdds)) (List.tl !bdds)
 
 let node_count table = Hashtbl.length table
 
@@ -213,17 +214,6 @@ let get_some x =
  	match x with
  	| Some x -> x
  	| None -> raise (ExpectationVsRealityError "expected something")
-
-let get_root table = let min_var = ref 99999 in 
-	let result = ref None in
-	Hashtbl.iter (fun x y -> let n = y.node in match n with
-		|Node n -> if n.var < !min_var then 
-		begin
-			min_var := n.var;
-			result := Some y;
-		end;
-		| _ -> ()) table;
-	get_some (!result)
 
 let save_bdd file table = let bdd_id = if Sys.file_exists file then
 	let chan = open_in file in
@@ -338,26 +328,26 @@ module BddData = struct
   				) values
   			with Not_found -> ()
 		done
-	let create_random_function depth n =
-	reset_max_var ();
-	let result = ref (create_random_bdd depth) in
-	let table = ref (create_empty_bdd()) in 
-	for i = 1 to n do
-	let funct = random_funct () in 
-		if funct == NOT then 
-			begin
-				print_node !result; 
-				result := opnot !table !result 
-			end
-		else 
-			begin
-				table := (create_empty_bdd());
- 				let tmp = create_random_bdd depth in 
- 				result := apply funct !result tmp (!table);
- 				print_int (Hashtbl.length !table);
- 				print_newline()
- 			end
 
+	let create_random_function depth n =
+		reset_max_var ();
+		let result = ref (create_random_bdd depth) in
+		let table = ref (create_empty_bdd()) in 
+		for i = 1 to n do
+		let funct = random_funct () in 
+			if funct == NOT then 
+				begin
+					print_node !result; 
+					result := opnot !table !result 
+				end
+			else 
+				begin
+					table := (create_empty_bdd());
+ 					let tmp = create_random_bdd depth in 
+ 					result := apply funct !result tmp (!table);
+ 					print_int (Hashtbl.length !table);
+ 					print_newline()
+ 				end
 	done;
 	create !table {depth=depth; truth_rate=0.0; node_count=0; root=(!result)}
 
