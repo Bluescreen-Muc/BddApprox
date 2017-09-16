@@ -6,79 +6,97 @@ digraph "" {
 		];
 {
 graph [rank=same];
-437121	[fillcolor=2, label="832 31936", rank=1];
+4739	[fillcolor=2, label=1, rank=1];
 }
 {
 graph [rank=same];
-437120	[fillcolor=5, label="208 3888", rank=2];
+4732	[fillcolor=3, label=2, rank=2];
+4738	[fillcolor=3, label=2, rank=2];
 }
 {
 graph [rank=same];
-437119	[fillcolor=7, label="104 920", rank=3];
+4736	[fillcolor=4, label=3, rank=3];
+4737	[fillcolor=4, label=3, rank=3];
+4731	[fillcolor=4, label=3, rank=3];
 }
 {
 graph [rank=same];
-437118	[fillcolor=8, label="104 408", rank=4];
+4730	[fillcolor=5, label=4, rank=4];
 }
 {
 graph [rank=same];
-437113	[fillcolor=9, label="24 232", rank=5];
-437117	[fillcolor=9, label="80 176", rank=5];
+4727	[fillcolor=6, label=5, rank=5];
+4729	[fillcolor=6, label=5, rank=5];
+4735	[fillcolor=6, label=5, rank=5];
 }
 {
 graph [rank=same];
-437112	[fillcolor=10, label="16 112", rank=6];
-437109	[fillcolor=10, label="8 120", rank=6];
-437115	[fillcolor=10, label="16 112", rank=6];
+4734	[fillcolor=7, label=6, rank=6];
+4728	[fillcolor=7, label=6, rank=6];
+4726	[fillcolor=7, label=6, rank=6];
 }
 {
 graph [rank=same];
-437108	[fillcolor=11, label="8 56", rank=7];
-437111	[fillcolor=11, label="16 48", rank=7];
-437116	[fillcolor=11, label="32 32", rank=7];
-437114	[fillcolor=11, label="16 48", rank=7];
+4725	[fillcolor=8, label=7, rank=7];
 }
 {
 graph [rank=same];
-437110	[fillcolor=1, label="16 16", rank=8];
-437107	[fillcolor=1, label="8 24", rank=8];
+4724	[fillcolor=9, label=8, rank=8];
 }
 {
 graph [rank=same];
-437106	[fillcolor=5, label="1 1", rank=9];
+4723	[fillcolor=10, label=9, rank=9];
+}
+{
+graph [rank=same];
+4733	[fillcolor=11, label=10, rank=10];
+}
+{
+graph [rank=same];
+4722	[fillcolor=1, label=11, rank=11];
+}
+{
+graph [rank=same];
+4721	[fillcolor=2, label=12, rank=12];
 }
 0	 [fillcolor=White, label=F, rank=None, shape=doublecircle];
 1	 [fillcolor=White, label=T, rank=None, shape=doublecircle];
-437120 -> 437119 		[style=dotted];
-437120 -> 1
-437117 -> 437116 		[style=dotted];
-437117 -> 437115
-437114 -> 437106 		[style=dotted];
-437114 -> 1
-437116 -> 0 		[style=dotted];
-437116 -> 1
-437111 -> 437110 		[style=dotted];
-437111 -> 1
-437115 -> 437114 		[style=dotted];
-437115 -> 1
-437107 -> 437106 		[style=dotted];
-437107 -> 1
-437118 -> 437117 		[style=dotted];
-437118 -> 437113
-437109 -> 437108 		[style=dotted];
-437109 -> 1
-437108 -> 437107 		[style=dotted];
-437108 -> 1
-437113 -> 437112 		[style=dotted];
-437113 -> 437109
-437106 -> 0 		[style=dotted];
-437106 -> 1
-437119 -> 1 		[style=dotted];
-437119 -> 437118
-437110 -> 0 		[style=dotted];
-437110 -> 1
-437112 -> 437111 		[style=dotted];
-437112 -> 1
-437121 -> 437120 		[style=dotted];
-437121 -> 1
+4738 -> 4737 		[style=dotted];
+4738 -> 4736
+4732 -> 4731 		[style=dotted];
+4732 -> 0
+4726 -> 0 		[style=dotted];
+4726 -> 4725
+4731 -> 0 		[style=dotted];
+4731 -> 4730
+4735 -> 4733 		[style=dotted];
+4735 -> 4734
+4728 -> 0 		[style=dotted];
+4728 -> 4721
+4725 -> 4721 		[style=dotted];
+4725 -> 4724
+4721 -> 0 		[style=dotted];
+4721 -> 1
+4737 -> 0 		[style=dotted];
+4737 -> 4729
+4724 -> 4721 		[style=dotted];
+4724 -> 4723
+4723 -> 4721 		[style=dotted];
+4723 -> 4722
+4734 -> 0 		[style=dotted];
+4734 -> 4733
+4733 -> 1 		[style=dotted];
+4733 -> 4721
+4729 -> 4721 		[style=dotted];
+4729 -> 4728
+4730 -> 4729 		[style=dotted];
+4730 -> 4727
+4722 -> 1 		[style=dotted];
+4722 -> 4721
+4739 -> 4738 		[style=dotted];
+4739 -> 4732
+4727 -> 4725 		[style=dotted];
+4727 -> 4726
+4736 -> 0 		[style=dotted];
+4736 -> 4735
 }

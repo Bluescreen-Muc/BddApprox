@@ -6,109 +6,277 @@ digraph "" {
 		];
 {
 graph [rank=same];
-437105	[fillcolor=2, label="0 0", rank=1];
+4720	[fillcolor=2, label=1, rank=1];
 }
 {
 graph [rank=same];
-437104	[fillcolor=5, label="0 0", rank=2];
+4719	[fillcolor=3, label=2, rank=2];
+4699	[fillcolor=3, label=2, rank=2];
 }
 {
 graph [rank=same];
-437103	[fillcolor=7, label="0 0", rank=3];
+4718	[fillcolor=4, label=3, rank=3];
+4715	[fillcolor=4, label=3, rank=3];
+4698	[fillcolor=4, label=3, rank=3];
 }
 {
 graph [rank=same];
-437102	[fillcolor=8, label="0 0", rank=4];
+4697	[fillcolor=5, label=4, rank=4];
 }
 {
 graph [rank=same];
-437101	[fillcolor=9, label="0 0", rank=5];
-437095	[fillcolor=9, label="0 0", rank=5];
+4696	[fillcolor=6, label=5, rank=5];
+4717	[fillcolor=6, label=5, rank=5];
+4694	[fillcolor=6, label=5, rank=5];
+4714	[fillcolor=6, label=5, rank=5];
 }
 {
 graph [rank=same];
-437098	[fillcolor=10, label="0 0", rank=6];
-437094	[fillcolor=10, label="0 0", rank=6];
-437088	[fillcolor=10, label="0 0", rank=6];
+4695	[fillcolor=7, label=6, rank=6];
+4684	[fillcolor=7, label=6, rank=6];
+4716	[fillcolor=7, label=6, rank=6];
+4709	[fillcolor=7, label=6, rank=6];
 }
 {
 graph [rank=same];
-437087	[fillcolor=11, label="0 0", rank=7];
-437093	[fillcolor=11, label="0 0", rank=7];
-437097	[fillcolor=11, label="0 0", rank=7];
-437100	[fillcolor=11, label="0 0", rank=7];
+4683	[fillcolor=8, label=7, rank=7];
+4693	[fillcolor=8, label=7, rank=7];
 }
 {
 graph [rank=same];
-437091	[fillcolor=1, label="0 0", rank=8];
-437099	[fillcolor=1, label="0 0", rank=8];
-437092	[fillcolor=1, label="0 0", rank=8];
-437085	[fillcolor=1, label="0 0", rank=8];
-437086	[fillcolor=1, label="0 0", rank=8];
-437096	[fillcolor=1, label="0 0", rank=8];
+4692	[fillcolor=9, label=8, rank=8];
+4682	[fillcolor=9, label=8, rank=8];
 }
 {
 graph [rank=same];
-437090	[fillcolor=3, label="0 0", rank=9];
-437084	[fillcolor=3, label="0 0", rank=9];
+4681	[fillcolor=10, label=9, rank=9];
+4691	[fillcolor=10, label=9, rank=9];
 }
 {
 graph [rank=same];
-437083	[fillcolor=4, label="0 0", rank=10];
-437089	[fillcolor=4, label="0 0", rank=10];
+4708	[fillcolor=11, label=10, rank=10];
+4713	[fillcolor=11, label=10, rank=10];
 }
 {
 graph [rank=same];
-437082	[fillcolor=5, label="0 0", rank=11];
+4690	[fillcolor=1, label=11, rank=11];
+4680	[fillcolor=1, label=11, rank=11];
+}
+{
+graph [rank=same];
+4712	[fillcolor=2, label=12, rank=12];
+4679	[fillcolor=2, label=12, rank=12];
+4711	[fillcolor=2, label=12, rank=12];
+4678	[fillcolor=2, label=12, rank=12];
+4689	[fillcolor=2, label=12, rank=12];
+4688	[fillcolor=2, label=12, rank=12];
+4707	[fillcolor=2, label=12, rank=12];
+4706	[fillcolor=2, label=12, rank=12];
+}
+{
+graph [rank=same];
+4677	[fillcolor=3, label=13, rank=13];
+4687	[fillcolor=3, label=13, rank=13];
+}
+{
+graph [rank=same];
+4710	[fillcolor=4, label=14, rank=14];
+4705	[fillcolor=4, label=14, rank=14];
+}
+{
+graph [rank=same];
+4686	[fillcolor=5, label=15, rank=15];
+4685	[fillcolor=5, label=15, rank=15];
+4670	[fillcolor=5, label=15, rank=15];
+4676	[fillcolor=5, label=15, rank=15];
+}
+{
+graph [rank=same];
+4664	[fillcolor=6, label=16, rank=16];
+4704	[fillcolor=6, label=16, rank=16];
+4673	[fillcolor=6, label=16, rank=16];
+4675	[fillcolor=6, label=16, rank=16];
+4669	[fillcolor=6, label=16, rank=16];
+}
+{
+graph [rank=same];
+4658	[fillcolor=7, label=17, rank=17];
+4668	[fillcolor=7, label=17, rank=17];
+4701	[fillcolor=7, label=17, rank=17];
+4703	[fillcolor=7, label=17, rank=17];
+4663	[fillcolor=7, label=17, rank=17];
+4674	[fillcolor=7, label=17, rank=17];
+4671	[fillcolor=7, label=17, rank=17];
+4672	[fillcolor=7, label=17, rank=17];
+}
+{
+graph [rank=same];
+4700	[fillcolor=8, label=18, rank=18];
+4702	[fillcolor=8, label=18, rank=18];
+}
+{
+graph [rank=same];
+4657	[fillcolor=9, label=19, rank=19];
+4667	[fillcolor=9, label=19, rank=19];
+4662	[fillcolor=9, label=19, rank=19];
+}
+{
+graph [rank=same];
+4661	[fillcolor=10, label=20, rank=20];
+}
+{
+graph [rank=same];
+4666	[fillcolor=11, label=21, rank=21];
+}
+{
+graph [rank=same];
+4665	[fillcolor=1, label=22, rank=22];
+}
+{
+graph [rank=same];
+4660	[fillcolor=2, label=23, rank=23];
+4656	[fillcolor=2, label=23, rank=23];
+}
+{
+graph [rank=same];
+4659	[fillcolor=3, label=24, rank=24];
+}
+{
+graph [rank=same];
+4655	[fillcolor=4, label=25, rank=25];
 }
 0	 [fillcolor=White, label=F, rank=None, shape=doublecircle];
 1	 [fillcolor=White, label=T, rank=None, shape=doublecircle];
-437096 -> 437084 		[style=dotted];
-437096 -> 437082
-437088 -> 437087 		[style=dotted];
-437088 -> 1
-437100 -> 0 		[style=dotted];
-437100 -> 437099
-437094 -> 437093 		[style=dotted];
-437094 -> 1
-437103 -> 1 		[style=dotted];
-437103 -> 437102
-437086 -> 437082 		[style=dotted];
-437086 -> 1
-437097 -> 437082 		[style=dotted];
-437097 -> 437096
-437089 -> 1 		[style=dotted];
-437089 -> 0
-437102 -> 437101 		[style=dotted];
-437102 -> 437095
-437084 -> 1 		[style=dotted];
-437084 -> 437083
-437082 -> 0 		[style=dotted];
-437082 -> 1
-437104 -> 437103 		[style=dotted];
-437104 -> 1
-437093 -> 437092 		[style=dotted];
-437093 -> 437091
-437090 -> 1 		[style=dotted];
-437090 -> 437089
-437087 -> 437086 		[style=dotted];
-437087 -> 437085
-437085 -> 437084 		[style=dotted];
-437085 -> 1
-437098 -> 437097 		[style=dotted];
-437098 -> 1
-437092 -> 0 		[style=dotted];
-437092 -> 1
-437099 -> 437090 		[style=dotted];
-437099 -> 0
-437095 -> 437094 		[style=dotted];
-437095 -> 437088
-437091 -> 437090 		[style=dotted];
-437091 -> 1
-437105 -> 437104 		[style=dotted];
-437105 -> 1
-437101 -> 437100 		[style=dotted];
-437101 -> 437098
-437083 -> 1 		[style=dotted];
-437083 -> 437082
+4713 -> 4712 		[style=dotted];
+4713 -> 4711
+4666 -> 0 		[style=dotted];
+4666 -> 4665
+4687 -> 4686 		[style=dotted];
+4687 -> 4685
+4705 -> 4673 		[style=dotted];
+4705 -> 4704
+4709 -> 0 		[style=dotted];
+4709 -> 4708
+4697 -> 4696 		[style=dotted];
+4697 -> 4694
+4676 -> 4675 		[style=dotted];
+4676 -> 4673
+4669 -> 0 		[style=dotted];
+4669 -> 4668
+4693 -> 4689 		[style=dotted];
+4693 -> 4692
+4672 -> 0 		[style=dotted];
+4672 -> 4661
+4671 -> 0 		[style=dotted];
+4671 -> 4656
+4698 -> 0 		[style=dotted];
+4698 -> 4697
+4715 -> 0 		[style=dotted];
+4715 -> 4714
+4714 -> 4713 		[style=dotted];
+4714 -> 4709
+4708 -> 4707 		[style=dotted];
+4708 -> 4706
+4720 -> 4719 		[style=dotted];
+4720 -> 4699
+4682 -> 4679 		[style=dotted];
+4682 -> 4681
+4674 -> 0 		[style=dotted];
+4674 -> 4666
+4662 -> 4661 		[style=dotted];
+4662 -> 0
+4691 -> 4689 		[style=dotted];
+4691 -> 4690
+4706 -> 0 		[style=dotted];
+4706 -> 4705
+4694 -> 4693 		[style=dotted];
+4694 -> 4684
+4656 -> 4655 		[style=dotted];
+4656 -> 0
+4710 -> 4671 		[style=dotted];
+4710 -> 4701
+4667 -> 4666 		[style=dotted];
+4667 -> 0
+4683 -> 4679 		[style=dotted];
+4683 -> 4682
+4717 -> 4712 		[style=dotted];
+4717 -> 4716
+4675 -> 0 		[style=dotted];
+4675 -> 4674
+4696 -> 4689 		[style=dotted];
+4696 -> 4695
+4718 -> 0 		[style=dotted];
+4718 -> 4717
+4702 -> 4661 		[style=dotted];
+4702 -> 0
+4663 -> 0 		[style=dotted];
+4663 -> 4662
+4699 -> 4698 		[style=dotted];
+4699 -> 0
+4655 -> 1 		[style=dotted];
+4655 -> 0
+4681 -> 4679 		[style=dotted];
+4681 -> 4680
+4657 -> 4656 		[style=dotted];
+4657 -> 0
+4692 -> 4689 		[style=dotted];
+4692 -> 4691
+4707 -> 0 		[style=dotted];
+4707 -> 4673
+4688 -> 0 		[style=dotted];
+4688 -> 4687
+4660 -> 4659 		[style=dotted];
+4660 -> 0
+4673 -> 4672 		[style=dotted];
+4673 -> 4671
+4703 -> 0 		[style=dotted];
+4703 -> 4702
+4704 -> 4703 		[style=dotted];
+4704 -> 4701
+4716 -> 0 		[style=dotted];
+4716 -> 4707
+4689 -> 0 		[style=dotted];
+4689 -> 4686
+4670 -> 4669 		[style=dotted];
+4670 -> 4664
+4701 -> 0 		[style=dotted];
+4701 -> 4700
+4664 -> 4663 		[style=dotted];
+4664 -> 4658
+4719 -> 4718 		[style=dotted];
+4719 -> 4715
+4678 -> 0 		[style=dotted];
+4678 -> 4677
+4677 -> 4676 		[style=dotted];
+4677 -> 4670
+4684 -> 0 		[style=dotted];
+4684 -> 4683
+4711 -> 0 		[style=dotted];
+4711 -> 4710
+4679 -> 0 		[style=dotted];
+4679 -> 4676
+4668 -> 0 		[style=dotted];
+4668 -> 4667
+4712 -> 0 		[style=dotted];
+4712 -> 4671
+4685 -> 4669 		[style=dotted];
+4685 -> 4658
+4661 -> 0 		[style=dotted];
+4661 -> 4660
+4680 -> 4679 		[style=dotted];
+4680 -> 4678
+4658 -> 0 		[style=dotted];
+4658 -> 4657
+4695 -> 0 		[style=dotted];
+4695 -> 4679
+4686 -> 4675 		[style=dotted];
+4686 -> 4671
+4700 -> 4656 		[style=dotted];
+4700 -> 0
+4690 -> 4689 		[style=dotted];
+4690 -> 4688
+4659 -> 0 		[style=dotted];
+4659 -> 4655
+4665 -> 0 		[style=dotted];
+4665 -> 4656
 }

@@ -8,3 +8,5 @@ treeData.json
 *.pyc
 bdd.png
 *.pkl
+OCaml/_build/_log
+OCaml/_build/sanitize.sh
