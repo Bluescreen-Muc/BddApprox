@@ -6,97 +6,460 @@ digraph "" {
 		];
 {
 graph [rank=same];
-4739	[fillcolor=2, label=1, rank=1];
+216714	[fillcolor=2, label=1, rank=1];
 }
 {
 graph [rank=same];
-4732	[fillcolor=3, label=2, rank=2];
-4738	[fillcolor=3, label=2, rank=2];
+216713	[fillcolor=3, label=2, rank=2];
 }
 {
 graph [rank=same];
-4736	[fillcolor=4, label=3, rank=3];
-4737	[fillcolor=4, label=3, rank=3];
-4731	[fillcolor=4, label=3, rank=3];
+216691	[fillcolor=4, label=3, rank=3];
+216712	[fillcolor=4, label=3, rank=3];
 }
 {
 graph [rank=same];
-4730	[fillcolor=5, label=4, rank=4];
+216690	[fillcolor=5, label=4, rank=4];
+216711	[fillcolor=5, label=4, rank=4];
 }
 {
 graph [rank=same];
-4727	[fillcolor=6, label=5, rank=5];
-4729	[fillcolor=6, label=5, rank=5];
-4735	[fillcolor=6, label=5, rank=5];
+216710	[fillcolor=6, label=5, rank=5];
+216689	[fillcolor=6, label=5, rank=5];
 }
 {
 graph [rank=same];
-4734	[fillcolor=7, label=6, rank=6];
-4728	[fillcolor=7, label=6, rank=6];
-4726	[fillcolor=7, label=6, rank=6];
+216709	[fillcolor=7, label=6, rank=6];
+216700	[fillcolor=7, label=6, rank=6];
+216631	[fillcolor=7, label=6, rank=6];
+216688	[fillcolor=7, label=6, rank=6];
 }
 {
 graph [rank=same];
-4725	[fillcolor=8, label=7, rank=7];
+216630	[fillcolor=8, label=7, rank=7];
+216664	[fillcolor=8, label=7, rank=7];
+216704	[fillcolor=8, label=7, rank=7];
+216687	[fillcolor=8, label=7, rank=7];
+216708	[fillcolor=8, label=7, rank=7];
+216695	[fillcolor=8, label=7, rank=7];
+216699	[fillcolor=8, label=7, rank=7];
+216614	[fillcolor=8, label=7, rank=7];
 }
 {
 graph [rank=same];
-4724	[fillcolor=9, label=8, rank=8];
+216698	[fillcolor=9, label=8, rank=8];
+216686	[fillcolor=9, label=8, rank=8];
+216703	[fillcolor=9, label=8, rank=8];
+216707	[fillcolor=9, label=8, rank=8];
+216613	[fillcolor=9, label=8, rank=8];
+216663	[fillcolor=9, label=8, rank=8];
+216629	[fillcolor=9, label=8, rank=8];
+216694	[fillcolor=9, label=8, rank=8];
 }
 {
 graph [rank=same];
-4723	[fillcolor=10, label=9, rank=9];
+216679	[fillcolor=10, label=9, rank=9];
+216612	[fillcolor=10, label=9, rank=9];
+216702	[fillcolor=10, label=9, rank=9];
+216696	[fillcolor=10, label=9, rank=9];
+216693	[fillcolor=10, label=9, rank=9];
+216705	[fillcolor=10, label=9, rank=9];
+216655	[fillcolor=10, label=9, rank=9];
+216706	[fillcolor=10, label=9, rank=9];
+216692	[fillcolor=10, label=9, rank=9];
+216685	[fillcolor=10, label=9, rank=9];
+216697	[fillcolor=10, label=9, rank=9];
+216599	[fillcolor=10, label=9, rank=9];
+216662	[fillcolor=10, label=9, rank=9];
+216628	[fillcolor=10, label=9, rank=9];
+216701	[fillcolor=10, label=9, rank=9];
+216622	[fillcolor=10, label=9, rank=9];
 }
 {
 graph [rank=same];
-4733	[fillcolor=11, label=10, rank=10];
+216598	[fillcolor=11, label=10, rank=10];
+216644	[fillcolor=11, label=10, rank=10];
+216602	[fillcolor=11, label=10, rank=10];
+216654	[fillcolor=11, label=10, rank=10];
+216684	[fillcolor=11, label=10, rank=10];
+216617	[fillcolor=11, label=10, rank=10];
+216621	[fillcolor=11, label=10, rank=10];
+216672	[fillcolor=11, label=10, rank=10];
+216678	[fillcolor=11, label=10, rank=10];
+216682	[fillcolor=11, label=10, rank=10];
+216627	[fillcolor=11, label=10, rank=10];
+216594	[fillcolor=11, label=10, rank=10];
+216658	[fillcolor=11, label=10, rank=10];
+216661	[fillcolor=11, label=10, rank=10];
+216625	[fillcolor=11, label=10, rank=10];
+216611	[fillcolor=11, label=10, rank=10];
 }
 {
 graph [rank=same];
-4722	[fillcolor=1, label=11, rank=11];
+216601	[fillcolor=1, label=11, rank=11];
+216657	[fillcolor=1, label=11, rank=11];
+216681	[fillcolor=1, label=11, rank=11];
+216610	[fillcolor=1, label=11, rank=11];
+216659	[fillcolor=1, label=11, rank=11];
+216626	[fillcolor=1, label=11, rank=11];
+216683	[fillcolor=1, label=11, rank=11];
+216600	[fillcolor=1, label=11, rank=11];
+216623	[fillcolor=1, label=11, rank=11];
+216624	[fillcolor=1, label=11, rank=11];
+216680	[fillcolor=1, label=11, rank=11];
+216660	[fillcolor=1, label=11, rank=11];
+216656	[fillcolor=1, label=11, rank=11];
+216603	[fillcolor=1, label=11, rank=11];
 }
 {
 graph [rank=same];
-4721	[fillcolor=2, label=12, rank=12];
+216597	[fillcolor=2, label=12, rank=12];
+216643	[fillcolor=2, label=12, rank=12];
+216593	[fillcolor=2, label=12, rank=12];
+216648	[fillcolor=2, label=12, rank=12];
+216609	[fillcolor=2, label=12, rank=12];
+216589	[fillcolor=2, label=12, rank=12];
+216638	[fillcolor=2, label=12, rank=12];
+216653	[fillcolor=2, label=12, rank=12];
+}
+{
+graph [rank=same];
+216642	[fillcolor=3, label=13, rank=13];
+216652	[fillcolor=3, label=13, rank=13];
+216620	[fillcolor=3, label=13, rank=13];
+216608	[fillcolor=3, label=13, rank=13];
+216677	[fillcolor=3, label=13, rank=13];
+216592	[fillcolor=3, label=13, rank=13];
+216616	[fillcolor=3, label=13, rank=13];
+216671	[fillcolor=3, label=13, rank=13];
+}
+{
+graph [rank=same];
+216607	[fillcolor=4, label=14, rank=14];
+216596	[fillcolor=4, label=14, rank=14];
+216647	[fillcolor=4, label=14, rank=14];
+216588	[fillcolor=4, label=14, rank=14];
+216591	[fillcolor=4, label=14, rank=14];
+216637	[fillcolor=4, label=14, rank=14];
+216641	[fillcolor=4, label=14, rank=14];
+216651	[fillcolor=4, label=14, rank=14];
+}
+{
+graph [rank=same];
+216646	[fillcolor=5, label=15, rank=15];
+216674	[fillcolor=5, label=15, rank=15];
+216640	[fillcolor=5, label=15, rank=15];
+216650	[fillcolor=5, label=15, rank=15];
+216670	[fillcolor=5, label=15, rank=15];
+216676	[fillcolor=5, label=15, rank=15];
+216668	[fillcolor=5, label=15, rank=15];
+216636	[fillcolor=5, label=15, rank=15];
+}
+{
+graph [rank=same];
+216595	[fillcolor=6, label=16, rank=16];
+216645	[fillcolor=6, label=16, rank=16];
+216649	[fillcolor=6, label=16, rank=16];
+216619	[fillcolor=6, label=16, rank=16];
+216606	[fillcolor=6, label=16, rank=16];
+216673	[fillcolor=6, label=16, rank=16];
+216618	[fillcolor=6, label=16, rank=16];
+216675	[fillcolor=6, label=16, rank=16];
+}
+{
+graph [rank=same];
+216639	[fillcolor=7, label=17, rank=17];
+216615	[fillcolor=7, label=17, rank=17];
+216669	[fillcolor=7, label=17, rank=17];
+216605	[fillcolor=7, label=17, rank=17];
+216590	[fillcolor=7, label=17, rank=17];
+}
+{
+graph [rank=same];
+216604	[fillcolor=9, label=19, rank=18];
+}
+{
+graph [rank=same];
+216635	[fillcolor=10, label=20, rank=19];
+216667	[fillcolor=10, label=20, rank=19];
+}
+{
+graph [rank=same];
+216634	[fillcolor=11, label=21, rank=20];
+216587	[fillcolor=11, label=21, rank=20];
+}
+{
+graph [rank=same];
+216666	[fillcolor=1, label=22, rank=21];
+216633	[fillcolor=1, label=22, rank=21];
+}
+{
+graph [rank=same];
+216665	[fillcolor=3, label=24, rank=22];
+216632	[fillcolor=3, label=24, rank=22];
+}
+{
+graph [rank=same];
+216586	[fillcolor=5, label=26, rank=23];
 }
 0	 [fillcolor=White, label=F, rank=None, shape=doublecircle];
 1	 [fillcolor=White, label=T, rank=None, shape=doublecircle];
-4738 -> 4737 		[style=dotted];
-4738 -> 4736
-4732 -> 4731 		[style=dotted];
-4732 -> 0
-4726 -> 0 		[style=dotted];
-4726 -> 4725
-4731 -> 0 		[style=dotted];
-4731 -> 4730
-4735 -> 4733 		[style=dotted];
-4735 -> 4734
-4728 -> 0 		[style=dotted];
-4728 -> 4721
-4725 -> 4721 		[style=dotted];
-4725 -> 4724
-4721 -> 0 		[style=dotted];
-4721 -> 1
-4737 -> 0 		[style=dotted];
-4737 -> 4729
-4724 -> 4721 		[style=dotted];
-4724 -> 4723
-4723 -> 4721 		[style=dotted];
-4723 -> 4722
-4734 -> 0 		[style=dotted];
-4734 -> 4733
-4733 -> 1 		[style=dotted];
-4733 -> 4721
-4729 -> 4721 		[style=dotted];
-4729 -> 4728
-4730 -> 4729 		[style=dotted];
-4730 -> 4727
-4722 -> 1 		[style=dotted];
-4722 -> 4721
-4739 -> 4738 		[style=dotted];
-4739 -> 4732
-4727 -> 4725 		[style=dotted];
-4727 -> 4726
-4736 -> 0 		[style=dotted];
-4736 -> 4735
+216688 -> 216687 		[style=dotted];
+216688 -> 216664
+216622 -> 216621 		[style=dotted];
+216622 -> 216617
+216675 -> 216669 		[style=dotted];
+216675 -> 1
+216653 -> 1 		[style=dotted];
+216653 -> 216652
+216651 -> 1 		[style=dotted];
+216651 -> 216650
+216618 -> 0 		[style=dotted];
+216618 -> 1
+216671 -> 1 		[style=dotted];
+216671 -> 216670
+216641 -> 1 		[style=dotted];
+216641 -> 216640
+216614 -> 1 		[style=dotted];
+216614 -> 216613
+216694 -> 216693 		[style=dotted];
+216694 -> 216692
+216616 -> 1 		[style=dotted];
+216616 -> 216615
+216603 -> 1 		[style=dotted];
+216603 -> 216597
+216712 -> 1 		[style=dotted];
+216712 -> 216711
+216590 -> 216587 		[style=dotted];
+216590 -> 1
+216586 -> 0 		[style=dotted];
+216586 -> 1
+216701 -> 216648 		[style=dotted];
+216701 -> 216638
+216689 -> 1 		[style=dotted];
+216689 -> 216688
+216637 -> 1 		[style=dotted];
+216637 -> 216636
+216604 -> 216587 		[style=dotted];
+216604 -> 1
+216587 -> 216586 		[style=dotted];
+216587 -> 1
+216714 -> 216713 		[style=dotted];
+216714 -> 1
+216711 -> 216710 		[style=dotted];
+216711 -> 216700
+216629 -> 216628 		[style=dotted];
+216629 -> 216622
+216591 -> 1 		[style=dotted];
+216591 -> 216590
+216663 -> 216662 		[style=dotted];
+216663 -> 216655
+216588 -> 1 		[style=dotted];
+216588 -> 216587
+216628 -> 216627 		[style=dotted];
+216628 -> 216625
+216636 -> 216635 		[style=dotted];
+216636 -> 1
+216668 -> 216667 		[style=dotted];
+216668 -> 1
+216638 -> 1 		[style=dotted];
+216638 -> 216637
+216631 -> 216630 		[style=dotted];
+216631 -> 216614
+216699 -> 1 		[style=dotted];
+216699 -> 216698
+216676 -> 216675 		[style=dotted];
+216676 -> 1
+216662 -> 216661 		[style=dotted];
+216662 -> 216658
+216599 -> 216598 		[style=dotted];
+216599 -> 216594
+216611 -> 216610 		[style=dotted];
+216611 -> 216603
+216592 -> 1 		[style=dotted];
+216592 -> 216591
+216656 -> 1 		[style=dotted];
+216656 -> 216638
+216697 -> 216626 		[style=dotted];
+216697 -> 216623
+216685 -> 216684 		[style=dotted];
+216685 -> 216682
+216700 -> 216699 		[style=dotted];
+216700 -> 216695
+216670 -> 216669 		[style=dotted];
+216670 -> 1
+216633 -> 216632 		[style=dotted];
+216633 -> 1
+216605 -> 216604 		[style=dotted];
+216605 -> 1
+216677 -> 1 		[style=dotted];
+216677 -> 216676
+216692 -> 216597 		[style=dotted];
+216692 -> 216589
+216660 -> 1 		[style=dotted];
+216660 -> 216653
+216695 -> 1 		[style=dotted];
+216695 -> 216694
+216666 -> 216665 		[style=dotted];
+216666 -> 1
+216708 -> 1 		[style=dotted];
+216708 -> 216707
+216625 -> 216624 		[style=dotted];
+216625 -> 216623
+216691 -> 1 		[style=dotted];
+216691 -> 216690
+216706 -> 216683 		[style=dotted];
+216706 -> 216680
+216632 -> 216586 		[style=dotted];
+216632 -> 1
+216608 -> 1 		[style=dotted];
+216608 -> 216607
+216650 -> 216649 		[style=dotted];
+216650 -> 1
+216640 -> 216639 		[style=dotted];
+216640 -> 1
+216661 -> 216660 		[style=dotted];
+216661 -> 216659
+216673 -> 216667 		[style=dotted];
+216673 -> 1
+216658 -> 216657 		[style=dotted];
+216658 -> 216656
+216680 -> 1 		[style=dotted];
+216680 -> 216668
+216594 -> 216593 		[style=dotted];
+216594 -> 216589
+216624 -> 1 		[style=dotted];
+216624 -> 216616
+216613 -> 216612 		[style=dotted];
+216613 -> 216599
+216667 -> 1 		[style=dotted];
+216667 -> 216666
+216627 -> 1 		[style=dotted];
+216627 -> 216626
+216647 -> 1 		[style=dotted];
+216647 -> 216646
+216709 -> 216708 		[style=dotted];
+216709 -> 216704
+216707 -> 216706 		[style=dotted];
+216707 -> 216705
+216623 -> 1 		[style=dotted];
+216623 -> 0
+216703 -> 216702 		[style=dotted];
+216703 -> 216701
+216682 -> 216681 		[style=dotted];
+216682 -> 216680
+216606 -> 216605 		[style=dotted];
+216606 -> 1
+216620 -> 1 		[style=dotted];
+216620 -> 216619
+216600 -> 1 		[style=dotted];
+216600 -> 216589
+216678 -> 216677 		[style=dotted];
+216678 -> 216674
+216669 -> 216667 		[style=dotted];
+216669 -> 1
+216652 -> 1 		[style=dotted];
+216652 -> 216651
+216690 -> 216689 		[style=dotted];
+216690 -> 216631
+216672 -> 216671 		[style=dotted];
+216672 -> 216668
+216621 -> 216620 		[style=dotted];
+216621 -> 216618
+216617 -> 216616 		[style=dotted];
+216617 -> 0
+216635 -> 1 		[style=dotted];
+216635 -> 216634
+216615 -> 0 		[style=dotted];
+216615 -> 1
+216687 -> 1 		[style=dotted];
+216687 -> 216686
+216684 -> 1 		[style=dotted];
+216684 -> 216683
+216619 -> 216615 		[style=dotted];
+216619 -> 1
+216683 -> 1 		[style=dotted];
+216683 -> 216674
+216654 -> 216653 		[style=dotted];
+216654 -> 216648
+216655 -> 216654 		[style=dotted];
+216655 -> 216644
+216704 -> 1 		[style=dotted];
+216704 -> 216703
+216596 -> 1 		[style=dotted];
+216596 -> 216595
+216705 -> 216674 		[style=dotted];
+216705 -> 216668
+216634 -> 216633 		[style=dotted];
+216634 -> 1
+216589 -> 1 		[style=dotted];
+216589 -> 216588
+216649 -> 216639 		[style=dotted];
+216649 -> 1
+216686 -> 216685 		[style=dotted];
+216686 -> 216679
+216609 -> 1 		[style=dotted];
+216609 -> 216608
+216710 -> 1 		[style=dotted];
+216710 -> 216709
+216626 -> 1 		[style=dotted];
+216626 -> 216618
+216664 -> 1 		[style=dotted];
+216664 -> 216663
+216648 -> 1 		[style=dotted];
+216648 -> 216647
+216645 -> 216635 		[style=dotted];
+216645 -> 1
+216602 -> 216601 		[style=dotted];
+216602 -> 216600
+216693 -> 216603 		[style=dotted];
+216693 -> 216600
+216696 -> 216618 		[style=dotted];
+216696 -> 0
+216659 -> 1 		[style=dotted];
+216659 -> 216648
+216610 -> 216609 		[style=dotted];
+216610 -> 1
+216644 -> 216643 		[style=dotted];
+216644 -> 216638
+216674 -> 216673 		[style=dotted];
+216674 -> 1
+216665 -> 0 		[style=dotted];
+216665 -> 1
+216639 -> 216635 		[style=dotted];
+216639 -> 1
+216607 -> 1 		[style=dotted];
+216607 -> 216606
+216593 -> 1 		[style=dotted];
+216593 -> 216592
+216702 -> 216659 		[style=dotted];
+216702 -> 216656
+216713 -> 216712 		[style=dotted];
+216713 -> 216691
+216698 -> 216697 		[style=dotted];
+216698 -> 216696
+216595 -> 216587 		[style=dotted];
+216595 -> 1
+216681 -> 1 		[style=dotted];
+216681 -> 216671
+216657 -> 1 		[style=dotted];
+216657 -> 216643
+216612 -> 216611 		[style=dotted];
+216612 -> 216602
+216646 -> 216645 		[style=dotted];
+216646 -> 1
+216643 -> 1 		[style=dotted];
+216643 -> 216642
+216642 -> 1 		[style=dotted];
+216642 -> 216641
+216630 -> 1 		[style=dotted];
+216630 -> 216629
+216601 -> 1 		[style=dotted];
+216601 -> 216593
+216598 -> 1 		[style=dotted];
+216598 -> 216597
+216679 -> 216678 		[style=dotted];
+216679 -> 216672
+216597 -> 1 		[style=dotted];
+216597 -> 216596
 }

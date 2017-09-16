@@ -1,0 +1,162 @@
+digraph "" {
+		node [colorscheme=set312,
+		label="\N",
+		shape=circle,
+		style=filled
+		];
+{
+graph [rank=same];
+215637	[fillcolor=2, label="22377260648497152 1130544243958349824", rank=1];
+}
+{
+graph [rank=same];
+215636	[fillcolor=3, label="22377260648497152 554083491654926336", rank=2];
+}
+{
+graph [rank=same];
+215635	[fillcolor=4, label="14918173765664768 273312202386046976", rank=3];
+215624	[fillcolor=4, label="7459086882832384 280771289268879360", rank=3];
+}
+{
+graph [rank=same];
+215634	[fillcolor=5, label="14918173765664768 129197014310191104", rank=4];
+215623	[fillcolor=5, label="7459086882832384 136656101193023488", rank=4];
+}
+{
+graph [rank=same];
+215622	[fillcolor=7, label="3729543441416192 32299253577547776", rank=5];
+215633	[fillcolor=7, label="7459086882832384 28569710136131584", rank=5];
+}
+{
+graph [rank=same];
+215628	[fillcolor=8, label="422212465065984 17592186044416000", rank=6];
+215621	[fillcolor=8, label="3518437208883200 14495961300598784", rank=6];
+215611	[fillcolor=8, label="211106232532992 17803292276948992", rank=6];
+215632	[fillcolor=8, label="7036874417766400 10977524091715584", rank=6];
+}
+{
+graph [rank=same];
+215610	[fillcolor=9, label="211106232532992 8796093022208000", rank=7];
+215631	[fillcolor=9, label="7036874417766400 1970324836974592", rank=7];
+215620	[fillcolor=9, label="3518437208883200 5488762045857792", rank=7];
+215627	[fillcolor=9, label="422212465065984 8584986789675008", rank=7];
+}
+{
+graph [rank=same];
+215616	[fillcolor=10, label="1970324836974592 2533274790395904", rank=8];
+215626	[fillcolor=10, label="140737488355328 4362862139015168", rank=8];
+215609	[fillcolor=10, label="70368744177664 4433230883192832", rank=8];
+215619	[fillcolor=10, label="1548112371908608 2955487255461888", rank=8];
+215625	[fillcolor=10, label="281474976710656 4222124650659840", rank=8];
+215630	[fillcolor=10, label="3096224743817216 1407374883553280", rank=8];
+215606	[fillcolor=10, label="140737488355328 4362862139015168", rank=8];
+215629	[fillcolor=10, label="3940649673949184 562949953421312", rank=8];
+}
+{
+graph [rank=same];
+215615	[fillcolor=11, label="844424930131968 1407374883553280", rank=9];
+215605	[fillcolor=11, label="140737488355328 2111062325329920", rank=9];
+215612	[fillcolor=11, label="1125899906842624 1125899906842624", rank=9];
+215608	[fillcolor=11, label="70368744177664 2181431069507584", rank=9];
+215618	[fillcolor=11, label="422212465065984 1829587348619264", rank=9];
+}
+{
+graph [rank=same];
+215607	[fillcolor=1, label="70368744177664 1055531162664960", rank=10];
+215617	[fillcolor=1, label="422212465065984 703687441776640", rank=10];
+}
+{
+graph [rank=same];
+215604	[fillcolor=2, label="70368744177664 492581209243648", rank=11];
+}
+{
+graph [rank=same];
+215603	[fillcolor=4, label="35184372088832 105553116266496", rank=12];
+}
+{
+graph [rank=same];
+215614	[fillcolor=6, label="26388279066624 8796093022208", rank=13];
+}
+{
+graph [rank=same];
+215613	[fillcolor=7, label="8796093022208 8796093022208", rank=14];
+}
+{
+graph [rank=same];
+215602	[fillcolor=11, label="549755813888 549755813888", rank=15];
+}
+0	 [fillcolor=White, label=F, rank=None, shape=doublecircle];
+1	 [fillcolor=White, label=T, rank=None, shape=doublecircle];
+215636 -> 215635 		[style=dotted];
+215636 -> 215624
+215629 -> 215614 		[style=dotted];
+215629 -> 0
+215606 -> 1 		[style=dotted];
+215606 -> 215605
+215632 -> 1 		[style=dotted];
+215632 -> 215631
+215618 -> 1 		[style=dotted];
+215618 -> 215617
+215617 -> 1 		[style=dotted];
+215617 -> 215614
+215608 -> 1 		[style=dotted];
+215608 -> 215607
+215627 -> 215626 		[style=dotted];
+215627 -> 215625
+215612 -> 1 		[style=dotted];
+215612 -> 0
+215630 -> 215617 		[style=dotted];
+215630 -> 0
+215623 -> 1 		[style=dotted];
+215623 -> 215622
+215620 -> 215619 		[style=dotted];
+215620 -> 215616
+215611 -> 1 		[style=dotted];
+215611 -> 215610
+215624 -> 1 		[style=dotted];
+215624 -> 215623
+215633 -> 215632 		[style=dotted];
+215633 -> 215628
+215625 -> 1 		[style=dotted];
+215625 -> 215604
+215621 -> 1 		[style=dotted];
+215621 -> 215620
+215607 -> 1 		[style=dotted];
+215607 -> 215604
+215602 -> 0 		[style=dotted];
+215602 -> 1
+215635 -> 1 		[style=dotted];
+215635 -> 215634
+215619 -> 215618 		[style=dotted];
+215619 -> 215612
+215613 -> 0 		[style=dotted];
+215613 -> 1
+215614 -> 0 		[style=dotted];
+215614 -> 215613
+215605 -> 1 		[style=dotted];
+215605 -> 215604
+215637 -> 215636 		[style=dotted];
+215637 -> 1
+215628 -> 1 		[style=dotted];
+215628 -> 215627
+215609 -> 1 		[style=dotted];
+215609 -> 215608
+215626 -> 1 		[style=dotted];
+215626 -> 215607
+215631 -> 215630 		[style=dotted];
+215631 -> 215629
+215622 -> 215621 		[style=dotted];
+215622 -> 215611
+215604 -> 1 		[style=dotted];
+215604 -> 215603
+215603 -> 1 		[style=dotted];
+215603 -> 215602
+215634 -> 1 		[style=dotted];
+215634 -> 215633
+215610 -> 215609 		[style=dotted];
+215610 -> 215606
+215616 -> 215615 		[style=dotted];
+215616 -> 215612
+215615 -> 1 		[style=dotted];
+215615 -> 215614
+}
