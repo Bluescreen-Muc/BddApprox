@@ -6,814 +6,184 @@ digraph "" {
 		];
 {
 graph [rank=same];
-216585	[fillcolor=2, label=1, rank=1];
+138	[fillcolor=2, label=0, rank=1];
 }
 {
 graph [rank=same];
-216584	[fillcolor=3, label=2, rank=2];
+137	[fillcolor=3, label=0, rank=2];
 }
 {
 graph [rank=same];
-216583	[fillcolor=4, label=3, rank=3];
-216562	[fillcolor=4, label=3, rank=3];
+136	[fillcolor=4, label=3, rank=3];
+127	[fillcolor=4, label=1, rank=3];
 }
 {
 graph [rank=same];
-216561	[fillcolor=5, label=4, rank=4];
-216582	[fillcolor=5, label=4, rank=4];
+124	[fillcolor=5, label=1, rank=4];
+135	[fillcolor=5, label=2, rank=4];
+133	[fillcolor=5, label=1, rank=4];
+126	[fillcolor=5, label=0, rank=4];
 }
 {
 graph [rank=same];
-216560	[fillcolor=6, label=5, rank=5];
-216581	[fillcolor=6, label=5, rank=5];
+132	[fillcolor=6, label=0, rank=5];
+122	[fillcolor=6, label=1, rank=5];
+123	[fillcolor=6, label=0, rank=5];
+131	[fillcolor=6, label=1, rank=5];
 }
 {
 graph [rank=same];
-216430	[fillcolor=7, label=6, rank=6];
-216571	[fillcolor=7, label=6, rank=6];
-216559	[fillcolor=7, label=6, rank=6];
-216580	[fillcolor=7, label=6, rank=6];
+121	[fillcolor=7, label=0, rank=6];
+125	[fillcolor=7, label=0, rank=6];
+130	[fillcolor=7, label=0, rank=6];
+134	[fillcolor=7, label=1, rank=6];
 }
 {
 graph [rank=same];
-216397	[fillcolor=8, label=7, rank=7];
-216429	[fillcolor=8, label=7, rank=7];
-216575	[fillcolor=8, label=7, rank=7];
-216566	[fillcolor=8, label=7, rank=7];
-216558	[fillcolor=8, label=7, rank=7];
-216504	[fillcolor=8, label=7, rank=7];
-216579	[fillcolor=8, label=7, rank=7];
-216570	[fillcolor=8, label=7, rank=7];
+129	[fillcolor=8, label=1, rank=7];
+111	[fillcolor=8, label=5, rank=7];
+128	[fillcolor=8, label=2, rank=7];
+120	[fillcolor=8, label=4, rank=7];
 }
 {
 graph [rank=same];
-216428	[fillcolor=9, label=8, rank=8];
-216574	[fillcolor=9, label=8, rank=8];
-216557	[fillcolor=9, label=8, rank=8];
-216503	[fillcolor=9, label=8, rank=8];
-216396	[fillcolor=9, label=8, rank=8];
-216569	[fillcolor=9, label=8, rank=8];
-216578	[fillcolor=9, label=8, rank=8];
-216565	[fillcolor=9, label=8, rank=8];
+100	[fillcolor=9, label=3, rank=8];
+110	[fillcolor=9, label=4, rank=8];
+119	[fillcolor=9, label=3, rank=8];
+114	[fillcolor=9, label=2, rank=8];
 }
 {
 graph [rank=same];
-216556	[fillcolor=10, label=9, rank=9];
-216563	[fillcolor=10, label=9, rank=9];
-216427	[fillcolor=10, label=9, rank=9];
-216567	[fillcolor=10, label=9, rank=9];
-216502	[fillcolor=10, label=9, rank=9];
-216568	[fillcolor=10, label=9, rank=9];
-216572	[fillcolor=10, label=9, rank=9];
-216408	[fillcolor=10, label=9, rank=9];
-216573	[fillcolor=10, label=9, rank=9];
-216576	[fillcolor=10, label=9, rank=9];
-216577	[fillcolor=10, label=9, rank=9];
-216526	[fillcolor=10, label=9, rank=9];
-216395	[fillcolor=10, label=9, rank=9];
-216364	[fillcolor=10, label=9, rank=9];
-216462	[fillcolor=10, label=9, rank=9];
-216564	[fillcolor=10, label=9, rank=9];
+105	[fillcolor=10, label=1, rank=9];
+109	[fillcolor=10, label=3, rank=9];
+99	[fillcolor=10, label=2, rank=9];
+96	[fillcolor=10, label=0, rank=9];
 }
 {
 graph [rank=same];
-216426	[fillcolor=11, label=10, rank=10];
-216555	[fillcolor=11, label=10, rank=10];
-216363	[fillcolor=11, label=10, rank=10];
-216394	[fillcolor=11, label=10, rank=10];
-216416	[fillcolor=11, label=10, rank=10];
-216352	[fillcolor=11, label=10, rank=10];
-216379	[fillcolor=11, label=10, rank=10];
-216525	[fillcolor=11, label=10, rank=10];
-216446	[fillcolor=11, label=10, rank=10];
-216515	[fillcolor=11, label=10, rank=10];
-216401	[fillcolor=11, label=10, rank=10];
-216501	[fillcolor=11, label=10, rank=10];
-216461	[fillcolor=11, label=10, rank=10];
-216541	[fillcolor=11, label=10, rank=10];
-216407	[fillcolor=11, label=10, rank=10];
-216482	[fillcolor=11, label=10, rank=10];
+108	[fillcolor=11, label=2, rank=10];
+118	[fillcolor=11, label=2, rank=10];
+115	[fillcolor=11, label=0, rank=10];
+104	[fillcolor=11, label=0, rank=10];
 }
 {
 graph [rank=same];
-216425	[fillcolor=1, label=11, rank=11];
-216554	[fillcolor=1, label=11, rank=11];
-216540	[fillcolor=1, label=11, rank=11];
-216372	[fillcolor=1, label=11, rank=11];
-216415	[fillcolor=1, label=11, rank=11];
-216388	[fillcolor=1, label=11, rank=11];
-216393	[fillcolor=1, label=11, rank=11];
-216481	[fillcolor=1, label=11, rank=11];
-216494	[fillcolor=1, label=11, rank=11];
-216378	[fillcolor=1, label=11, rank=11];
-216422	[fillcolor=1, label=11, rank=11];
-216473	[fillcolor=1, label=11, rank=11];
-216500	[fillcolor=1, label=11, rank=11];
-216534	[fillcolor=1, label=11, rank=11];
-216550	[fillcolor=1, label=11, rank=11];
-216411	[fillcolor=1, label=11, rank=11];
+107	[fillcolor=1, label=1, rank=11];
+113	[fillcolor=1, label=1, rank=11];
+98	[fillcolor=1, label=1, rank=11];
+117	[fillcolor=1, label=1, rank=11];
 }
 {
 graph [rank=same];
-216460	[fillcolor=2, label=12, rank=12];
-216499	[fillcolor=2, label=12, rank=12];
-216472	[fillcolor=2, label=12, rank=12];
-216362	[fillcolor=2, label=12, rank=12];
-216387	[fillcolor=2, label=12, rank=12];
-216371	[fillcolor=2, label=12, rank=12];
-216480	[fillcolor=2, label=12, rank=12];
-216438	[fillcolor=2, label=12, rank=12];
-216377	[fillcolor=2, label=12, rank=12];
-216493	[fillcolor=2, label=12, rank=12];
-216346	[fillcolor=2, label=12, rank=12];
-216358	[fillcolor=2, label=12, rank=12];
-216392	[fillcolor=2, label=12, rank=12];
-216445	[fillcolor=2, label=12, rank=12];
-216351	[fillcolor=2, label=12, rank=12];
-216455	[fillcolor=2, label=12, rank=12];
+116	[fillcolor=2, label=0, rank=12];
+106	[fillcolor=2, label=0, rank=12];
+112	[fillcolor=2, label=0, rank=12];
+97	[fillcolor=2, label=0, rank=12];
 }
 {
 graph [rank=same];
-216539	[fillcolor=3, label=13, rank=13];
-216414	[fillcolor=3, label=13, rank=13];
-216376	[fillcolor=3, label=13, rank=13];
-216444	[fillcolor=3, label=13, rank=13];
-216479	[fillcolor=3, label=13, rank=13];
-216498	[fillcolor=3, label=13, rank=13];
-216391	[fillcolor=3, label=13, rank=13];
-216459	[fillcolor=3, label=13, rank=13];
-216524	[fillcolor=3, label=13, rank=13];
-216406	[fillcolor=3, label=13, rank=13];
-216400	[fillcolor=3, label=13, rank=13];
-216361	[fillcolor=3, label=13, rank=13];
-216350	[fillcolor=3, label=13, rank=13];
-216553	[fillcolor=3, label=13, rank=13];
-216424	[fillcolor=3, label=13, rank=13];
-216514	[fillcolor=3, label=13, rank=13];
+103	[fillcolor=3, label=1, rank=13];
+95	[fillcolor=3, label=1, rank=13];
 }
 {
 graph [rank=same];
-216386	[fillcolor=4, label=14, rank=14];
-216390	[fillcolor=4, label=14, rank=14];
-216349	[fillcolor=4, label=14, rank=14];
-216370	[fillcolor=4, label=14, rank=14];
-216443	[fillcolor=4, label=14, rank=14];
-216458	[fillcolor=4, label=14, rank=14];
-216492	[fillcolor=4, label=14, rank=14];
-216497	[fillcolor=4, label=14, rank=14];
-216345	[fillcolor=4, label=14, rank=14];
-216375	[fillcolor=4, label=14, rank=14];
-216357	[fillcolor=4, label=14, rank=14];
-216471	[fillcolor=4, label=14, rank=14];
-216478	[fillcolor=4, label=14, rank=14];
-216454	[fillcolor=4, label=14, rank=14];
-216360	[fillcolor=4, label=14, rank=14];
-216437	[fillcolor=4, label=14, rank=14];
+94	[fillcolor=4, label=0, rank=14];
+102	[fillcolor=4, label=0, rank=14];
 }
 {
 graph [rank=same];
-216533	[fillcolor=5, label=15, rank=15];
-216538	[fillcolor=5, label=15, rank=15];
-216496	[fillcolor=5, label=15, rank=15];
-216470	[fillcolor=5, label=15, rank=15];
-216436	[fillcolor=5, label=15, rank=15];
-216513	[fillcolor=5, label=15, rank=15];
-216453	[fillcolor=5, label=15, rank=15];
-216491	[fillcolor=5, label=15, rank=15];
-216549	[fillcolor=5, label=15, rank=15];
-216523	[fillcolor=5, label=15, rank=15];
-216521	[fillcolor=5, label=15, rank=15];
-216509	[fillcolor=5, label=15, rank=15];
-216442	[fillcolor=5, label=15, rank=15];
-216457	[fillcolor=5, label=15, rank=15];
-216552	[fillcolor=5, label=15, rank=15];
-216477	[fillcolor=5, label=15, rank=15];
-}
-{
-graph [rank=same];
-216421	[fillcolor=6, label=16, rank=16];
-216389	[fillcolor=6, label=16, rank=16];
-216508	[fillcolor=6, label=16, rank=16];
-216490	[fillcolor=6, label=16, rank=16];
-216423	[fillcolor=6, label=16, rank=16];
-216359	[fillcolor=6, label=16, rank=16];
-216456	[fillcolor=6, label=16, rank=16];
-216548	[fillcolor=6, label=16, rank=16];
-216537	[fillcolor=6, label=16, rank=16];
-216532	[fillcolor=6, label=16, rank=16];
-216520	[fillcolor=6, label=16, rank=16];
-216551	[fillcolor=6, label=16, rank=16];
-216405	[fillcolor=6, label=16, rank=16];
-216356	[fillcolor=6, label=16, rank=16];
-216435	[fillcolor=6, label=16, rank=16];
-216495	[fillcolor=6, label=16, rank=16];
-216385	[fillcolor=6, label=16, rank=16];
-216441	[fillcolor=6, label=16, rank=16];
-216522	[fillcolor=6, label=16, rank=16];
-216469	[fillcolor=6, label=16, rank=16];
-216512	[fillcolor=6, label=16, rank=16];
-216476	[fillcolor=6, label=16, rank=16];
-216404	[fillcolor=6, label=16, rank=16];
-216452	[fillcolor=6, label=16, rank=16];
-}
-{
-graph [rank=same];
-216489	[fillcolor=7, label=17, rank=17];
-216547	[fillcolor=7, label=17, rank=17];
-216399	[fillcolor=7, label=17, rank=17];
-216451	[fillcolor=7, label=17, rank=17];
-216440	[fillcolor=7, label=17, rank=17];
-216374	[fillcolor=7, label=17, rank=17];
-216384	[fillcolor=7, label=17, rank=17];
-216475	[fillcolor=7, label=17, rank=17];
-216519	[fillcolor=7, label=17, rank=17];
-216403	[fillcolor=7, label=17, rank=17];
-216511	[fillcolor=7, label=17, rank=17];
-216420	[fillcolor=7, label=17, rank=17];
-216413	[fillcolor=7, label=17, rank=17];
-216536	[fillcolor=7, label=17, rank=17];
-216348	[fillcolor=7, label=17, rank=17];
-216355	[fillcolor=7, label=17, rank=17];
-}
-{
-graph [rank=same];
-216474	[fillcolor=8, label=18, rank=18];
-216373	[fillcolor=8, label=18, rank=18];
-216510	[fillcolor=8, label=18, rank=18];
-216535	[fillcolor=8, label=18, rank=18];
-216398	[fillcolor=8, label=18, rank=18];
-216412	[fillcolor=8, label=18, rank=18];
-216347	[fillcolor=8, label=18, rank=18];
-216439	[fillcolor=8, label=18, rank=18];
-}
-{
-graph [rank=same];
-216383	[fillcolor=9, label=19, rank=19];
-216468	[fillcolor=9, label=19, rank=19];
-216419	[fillcolor=9, label=19, rank=19];
-216531	[fillcolor=9, label=19, rank=19];
-216410	[fillcolor=9, label=19, rank=19];
-216488	[fillcolor=9, label=19, rank=19];
-216369	[fillcolor=9, label=19, rank=19];
-216546	[fillcolor=9, label=19, rank=19];
-}
-{
-graph [rank=same];
-216530	[fillcolor=10, label=20, rank=20];
-216487	[fillcolor=10, label=20, rank=20];
-216450	[fillcolor=10, label=20, rank=20];
-216507	[fillcolor=10, label=20, rank=20];
-216434	[fillcolor=10, label=20, rank=20];
-216467	[fillcolor=10, label=20, rank=20];
-216545	[fillcolor=10, label=20, rank=20];
-216518	[fillcolor=10, label=20, rank=20];
-}
-{
-graph [rank=same];
-216354	[fillcolor=11, label=21, rank=21];
-216466	[fillcolor=11, label=21, rank=21];
-216486	[fillcolor=11, label=21, rank=21];
-216433	[fillcolor=11, label=21, rank=21];
-216382	[fillcolor=11, label=21, rank=21];
-216344	[fillcolor=11, label=21, rank=21];
-216368	[fillcolor=11, label=21, rank=21];
-216449	[fillcolor=11, label=21, rank=21];
-}
-{
-graph [rank=same];
-216465	[fillcolor=1, label=22, rank=22];
-216517	[fillcolor=1, label=22, rank=22];
-216544	[fillcolor=1, label=22, rank=22];
-216448	[fillcolor=1, label=22, rank=22];
-216529	[fillcolor=1, label=22, rank=22];
-216485	[fillcolor=1, label=22, rank=22];
-216432	[fillcolor=1, label=22, rank=22];
-216506	[fillcolor=1, label=22, rank=22];
-}
-{
-graph [rank=same];
-216409	[fillcolor=2, label=23, rank=23];
-216464	[fillcolor=2, label=23, rank=23];
-216543	[fillcolor=2, label=23, rank=23];
-216418	[fillcolor=2, label=23, rank=23];
-216367	[fillcolor=2, label=23, rank=23];
-216484	[fillcolor=2, label=23, rank=23];
-216528	[fillcolor=2, label=23, rank=23];
-216381	[fillcolor=2, label=23, rank=23];
-}
-{
-graph [rank=same];
-216505	[fillcolor=3, label=24, rank=24];
-216542	[fillcolor=3, label=24, rank=24];
-216463	[fillcolor=3, label=24, rank=24];
-216483	[fillcolor=3, label=24, rank=24];
-216516	[fillcolor=3, label=24, rank=24];
-216527	[fillcolor=3, label=24, rank=24];
-216447	[fillcolor=3, label=24, rank=24];
-216431	[fillcolor=3, label=24, rank=24];
-}
-{
-graph [rank=same];
-216402	[fillcolor=4, label=25, rank=25];
-216417	[fillcolor=4, label=25, rank=25];
-216380	[fillcolor=4, label=25, rank=25];
-216353	[fillcolor=4, label=25, rank=25];
-}
-{
-graph [rank=same];
-216366	[fillcolor=5, label=26, rank=26];
-216343	[fillcolor=5, label=26, rank=26];
-}
-{
-graph [rank=same];
-216365	[fillcolor=6, label=27, rank=27];
+101	[fillcolor=5, label=0, rank=15];
 }
 0	 [fillcolor=White, label=F, rank=None, shape=doublecircle];
 1	 [fillcolor=White, label=T, rank=None, shape=doublecircle];
-216546 -> 216518 		[style=dotted];
-216546 -> 216545
-216477 -> 216475 		[style=dotted];
-216477 -> 216476
-216514 -> 1 		[style=dotted];
-216514 -> 216513
-216452 -> 216434 		[style=dotted];
-216452 -> 216451
-216564 -> 216388 		[style=dotted];
-216564 -> 216372
-216518 -> 1 		[style=dotted];
-216518 -> 216517
-216482 -> 216481 		[style=dotted];
-216482 -> 216473
-216506 -> 216505 		[style=dotted];
-216506 -> 1
-216439 -> 216434 		[style=dotted];
-216439 -> 1
-216431 -> 216343 		[style=dotted];
-216431 -> 1
-216424 -> 1 		[style=dotted];
-216424 -> 216423
-216552 -> 216551 		[style=dotted];
-216552 -> 216537
-216437 -> 1 		[style=dotted];
-216437 -> 216436
-216404 -> 0 		[style=dotted];
-216404 -> 216403
-216355 -> 216354 		[style=dotted];
-216355 -> 1
-216348 -> 216344 		[style=dotted];
-216348 -> 216347
-216455 -> 1 		[style=dotted];
-216455 -> 216454
-216351 -> 1 		[style=dotted];
-216351 -> 216350
-216582 -> 216581 		[style=dotted];
-216582 -> 216571
-216360 -> 1 		[style=dotted];
-216360 -> 216359
-216536 -> 216531 		[style=dotted];
-216536 -> 216535
-216476 -> 216475 		[style=dotted];
-216476 -> 1
-216381 -> 1 		[style=dotted];
-216381 -> 216380
-216347 -> 216344 		[style=dotted];
-216347 -> 1
-216570 -> 1 		[style=dotted];
-216570 -> 216569
-216449 -> 216448 		[style=dotted];
-216449 -> 1
-216445 -> 1 		[style=dotted];
-216445 -> 216444
-216579 -> 1 		[style=dotted];
-216579 -> 216578
-216545 -> 1 		[style=dotted];
-216545 -> 216544
-216411 -> 216410 		[style=dotted];
-216411 -> 0
-216368 -> 216367 		[style=dotted];
-216368 -> 1
-216344 -> 216343 		[style=dotted];
-216344 -> 1
-216550 -> 216549 		[style=dotted];
-216550 -> 216521
-216413 -> 216410 		[style=dotted];
-216413 -> 216412
-216392 -> 1 		[style=dotted];
-216392 -> 216391
-216353 -> 216343 		[style=dotted];
-216353 -> 1
-216343 -> 0 		[style=dotted];
-216343 -> 1
-216512 -> 216511 		[style=dotted];
-216512 -> 1
-216469 -> 216468 		[style=dotted];
-216469 -> 1
-216454 -> 1 		[style=dotted];
-216454 -> 216453
-216412 -> 216410 		[style=dotted];
-216412 -> 1
-216382 -> 216381 		[style=dotted];
-216382 -> 1
-216358 -> 1 		[style=dotted];
-216358 -> 216357
-216522 -> 216511 		[style=dotted];
-216522 -> 216519
-216441 -> 216440 		[style=dotted];
-216441 -> 1
-216562 -> 1 		[style=dotted];
-216562 -> 216561
-216553 -> 1 		[style=dotted];
-216553 -> 216552
-216350 -> 1 		[style=dotted];
-216350 -> 216349
-216346 -> 1 		[style=dotted];
-216346 -> 216345
-216478 -> 1 		[style=dotted];
-216478 -> 216477
-216462 -> 216461 		[style=dotted];
-216462 -> 216446
-216369 -> 216344 		[style=dotted];
-216369 -> 216368
-216361 -> 1 		[style=dotted];
-216361 -> 216360
-216565 -> 216564 		[style=dotted];
-216565 -> 216563
-216534 -> 216533 		[style=dotted];
-216534 -> 216509
-216457 -> 216456 		[style=dotted];
-216457 -> 216441
-216493 -> 1 		[style=dotted];
-216493 -> 216492
-216377 -> 1 		[style=dotted];
-216377 -> 216376
-216504 -> 1 		[style=dotted];
-216504 -> 216503
-216385 -> 216369 		[style=dotted];
-216385 -> 216384
-216500 -> 216499 		[style=dotted];
-216500 -> 216460
-216420 -> 216419 		[style=dotted];
-216420 -> 1
-216398 -> 0 		[style=dotted];
-216398 -> 1
-216495 -> 216475 		[style=dotted];
-216495 -> 216489
-216473 -> 216472 		[style=dotted];
-216473 -> 216438
-216433 -> 216432 		[style=dotted];
-216433 -> 1
-216422 -> 216421 		[style=dotted];
-216422 -> 216404
-216400 -> 1 		[style=dotted];
-216400 -> 216399
-216471 -> 1 		[style=dotted];
-216471 -> 216470
-216432 -> 216431 		[style=dotted];
-216432 -> 1
-216378 -> 216377 		[style=dotted];
-216378 -> 216351
-216494 -> 216493 		[style=dotted];
-216494 -> 216455
-216407 -> 216406 		[style=dotted];
-216407 -> 216404
-216406 -> 1 		[style=dotted];
-216406 -> 216405
-216511 -> 216507 		[style=dotted];
-216511 -> 216510
-216481 -> 216480 		[style=dotted];
-216481 -> 216445
-216438 -> 1 		[style=dotted];
-216438 -> 216437
-216357 -> 1 		[style=dotted];
-216357 -> 216356
-216447 -> 216353 		[style=dotted];
-216447 -> 1
-216528 -> 1 		[style=dotted];
-216528 -> 216527
-216442 -> 216440 		[style=dotted];
-216442 -> 216441
-216403 -> 216402 		[style=dotted];
-216403 -> 1
-216435 -> 216434 		[style=dotted];
-216435 -> 1
-216364 -> 216363 		[style=dotted];
-216364 -> 216352
-216527 -> 216365 		[style=dotted];
-216527 -> 1
-216467 -> 1 		[style=dotted];
-216467 -> 216466
-216395 -> 216394 		[style=dotted];
-216395 -> 216379
-216356 -> 216344 		[style=dotted];
-216356 -> 216355
-216509 -> 216507 		[style=dotted];
-216509 -> 216508
-216485 -> 216484 		[style=dotted];
-216485 -> 1
-216393 -> 216392 		[style=dotted];
-216393 -> 216362
-216388 -> 216387 		[style=dotted];
-216388 -> 216358
-216519 -> 216518 		[style=dotted];
-216519 -> 1
-216516 -> 216402 		[style=dotted];
-216516 -> 1
-216405 -> 216399 		[style=dotted];
-216405 -> 216403
-216580 -> 216579 		[style=dotted];
-216580 -> 216575
-216526 -> 216525 		[style=dotted];
-216526 -> 216515
-216486 -> 216485 		[style=dotted];
-216486 -> 1
-216558 -> 1 		[style=dotted];
-216558 -> 216557
-216375 -> 1 		[style=dotted];
-216375 -> 216374
-216566 -> 1 		[style=dotted];
-216566 -> 216565
-216551 -> 216536 		[style=dotted];
-216551 -> 216547
-216541 -> 216540 		[style=dotted];
-216541 -> 216534
-216366 -> 216365 		[style=dotted];
-216366 -> 1
-216475 -> 216468 		[style=dotted];
-216475 -> 216474
-216524 -> 1 		[style=dotted];
-216524 -> 216523
-216480 -> 1 		[style=dotted];
-216480 -> 216479
-216577 -> 216550 		[style=dotted];
-216577 -> 216534
-216459 -> 1 		[style=dotted];
-216459 -> 216458
-216578 -> 216577 		[style=dotted];
-216578 -> 216576
-216415 -> 216414 		[style=dotted];
-216415 -> 216400
-216521 -> 216520 		[style=dotted];
-216521 -> 216508
-216380 -> 216366 		[style=dotted];
-216380 -> 1
-216371 -> 1 		[style=dotted];
-216371 -> 216370
-216345 -> 1 		[style=dotted];
-216345 -> 216344
-216384 -> 216383 		[style=dotted];
-216384 -> 1
-216461 -> 216460 		[style=dotted];
-216461 -> 216455
-216520 -> 216507 		[style=dotted];
-216520 -> 216519
-216434 -> 1 		[style=dotted];
-216434 -> 216433
-216532 -> 216531 		[style=dotted];
-216532 -> 1
-216537 -> 216536 		[style=dotted];
-216537 -> 1
-216507 -> 1 		[style=dotted];
-216507 -> 216506
-216483 -> 216380 		[style=dotted];
-216483 -> 1
-216559 -> 216558 		[style=dotted];
-216559 -> 216504
-216501 -> 216500 		[style=dotted];
-216501 -> 216494
-216401 -> 216400 		[style=dotted];
-216401 -> 0
-216450 -> 1 		[style=dotted];
-216450 -> 216449
-216569 -> 216568 		[style=dotted];
-216569 -> 216567
-216523 -> 216522 		[style=dotted];
-216523 -> 216512
-216497 -> 1 		[style=dotted];
-216497 -> 216496
-216548 -> 216531 		[style=dotted];
-216548 -> 216547
-216488 -> 216450 		[style=dotted];
-216488 -> 216487
-216372 -> 216371 		[style=dotted];
-216372 -> 216346
-216391 -> 1 		[style=dotted];
-216391 -> 216390
-216387 -> 1 		[style=dotted];
-216387 -> 216386
-216456 -> 216440 		[style=dotted];
-216456 -> 216451
-216374 -> 216369 		[style=dotted];
-216374 -> 216373
-216576 -> 216521 		[style=dotted];
-216576 -> 216509
-216515 -> 216514 		[style=dotted];
-216515 -> 216509
-216410 -> 0 		[style=dotted];
-216410 -> 216409
-216365 -> 1 		[style=dotted];
-216365 -> 0
-216585 -> 216584 		[style=dotted];
-216585 -> 1
-216440 -> 216434 		[style=dotted];
-216440 -> 216439
-216573 -> 216494 		[style=dotted];
-216573 -> 216473
-216498 -> 1 		[style=dotted];
-216498 -> 216497
-216408 -> 216407 		[style=dotted];
-216408 -> 216401
-216492 -> 1 		[style=dotted];
-216492 -> 216491
-216487 -> 1 		[style=dotted];
-216487 -> 216486
-216466 -> 216465 		[style=dotted];
-216466 -> 1
-216549 -> 216548 		[style=dotted];
-216549 -> 216532
-216354 -> 216353 		[style=dotted];
-216354 -> 1
-216529 -> 216528 		[style=dotted];
-216529 -> 1
-216463 -> 216366 		[style=dotted];
-216463 -> 1
-216479 -> 1 		[style=dotted];
-216479 -> 216478
-216572 -> 216455 		[style=dotted];
-216572 -> 216438
-216451 -> 216450 		[style=dotted];
-216451 -> 1
-216568 -> 216422 		[style=dotted];
-216568 -> 216411
-216535 -> 216531 		[style=dotted];
-216535 -> 1
-216359 -> 216348 		[style=dotted];
-216359 -> 216355
-216542 -> 216417 		[style=dotted];
-216542 -> 1
-216444 -> 1 		[style=dotted];
-216444 -> 216443
-216376 -> 1 		[style=dotted];
-216376 -> 216375
-216491 -> 216490 		[style=dotted];
-216491 -> 216469
-216453 -> 216452 		[style=dotted];
-216453 -> 216435
-216399 -> 0 		[style=dotted];
-216399 -> 216398
-216561 -> 216560 		[style=dotted];
-216561 -> 216430
-216414 -> 1 		[style=dotted];
-216414 -> 216413
-216571 -> 216570 		[style=dotted];
-216571 -> 216566
-216446 -> 216445 		[style=dotted];
-216446 -> 216438
-216540 -> 216539 		[style=dotted];
-216540 -> 216514
-216530 -> 1 		[style=dotted];
-216530 -> 216529
-216423 -> 216413 		[style=dotted];
-216423 -> 216420
-216458 -> 1 		[style=dotted];
-216458 -> 216457
-216448 -> 216447 		[style=dotted];
-216448 -> 1
-216430 -> 216429 		[style=dotted];
-216430 -> 216397
-216417 -> 216365 		[style=dotted];
-216417 -> 1
-216531 -> 216507 		[style=dotted];
-216531 -> 216530
-216547 -> 216546 		[style=dotted];
-216547 -> 1
-216484 -> 1 		[style=dotted];
-216484 -> 216483
-216583 -> 1 		[style=dotted];
-216583 -> 216582
-216544 -> 216543 		[style=dotted];
-216544 -> 1
-216525 -> 216524 		[style=dotted];
-216525 -> 216521
-216513 -> 216511 		[style=dotted];
-216513 -> 216512
-216510 -> 216507 		[style=dotted];
-216510 -> 1
-216379 -> 216378 		[style=dotted];
-216379 -> 216372
-216554 -> 216553 		[style=dotted];
-216554 -> 216524
-216517 -> 216516 		[style=dotted];
-216517 -> 1
-216502 -> 216501 		[style=dotted];
-216502 -> 216482
-216443 -> 1 		[style=dotted];
-216443 -> 216442
-216370 -> 1 		[style=dotted];
-216370 -> 216369
-216490 -> 216468 		[style=dotted];
-216490 -> 216489
-216367 -> 1 		[style=dotted];
-216367 -> 216366
-216575 -> 1 		[style=dotted];
-216575 -> 216574
-216508 -> 216507 		[style=dotted];
-216508 -> 1
-216429 -> 1 		[style=dotted];
-216429 -> 216428
-216352 -> 216351 		[style=dotted];
-216352 -> 216346
-216489 -> 216488 		[style=dotted];
-216489 -> 1
-216425 -> 216424 		[style=dotted];
-216425 -> 216406
-216362 -> 1 		[style=dotted];
-216362 -> 216361
-216416 -> 216415 		[style=dotted];
-216416 -> 216411
-216396 -> 216395 		[style=dotted];
-216396 -> 216364
-216436 -> 216434 		[style=dotted];
-216436 -> 216435
-216419 -> 216402 		[style=dotted];
-216419 -> 216418
-216470 -> 216468 		[style=dotted];
-216470 -> 216469
-216418 -> 1 		[style=dotted];
-216418 -> 216417
-216397 -> 1 		[style=dotted];
-216397 -> 216396
-216373 -> 216369 		[style=dotted];
-216373 -> 1
-216503 -> 216502 		[style=dotted];
-216503 -> 216462
-216581 -> 1 		[style=dotted];
-216581 -> 216580
-216560 -> 1 		[style=dotted];
-216560 -> 216559
-216496 -> 216495 		[style=dotted];
-216496 -> 216476
-216349 -> 1 		[style=dotted];
-216349 -> 216348
-216543 -> 1 		[style=dotted];
-216543 -> 216542
-216472 -> 1 		[style=dotted];
-216472 -> 216471
-216464 -> 1 		[style=dotted];
-216464 -> 216463
-216538 -> 216536 		[style=dotted];
-216538 -> 216537
-216394 -> 216393 		[style=dotted];
-216394 -> 216388
-216557 -> 216556 		[style=dotted];
-216557 -> 216526
-216468 -> 216434 		[style=dotted];
-216468 -> 216467
-216409 -> 1 		[style=dotted];
-216409 -> 216365
-216390 -> 1 		[style=dotted];
-216390 -> 216389
-216389 -> 216374 		[style=dotted];
-216389 -> 216384
-216499 -> 1 		[style=dotted];
-216499 -> 216498
-216574 -> 216573 		[style=dotted];
-216574 -> 216572
-216567 -> 216404 		[style=dotted];
-216567 -> 0
-216539 -> 1 		[style=dotted];
-216539 -> 216538
-216505 -> 0 		[style=dotted];
-216505 -> 1
-216386 -> 1 		[style=dotted];
-216386 -> 216385
-216363 -> 216362 		[style=dotted];
-216363 -> 216358
-216460 -> 1 		[style=dotted];
-216460 -> 216459
-216555 -> 216554 		[style=dotted];
-216555 -> 216550
-216584 -> 216583 		[style=dotted];
-216584 -> 216562
-216426 -> 216425 		[style=dotted];
-216426 -> 216422
-216428 -> 216427 		[style=dotted];
-216428 -> 216408
-216383 -> 216354 		[style=dotted];
-216383 -> 216382
-216427 -> 216426 		[style=dotted];
-216427 -> 216416
-216474 -> 216468 		[style=dotted];
-216474 -> 1
-216421 -> 216410 		[style=dotted];
-216421 -> 216420
-216402 -> 0 		[style=dotted];
-216402 -> 1
-216563 -> 216358 		[style=dotted];
-216563 -> 216346
-216533 -> 216531 		[style=dotted];
-216533 -> 216532
-216465 -> 216464 		[style=dotted];
-216465 -> 1
-216556 -> 216555 		[style=dotted];
-216556 -> 216541
+114 -> 113 		[style=dotted];
+114 -> 0
+96 -> 95 		[style=dotted];
+96 -> 1
+126 -> 114 		[style=dotted];
+126 -> 125
+99 -> 98 		[style=dotted];
+99 -> 1
+95 -> 94 		[style=dotted];
+95 -> 0
+134 -> 0 		[style=dotted];
+134 -> 96
+120 -> 119 		[style=dotted];
+120 -> 114
+101 -> 0 		[style=dotted];
+101 -> 1
+131 -> 1 		[style=dotted];
+131 -> 130
+128 -> 105 		[style=dotted];
+128 -> 96
+123 -> 1 		[style=dotted];
+123 -> 120
+117 -> 116 		[style=dotted];
+117 -> 1
+98 -> 97 		[style=dotted];
+98 -> 1
+103 -> 102 		[style=dotted];
+103 -> 101
+102 -> 1 		[style=dotted];
+102 -> 101
+130 -> 129 		[style=dotted];
+130 -> 128
+119 -> 118 		[style=dotted];
+119 -> 115
+111 -> 110 		[style=dotted];
+111 -> 100
+113 -> 112 		[style=dotted];
+113 -> 1
+110 -> 109 		[style=dotted];
+110 -> 105
+104 -> 103 		[style=dotted];
+104 -> 1
+138 -> 136 		[style=dotted];
+138 -> 137
+115 -> 101 		[style=dotted];
+115 -> 1
+109 -> 108 		[style=dotted];
+109 -> 1
+125 -> 114 		[style=dotted];
+125 -> 100
+133 -> 132 		[style=dotted];
+133 -> 131
+127 -> 126 		[style=dotted];
+127 -> 124
+118 -> 117 		[style=dotted];
+118 -> 1
+135 -> 0 		[style=dotted];
+135 -> 134
+97 -> 95 		[style=dotted];
+97 -> 1
+122 -> 1 		[style=dotted];
+122 -> 121
+121 -> 120 		[style=dotted];
+121 -> 111
+112 -> 0 		[style=dotted];
+112 -> 1
+94 -> 1 		[style=dotted];
+94 -> 0
+137 -> 136 		[style=dotted];
+137 -> 127
+129 -> 115 		[style=dotted];
+129 -> 0
+106 -> 103 		[style=dotted];
+106 -> 1
+136 -> 135 		[style=dotted];
+136 -> 133
+108 -> 107 		[style=dotted];
+108 -> 1
+105 -> 104 		[style=dotted];
+105 -> 1
+132 -> 1 		[style=dotted];
+132 -> 129
+124 -> 123 		[style=dotted];
+124 -> 122
+116 -> 101 		[style=dotted];
+116 -> 1
+107 -> 106 		[style=dotted];
+107 -> 1
+100 -> 99 		[style=dotted];
+100 -> 96
 }
