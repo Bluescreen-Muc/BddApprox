@@ -6,93 +6,183 @@ digraph "" {
 		];
 {
 graph [rank=same];
-138	[fillcolor=2, label=0, rank=1];
+138	[fillcolor=2, label="0 :CD
+0 :CP
+05.0 52361 34461", rank=1];
 }
 {
 graph [rank=same];
-137	[fillcolor=3, label=0, rank=2];
+137	[fillcolor=3, label="0 :CD
+1 :CP
+55.0 3109 1737", rank=2];
 }
 {
 graph [rank=same];
-136	[fillcolor=4, label=3, rank=3];
-127	[fillcolor=4, label=1, rank=3];
+136	[fillcolor=4, label="0 :CD
+2 :CP
+54.0 6563 6354", rank=3];
+127	[fillcolor=4, label="0 :CD
+1 :CP
+56.0 7535 5382", rank=3];
 }
 {
 graph [rank=same];
-124	[fillcolor=5, label=1, rank=4];
-135	[fillcolor=5, label=2, rank=4];
-133	[fillcolor=5, label=1, rank=4];
-126	[fillcolor=5, label=0, rank=4];
+124	[fillcolor=5, label="0 :CD
+1 :CP
+48.0 1243 576", rank=4];
+135	[fillcolor=5, label="0 :CD
+1 :CP
+61.0 046 6543", rank=4];
+133	[fillcolor=5, label="0 :CD
+1 :CP
+47.0 6103 0801", rank=4];
+126	[fillcolor=5, label="0 :CD
+1 :CP
+74.0 6391 0612", rank=4];
 }
 {
 graph [rank=same];
-132	[fillcolor=6, label=0, rank=5];
-122	[fillcolor=6, label=1, rank=5];
-123	[fillcolor=6, label=0, rank=5];
-131	[fillcolor=6, label=1, rank=5];
+132	[fillcolor=6, label="0 :CD
+1 :CP
+96.0 8041 046", rank=5];
+122	[fillcolor=6, label="0 :CD
+1 :CP
+78.0 3771 572", rank=5];
+123	[fillcolor=6, label="0 :CD
+1 :CP
+08.0 8461 004", rank=5];
+131	[fillcolor=6, label="0 :CD
+1 :CP
+97.0 8061 044", rank=5];
 }
 {
 graph [rank=same];
-121	[fillcolor=7, label=0, rank=6];
-125	[fillcolor=7, label=0, rank=6];
-130	[fillcolor=7, label=0, rank=6];
-134	[fillcolor=7, label=1, rank=6];
+121	[fillcolor=7, label="0 :CD
+1 :CP
+37.0 947 572", rank=6];
+125	[fillcolor=7, label="0 :CD
+1 :CP
+75.0 485 044", rank=6];
+130	[fillcolor=7, label="0 :CD
+1 :CP
+75.0 485 044", rank=6];
+134	[fillcolor=7, label="0 :CD
+1 :CP
+13.0 023 407", rank=6];
 }
 {
 graph [rank=same];
-129	[fillcolor=8, label=1, rank=7];
-111	[fillcolor=8, label=5, rank=7];
-128	[fillcolor=8, label=2, rank=7];
-120	[fillcolor=8, label=4, rank=7];
+129	[fillcolor=8, label="0 :CD
+2 :CP
+83.0 291 023", rank=7];
+111	[fillcolor=8, label="0 :CD
+1 :CP
+58.0 734 57", rank=7];
+128	[fillcolor=8, label="0 :CD
+1 :CP
+77.0 293 021", rank=7];
+120	[fillcolor=8, label="0 :CD
+2 :CP
+16.0 213 002", rank=7];
 }
 {
 graph [rank=same];
-100	[fillcolor=9, label=3, rank=8];
-110	[fillcolor=9, label=4, rank=8];
-119	[fillcolor=9, label=3, rank=8];
-114	[fillcolor=9, label=2, rank=8];
+100	[fillcolor=9, label="0 :CD
+2 :CP
+77.0 691 06", rank=8];
+110	[fillcolor=9, label="0 :CD
+1 :CP
+49.0 142 51", rank=8];
+119	[fillcolor=9, label="0 :CD
+1 :CP
+48.0 612 04", rank=8];
+114	[fillcolor=9, label="0 :CD
+3 :CP
+83.0 69 061", rank=8];
 }
 {
 graph [rank=same];
-105	[fillcolor=10, label=1, rank=9];
-109	[fillcolor=10, label=3, rank=9];
-99	[fillcolor=10, label=2, rank=9];
-96	[fillcolor=10, label=0, rank=9];
+105	[fillcolor=10, label="0 :CD
+2 :CP
+19.0 611 21", rank=9];
+109	[fillcolor=10, label="0 :CD
+1 :CP
+89.0 521 3", rank=9];
+99	[fillcolor=10, label="0 :CD
+1 :CP
+19.0 611 21", rank=9];
+96	[fillcolor=10, label="0 :CD
+3 :CP
+26.0 08 84", rank=9];
 }
 {
 graph [rank=same];
-108	[fillcolor=11, label=2, rank=10];
-118	[fillcolor=11, label=2, rank=10];
-115	[fillcolor=11, label=0, rank=10];
-104	[fillcolor=11, label=0, rank=10];
+108	[fillcolor=11, label="0 :CD
+1 :CP
+59.0 16 3", rank=10];
+118	[fillcolor=11, label="0 :CD
+1 :CP
+49.0 06 4", rank=10];
+115	[fillcolor=11, label="0 :CD
+2 :CP
+57.0 84 61", rank=10];
+104	[fillcolor=11, label="0 :CD
+1 :CP
+18.0 25 21", rank=10];
 }
 {
 graph [rank=same];
-107	[fillcolor=1, label=1, rank=11];
-113	[fillcolor=1, label=1, rank=11];
-98	[fillcolor=1, label=1, rank=11];
-117	[fillcolor=1, label=1, rank=11];
+107	[fillcolor=1, label="0 :CD
+1 :CP
+19.0 92 3", rank=11];
+113	[fillcolor=1, label="0 :CD
+1 :CP
+57.0 42 8", rank=11];
+98	[fillcolor=1, label="0 :CD
+1 :CP
+18.0 62 6", rank=11];
+117	[fillcolor=1, label="0 :CD
+1 :CP
+88.0 82 4", rank=11];
 }
 {
 graph [rank=same];
-116	[fillcolor=2, label=0, rank=12];
-106	[fillcolor=2, label=0, rank=12];
-112	[fillcolor=2, label=0, rank=12];
-97	[fillcolor=2, label=0, rank=12];
+116	[fillcolor=2, label="0 :CD
+1 :CP
+57.0 21 4", rank=12];
+106	[fillcolor=2, label="0 :CD
+1 :CP
+18.0 31 3", rank=12];
+112	[fillcolor=2, label="0 :CD
+1 :CP
+05.0 8 8", rank=12];
+97	[fillcolor=2, label="0 :CD
+1 :CP
+26.0 01 6", rank=12];
 }
 {
 graph [rank=same];
-103	[fillcolor=3, label=1, rank=13];
-95	[fillcolor=3, label=1, rank=13];
+103	[fillcolor=3, label="0 :CD
+2 :CP
+26.0 5 3", rank=13];
+95	[fillcolor=3, label="0 :CD
+2 :CP
+52.0 2 6", rank=13];
 }
 {
 graph [rank=same];
-94	[fillcolor=4, label=0, rank=14];
-102	[fillcolor=4, label=0, rank=14];
+94	[fillcolor=4, label="0 :CD
+1 :CP
+05.0 2 2", rank=14];
+102	[fillcolor=4, label="0 :CD
+1 :CP
+57.0 3 1", rank=14];
 }
 {
 graph [rank=same];
-101	[fillcolor=5, label=0, rank=15];
+101	[fillcolor=5, label="0 :CD
+4 :CP
+05.0 1 1", rank=15];
 }
 0	 [fillcolor=White, label=F, rank=None, shape=doublecircle];
 1	 [fillcolor=White, label=T, rank=None, shape=doublecircle];
