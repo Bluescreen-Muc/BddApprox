@@ -15,9 +15,9 @@ type node_info = {mutable paths: int; mutable true_paths:int; mutable false_path
 
 let empty_node_info () = {paths=0; true_paths=0; false_paths=0; parent_count=0; dominate_count=0; score=0.0}
 
-type funny = AND | OR | NOT
+type funny = AND | OR | NOT | IMP
 
-let functions = [|AND; OR; NOT|]
+let functions = [|AND; OR; IMP; NOT|]
 
 let random_funct ?(opnot = true) ()= 
     if opnot == true then let n = Random.int (Array.length functions) in Array.get functions n
@@ -143,17 +143,16 @@ let create_single_bdd var =
     ignore(Hashtbl.add !t 1 one);
     (add_node !t (Node{var=var; low=zero; high=one;info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}}), !t)
 
-
-let to_bool terminal =
-	match terminal with 
-	| False -> false
-	| True -> true
-	| _ -> false 
-
-let op funct op1 op2 = 
+let op_bool funct t1 t2 = 
 	match funct with 
-	| AND -> if (to_bool op1) && (to_bool op2) then one else zero
-	| OR -> if (to_bool op1) || (to_bool op2) then one else zero 
+	| AND -> if t1 == True && t2 == True then one else zero
+	| OR -> if t1 == True || t2 == True then one else zero 
+	| IMP -> begin
+			match t1, t2 with
+			| False, _ -> one
+			| _, True -> one
+			| _, _ -> zero	
+			end
 	| _ -> raise (ExpectedUnaryError)
 
 let connected_to_terminal node = if node.uid == 1 || node.uid == 0 then 0 else let output = ref 0 in 
@@ -186,7 +185,7 @@ let rec apply funct bdd1 bdd2 table =
 		else add_node table (Node{var=n1.var; low=(apply funct n1.low n2.low table); high=(apply funct n1.high n2.high table); info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}}) 
 	| Node n1, t -> add_node table (Node{var=n1.var; low=(apply funct n1.low bdd2 table ); high=(apply funct n1.high bdd2 table); info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}}) 
 	| t, Node n1 -> add_node table (Node{var=n1.var; low=(apply funct n1.low bdd1 table); high=(apply funct n1.high bdd1 table); info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}}) 
-	| t1, t2 -> op funct t1 t2
+	| t1, t2 -> op_bool funct t1 t2
 
 let opnot table bdd = let to_do = ref [] in 
 	Hashtbl.iter (fun x y -> 
@@ -754,19 +753,15 @@ let rec build = let table = ref (create_empty_bdd ()) in function
   | For (f1, f2) -> (apply OR (fst(build f1)) (fst(build f2)) (!table), !table)
   (* | Fnot f -> opnot (build f) *)
   | _ -> (zero, !table) 
-  (* | For (f1, f2) -> mk_or (build f1) (build f2)
-  | Fimp (f1, f2) -> mk_imp (build f1) (build f2)
-  | Fiff (f1, f2) -> mk_iff (build f1) (build f2)
-  | Fnot f -> mk_not (build f)
-
- *)
 
 let speed_test () =
 	let t = Sys.time () in 
 	
-	let l = ref [] in 
-	for i = 1 to 100000000 do
-		 ignore(1::!l);
+	let data = ref (BddData.empty ()) in 
+	for i = 1 to 10 do
+	Random.init 12345;
+		 data := BddData.create_random_function 60 29;
+
 	done;
 	Printf.printf "Execution time: %fs\n" (Sys.time() -. t)
 
