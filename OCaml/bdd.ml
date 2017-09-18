@@ -11,9 +11,9 @@ module Int = struct
  end
 module IntSet = Set.Make(Int)
 
-type node_info = {mutable paths: int; mutable true_paths:int; mutable false_paths: int; mutable parent_count: int; mutable dominate_count: int; mutable score: float}
+type node_info = {mutable paths: int; mutable true_paths:int; mutable false_paths: int; mutable parent_count: int; mutable dominate_count: int; mutable dom_hashes: int list; mutable score: float}
 
-let empty_node_info () = {paths=0; true_paths=0; false_paths=0; parent_count=0; dominate_count=0; score=0.0}
+let empty_node_info () = {paths=0; true_paths=0; false_paths=0; parent_count=0; dominate_count=0; score=0.0; dom_hashes=[]}
 
 type funny = AND | OR | NOT | IMP | EQ
 
@@ -25,7 +25,7 @@ let random_funct ?(opnot = true) ()=
 
 type variable = int (* 1..max_var *)
 type bdd = { mutable uid: int; mutable node : node }
-and node = True | False | Node of {mutable var: int; mutable low: bdd; mutable high: bdd; mutable info: node_info}
+and node = True | False | Node of {mutable var: int; mutable low: bdd; mutable high: bdd; mutable info: node_info} 
 type bdd_info = {mutable depth: int; mutable truth_rate: float; mutable true_paths: int; mutable false_paths: int ; mutable node_count: int; mutable root: bdd; fillrate: int}
 
 let set_dom_count bdd x = match bdd.node with 
@@ -150,7 +150,7 @@ let create_single_bdd var =
 	let t = ref (Hashtbl.create 10) in 
     ignore(Hashtbl.add !t  0 zero);
     ignore(Hashtbl.add !t 1 one);
-    (add_node !t (Node{var=var; low=zero; high=one;info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}}), !t)
+    (add_node !t (Node{var=var; low=zero; high=one;info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0; dom_hashes=[]}}), !t)
 
 let op_bool funct t1 t2 = 
 	match funct with 
@@ -193,11 +193,11 @@ let switch_terminals bdd = match bdd.node with
 let rec apply funct bdd1 bdd2 table =
 	match bdd1.node, bdd2.node with
 	| Node n1, Node n2 -> 
-		if n1.var < n2.var then add_node table (Node{var=n1.var; low=(apply funct n1.low bdd2 table); high=(apply funct n1.high bdd2 table); info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}}) 
-		else if n1.var > n2.var then add_node table (Node{var=n2.var; low=(apply funct bdd1 n2.low table); high=(apply funct bdd1 n2.high table); info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}}) 
-		else add_node table (Node{var=n1.var; low=(apply funct n1.low n2.low table); high=(apply funct n1.high n2.high table); info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}}) 
-	| Node n1, t -> add_node table (Node{var=n1.var; low=(apply funct n1.low bdd2 table ); high=(apply funct n1.high bdd2 table); info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}}) 
-	| t, Node n1 -> add_node table (Node{var=n1.var; low=(apply funct n1.low bdd1 table); high=(apply funct n1.high bdd1 table); info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}}) 
+		if n1.var < n2.var then add_node table (Node{var=n1.var; low=(apply funct n1.low bdd2 table); high=(apply funct n1.high bdd2 table); info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0;dom_hashes=[]}}) 
+		else if n1.var > n2.var then add_node table (Node{var=n2.var; low=(apply funct bdd1 n2.low table); high=(apply funct bdd1 n2.high table); info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0;dom_hashes=[]}}) 
+		else add_node table (Node{var=n1.var; low=(apply funct n1.low n2.low table); high=(apply funct n1.high n2.high table); info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0;dom_hashes=[]}}) 
+	| Node n1, t -> add_node table (Node{var=n1.var; low=(apply funct n1.low bdd2 table ); high=(apply funct n1.high bdd2 table); info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0;dom_hashes=[]}}) 
+	| t, Node n1 -> add_node table (Node{var=n1.var; low=(apply funct n1.low bdd1 table); high=(apply funct n1.high bdd1 table); info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0;dom_hashes=[]}}) 
 	| t1, t2 -> op_bool funct t1 t2
 
 let opnot table bdd = let to_do = ref [] in 
@@ -301,7 +301,7 @@ module BddData = struct
 	let create_single_bdd var = let data = ref (empty ()) in let table = ref !data.bdd in 
 		ignore(Hashtbl.add !table 0 zero);
     	ignore(Hashtbl.add !table 1 one);
-    	let root = add_node !data.bdd (Node{var=var; low=zero; high=one;info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}})
+    	let root = add_node !data.bdd (Node{var=var; low=zero; high=one;info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0;dom_hashes=[]}})
 		in { bdd = !table; info = {depth=var; truth_rate=0.0; node_count= 0; root=root; true_paths=0; false_paths=0; fillrate=0}}
     
 	let count_nodes x = x.info.node_count <- Hashtbl.length x.bdd; x.info.node_count
@@ -413,13 +413,13 @@ module BddData = struct
 			match n.low.node with 
 			| Node nlow -> let pc = nlow.info.parent_count in 
 			if pc == 1 then begin
-				score := !score + 1; 
+				score := (hash n.low.node)::!score; 
 				inner_fill_dominate n.low acc score;
 			end
 			else acc := n.low.uid::!acc;
 			if List.length (List.find_all (fun x -> x == n.low.uid) !acc) >= pc then 
 			begin
-				score := !score + 1; 
+				score := (hash n.low.node)::!score ; 
 				inner_fill_dominate n.low acc score;
 			end
 			| _ -> ();
@@ -427,13 +427,13 @@ module BddData = struct
 			match n.high.node with 
 			| Node nhigh -> let pc = nhigh.info.parent_count in 
 			if pc == 1 then begin
-				score := !score + 1; 
+				score := (hash n.high.node)::!score; 
 				inner_fill_dominate n.high acc score;
 			end
 			else acc := n.high.uid::!acc;
 			if List.length (List.find_all (fun x -> x == n.high.uid) !acc) >= pc then 
 			begin
-				score := !score + 1; 
+				score := (hash n.high.node)::!score ; 
 				inner_fill_dominate n.high acc score;
 			end
 			| _ -> ()
@@ -444,7 +444,7 @@ module BddData = struct
 	let fill_dominate data = let root_uid = (get_root data).uid in Hashtbl.iter (fun x y -> if not (y.uid == root_uid) then 
 		begin
 		match y.node with 
-			| Node n -> let count = ref 1 in let l = ref [] in inner_fill_dominate y l count; n.info.dominate_count <- !count;
+			| Node n -> let count = ref [] in let l = ref [] in inner_fill_dominate y l count; n.info.dominate_count <- (List.length !count) + 1; n.info.dom_hashes <- !count;
 			| _ -> ();
 		end
 		else set_dom_count y ((count_nodes data) - 3)) data.bdd
@@ -661,7 +661,7 @@ module BddData = struct
 		rebuild data;
 		fill_info data
 
-	let approx_dom max_error data = 
+	let approx_dom ?(relative=false) ?(effort = 0) max_error data = 
 		
 		let neg_compare_score (bdd1, _) (bdd2, _) = 
 			match bdd1.node, bdd2.node with 
@@ -674,13 +674,14 @@ module BddData = struct
 		count_false_true data;
 		fill_parents data;
 		let sum_paths = data.info.true_paths + data.info.false_paths in
-		let max_false = int_of_float (max_error *. float_of_int sum_paths) in print_int max_false; let bdd_list = ref [] in 
+		let max_false = if relative then int_of_float (max_error *. float_of_int sum_paths) else int_of_float (max_error *. float_of_int data.info.true_paths)  in 
+		 print_int max_false; let bdd_list = ref [] in 
 		Hashtbl.iter (fun x y -> 
 		match y.node with
 		| Node n -> if n.info.false_paths <= max_false then bdd_list := (y, hash(y.node))::(!bdd_list)
 		| _ -> ()) data.bdd;
-		List.iter (fun (x,y) -> let count = ref 0 in let l = ref [] in match x.node with 
-		| Node n -> inner_fill_dominate x l count;  n.info.dominate_count <- 1 + !count; n.info.score <- float_of_int (n.info.dominate_count * sum_paths) /. float_of_int(n.info.false_paths);
+		List.iter (fun (x,y) -> let count = ref [] in let l = ref [] in match x.node with 
+		| Node n -> inner_fill_dominate x l count; n.info.dom_hashes <- !count; n.info.dominate_count <- 1 + (List.length !count); n.info.score <- float_of_int (n.info.dominate_count * sum_paths) /. float_of_int(n.info.false_paths);
 		| _ -> ()) !bdd_list;
 		bdd_list := List.sort neg_compare_score !bdd_list;
 		let cur_false = ref 0 in 
@@ -771,8 +772,9 @@ let speed_test () =
 	let t = Sys.time () in 
 	
 	let data = ref (BddData.empty ()) in 
-	for i = 1 to 10 do
 	Random.init 12345;
+	for i = 1 to 10 do
+	
 		 data := BddData.create_random_function 60 29;
 
 	done;
@@ -781,9 +783,11 @@ let speed_test () =
 let speed_test2 () =
 	Random.init 12345;
 	let data = BddData.create_random_function 60 18 in
+	print_int (BddData.count_nodes data);
 	let t = Sys.time () in 
-	for i = 1 to 20000 do
-		 BddData.fill_parents data;
+	for i = 1 to 5 do
+			BddData.fill_parents data;
+		 	BddData.fill_dominate data;
 	done;
 	Printf.printf "Execution time: %fs\n" (Sys.time() -. t)
 
