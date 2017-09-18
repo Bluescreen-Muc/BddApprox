@@ -6,667 +6,2305 @@ digraph "" {
 		];
 {
 graph [rank=same];
-69560	[fillcolor=2, label="68719476736 25010208768 43709267968 0.64
+165795	[fillcolor=2, label="17592186044416 13863528431616 3728657612800 0.21
 PC: 0
-DC: 97
+DC: 369
 DomScore: 0.0000", rank=1];
 }
 {
 graph [rank=same];
-69559	[fillcolor=3, label="34359738368 12260671488 22099066880 0.64
+165794	[fillcolor=3, label="8796093022208 6903646126080 1892446896128 0.22
 PC: 1
-DC: 16
+DC: 4
 DomScore: 0.0000", rank=2];
-69543	[fillcolor=3, label="34359738368 12749537280 21610201088 0.63
+165790	[fillcolor=3, label="8796093022208 6959882305536 1836210716672 0.21
 PC: 1
-DC: 18
+DC: 44
 DomScore: 0.0000", rank=2];
 }
 {
 graph [rank=same];
-69542	[fillcolor=4, label="17179869184 6324387840 10855481344 0.63
+165793	[fillcolor=4, label="4398046511104 2505599614976 1892446896128 0.43
 PC: 1
-DC: 17
+DC: 3
+DomScore: 0.0000", rank=3];
+165789	[fillcolor=4, label="4398046511104 2561835794432 1836210716672 0.42
+PC: 1
+DC: 43
 DomScore: 0.0000", rank=3];
 }
 {
 graph [rank=same];
-69558	[fillcolor=5, label="17179869184 5835522048 11344347136 0.66
+165792	[fillcolor=5, label="2199023255552 1155654483968 1043368771584 0.47
 PC: 1
-DC: 15
+DC: 1
 DomScore: 0.0000", rank=4];
-69536	[fillcolor=5, label="8589934592 3114762240 5475172352 0.64
-PC: 1
-DC: 11
-DomScore: 0.0000", rank=4];
-69508	[fillcolor=5, label="34359738368 12850298880 21509439488 0.63
-PC: 2
-DC: 22
-DomScore: 0.0000", rank=4];
-69541	[fillcolor=5, label="8589934592 3209625600 5380308992 0.63
-PC: 1
-DC: 5
-DomScore: 0.0000", rank=4];
-}
-{
-graph [rank=same];
-69507	[fillcolor=6, label="17179869184 12850298880 4329570304 0.25
+165788	[fillcolor=5, label="2199023255552 1179829403648 1019193851904 0.46
 PC: 1
 DC: 21
-DomScore: 0.0000", rank=5];
-69540	[fillcolor=6, label="4294967296 3209625600 1085341696 0.25
+DomScore: 0.0000", rank=4];
+165596	[fillcolor=5, label="2199023255552 1382006390784 817016864768 0.37
 PC: 1
-DC: 4
-DomScore: 0.0000", rank=5];
-69535	[fillcolor=6, label="4294967296 3114762240 1180205056 0.27
+DC: 21
+DomScore: 0.0000", rank=4];
+165791	[fillcolor=5, label="2199023255552 1349945131008 849078124544 0.39
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=4];
+}
+{
+graph [rank=same];
+165506	[fillcolor=6, label="1099511627776 537911099392 561600528384 0.51
 PC: 1
 DC: 10
 DomScore: 0.0000", rank=5];
-69557	[fillcolor=6, label="8589934592 5835522048 2754412544 0.32
+165595	[fillcolor=6, label="1099511627776 844095291392 255416336384 0.23
 PC: 1
-DC: 14
+DC: 10
+DomScore: 0.0000", rank=5];
+165787	[fillcolor=6, label="1099511627776 748227133440 351284494336 0.32
+PC: 1
+DC: 10
+DomScore: 0.0000", rank=5];
+165695	[fillcolor=6, label="1099511627776 431602270208 667909357568 0.61
+PC: 1
+DC: 10
 DomScore: 0.0000", rank=5];
 }
 {
 graph [rank=same];
-69528	[fillcolor=7, label="2147483648 1540587520 606896128 0.28
-PC: 1
-DC: 3
-DomScore: 0.0000", rank=6];
-69556	[fillcolor=7, label="4294967296 3017015296 1277952000 0.30
-PC: 1
-DC: 6
-DomScore: 0.0000", rank=6];
-69534	[fillcolor=7, label="2147483648 1574174720 573308928 0.27
-PC: 1
-DC: 6
-DomScore: 0.0000", rank=6];
-69538	[fillcolor=7, label="2147483648 1604780032 542703616 0.25
-PC: 1
-DC: 2
-DomScore: 0.0000", rank=6];
-69499	[fillcolor=7, label="8589934592 6425149440 2164785152 0.25
-PC: 1
-DC: 13
-DomScore: 0.0000", rank=6];
-69550	[fillcolor=7, label="4294967296 2818506752 1476460544 0.34
-PC: 1
-DC: 6
-DomScore: 0.0000", rank=6];
-69539	[fillcolor=7, label="2147483648 1604845568 542638080 0.25
-PC: 1
-DC: 1
-DomScore: 0.0000", rank=6];
-69506	[fillcolor=7, label="8589934592 6425149440 2164785152 0.25
-PC: 1
-DC: 7
-DomScore: 0.0000", rank=6];
-}
-{
-graph [rank=same];
-69549	[fillcolor=8, label="2147483648 1710161920 437321728 0.20
-PC: 1
-DC: 5
-DomScore: 0.0000", rank=7];
-69555	[fillcolor=8, label="2147483648 1908670464 238813184 0.11
-PC: 1
-DC: 5
-DomScore: 0.0000", rank=7];
-}
-{
-graph [rank=same];
-69552	[fillcolor=9, label="1073741824 986447872 87293952 0.08
-PC: 1
-DC: 2
-DomScore: 0.0000", rank=8];
-69505	[fillcolor=9, label="4294967296 4225761280 69206016 0.02
-PC: 1
-DC: 3
-DomScore: 0.0000", rank=8];
-69546	[fillcolor=9, label="1073741824 922189824 151552000 0.14
-PC: 1
-DC: 2
-DomScore: 0.0000", rank=8];
-69533	[fillcolor=9, label="1073741824 1020002304 53739520 0.05
-PC: 1
-DC: 5
-DomScore: 0.0000", rank=8];
-69502	[fillcolor=9, label="4294967296 2199388160 2095579136 0.49
-PC: 1
-DC: 3
-DomScore: 0.0000", rank=8];
-69554	[fillcolor=9, label="1073741824 922222592 151519232 0.14
-PC: 1
-DC: 2
-DomScore: 0.0000", rank=8];
-69498	[fillcolor=9, label="4294967296 4208459776 86507520 0.02
-PC: 1
-DC: 12
-DomScore: 0.0000", rank=8];
-69527	[fillcolor=9, label="1073741824 986415104 87326720 0.08
-PC: 1
-DC: 2
-DomScore: 0.0000", rank=8];
-69537	[fillcolor=9, label="1073741824 1050607616 23134208 0.02
-PC: 1
-DC: 1
-DomScore: 0.0000", rank=8];
-69548	[fillcolor=9, label="1073741824 787972096 285769728 0.27
-PC: 1
-DC: 2
-DomScore: 0.0000", rank=8];
-}
-{
-graph [rank=same];
-69551	[fillcolor=10, label="536870912 461111296 75759616 0.14
-PC: 1
-DC: 1
-DomScore: 0.0000", rank=9];
-69553	[fillcolor=10, label="536870912 396886016 139984896 0.26
-PC: 1
-DC: 1
-DomScore: 0.0000", rank=9];
-69532	[fillcolor=10, label="536870912 494665728 42205184 0.08
-PC: 1
-DC: 4
-DomScore: 0.0000", rank=9];
-69545	[fillcolor=10, label="536870912 396853248 140017664 0.26
-PC: 1
-DC: 1
-DomScore: 0.0000", rank=9];
-69526	[fillcolor=10, label="536870912 461078528 75792384 0.14
-PC: 1
-DC: 1
-DomScore: 0.0000", rank=9];
-69547	[fillcolor=10, label="536870912 262635520 274235392 0.51
-PC: 1
-DC: 1
-DomScore: 0.0000", rank=9];
-}
-{
-graph [rank=same];
-69504	[fillcolor=11, label="2147483648 2124414976 23068672 0.01
-PC: 1
-DC: 2
-DomScore: 0.0000", rank=10];
-69525	[fillcolor=11, label="1342177280 1313177600 28999680 0.02
-PC: 4
-DC: 15
-DomScore: 0.0000", rank=10];
-69531	[fillcolor=11, label="268435456 231997440 36438016 0.14
-PC: 1
-DC: 3
-DomScore: 0.0000", rank=10];
-69497	[fillcolor=11, label="2147483648 2107113472 40370176 0.02
-PC: 1
-DC: 11
-DomScore: 0.0000", rank=10];
-69486	[fillcolor=11, label="9932111872 9718726656 213385216 0.02
-PC: 13
-DC: 1
-DomScore: 0.0000", rank=10];
-69544	[fillcolor=11, label="536870912 268435456 268435456 0.50
-PC: 2
-DC: 1
-DomScore: 0.0000", rank=10];
-69476	[fillcolor=11, label="15032385536 7758413824 7273971712 0.48
-PC: 8
-DC: 1
-DomScore: 0.0000", rank=10];
-69510	[fillcolor=11, label="536870912 396886016 139984896 0.26
-PC: 2
-DC: 2
-DomScore: 0.0000", rank=10];
-69501	[fillcolor=11, label="2147483648 1091043328 1056440320 0.49
-PC: 1
-DC: 2
-DomScore: 0.0000", rank=10];
-}
-{
-graph [rank=same];
-69503	[fillcolor=1, label="1073741824 1050673152 23068672 0.02
-PC: 1
-DC: 1
-DomScore: 0.0000", rank=11];
-69500	[fillcolor=1, label="1073741824 17301504 1056440320 0.98
-PC: 1
-DC: 1
-DomScore: 0.0000", rank=11];
-69524	[fillcolor=1, label="671088640 642088960 28999680 0.04
-PC: 1
-DC: 14
-DomScore: 0.0000", rank=11];
-69496	[fillcolor=1, label="1073741824 1033371648 40370176 0.04
-PC: 1
-DC: 10
-DomScore: 0.0000", rank=11];
-69509	[fillcolor=1, label="268435456 128450560 139984896 0.52
-PC: 1
-DC: 1
-DomScore: 0.0000", rank=11];
-69530	[fillcolor=1, label="134217728 97779712 36438016 0.27
-PC: 1
-DC: 2
-DomScore: 0.0000", rank=11];
-}
-{
-graph [rank=same];
-69495	[fillcolor=2, label="536870912 519569408 17301504 0.03
+165505	[fillcolor=7, label="549755813888 276756955136 272998858752 0.50
 PC: 1
 DC: 9
-DomScore: 0.0000", rank=12];
-69485	[fillcolor=2, label="6576668672 6294077440 282591232 0.04
-PC: 6
-DC: 1
-DomScore: 0.0000", rank=12];
-69523	[fillcolor=2, label="335544320 320962560 14581760 0.04
+DomScore: 0.0000", rank=6];
+165594	[fillcolor=7, label="549755813888 430276870144 119478943744 0.22
+PC: 1
+DC: 9
+DomScore: 0.0000", rank=6];
+165694	[fillcolor=7, label="549755813888 221450862592 328304951296 0.60
+PC: 1
+DC: 9
+DomScore: 0.0000", rank=6];
+165685	[fillcolor=7, label="1649267441664 630454222848 1018813218816 0.62
+PC: 2
+DC: 31
+DomScore: 0.0000", rank=6];
+165777	[fillcolor=7, label="1649267441664 1103027503104 546239938560 0.33
+PC: 2
+DC: 31
+DomScore: 0.0000", rank=6];
+165496	[fillcolor=7, label="1649267441664 783462432768 865805008896 0.52
+PC: 2
+DC: 31
+DomScore: 0.0000", rank=6];
+165585	[fillcolor=7, label="1649267441664 1241455263744 407812177920 0.25
+PC: 2
+DC: 31
+DomScore: 0.0000", rank=6];
+165786	[fillcolor=7, label="549755813888 380551299072 169204514816 0.31
+PC: 1
+DC: 9
+DomScore: 0.0000", rank=6];
+}
+{
+graph [rank=same];
+165495	[fillcolor=8, label="824633720832 355039444992 469594275840 0.57
+PC: 1
+DC: 30
+DomScore: 0.0000", rank=7];
+165504	[fillcolor=8, label="274877906944 133949292544 140928614400 0.51
+PC: 1
+DC: 8
+DomScore: 0.0000", rank=7];
+165593	[fillcolor=8, label="274877906944 213179695104 61698211840 0.22
+PC: 1
+DC: 8
+DomScore: 0.0000", rank=7];
+165785	[fillcolor=8, label="274877906944 188410232832 86467674112 0.31
+PC: 1
+DC: 8
+DomScore: 0.0000", rank=7];
+165438	[fillcolor=8, label="1099511627776 571230650368 528280977408 0.48
+PC: 2
+DC: 3
+DomScore: 0.0000", rank=7];
+165776	[fillcolor=8, label="824633720832 526604304384 298029416448 0.36
+PC: 1
+DC: 30
+DomScore: 0.0000", rank=7];
+165528	[fillcolor=8, label="1099511627776 868388700160 231122927616 0.21
+PC: 2
+DC: 3
+DomScore: 0.0000", rank=7];
+165584	[fillcolor=8, label="824633720832 590163738624 234469982208 0.28
+PC: 1
+DC: 30
+DomScore: 0.0000", rank=7];
+165721	[fillcolor=8, label="1099511627776 768564264960 330947362816 0.30
+PC: 2
+DC: 4
+DomScore: 0.0000", rank=7];
+165684	[fillcolor=8, label="824633720832 287595036672 537038684160 0.65
+PC: 1
+DC: 30
+DomScore: 0.0000", rank=7];
+165693	[fillcolor=8, label="274877906944 107164467200 167713439744 0.61
+PC: 1
+DC: 8
+DomScore: 0.0000", rank=7];
+165621	[fillcolor=8, label="1099511627776 457145581568 642366046208 0.58
+PC: 2
+DC: 4
+DomScore: 0.0000", rank=7];
+}
+{
+graph [rank=same];
+165592	[fillcolor=9, label="137438953472 124595994624 12842958848 0.09
+PC: 1
+DC: 7
+DomScore: 0.0000", rank=8];
+165503	[fillcolor=9, label="137438953472 108179488768 29259464704 0.21
+PC: 1
+DC: 7
+DomScore: 0.0000", rank=8];
+165518	[fillcolor=9, label="549755813888 514053898240 35701915648 0.06
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=8];
+165620	[fillcolor=9, label="549755813888 354066366464 195689447424 0.36
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=8];
+165692	[fillcolor=9, label="137438953472 81394663424 56044290048 0.41
+PC: 1
+DC: 7
+DomScore: 0.0000", rank=8];
+165435	[fillcolor=9, label="549755813888 468151435264 81604378624 0.15
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=8];
+165583	[fillcolor=9, label="412316860416 324412637184 87904223232 0.21
+PC: 1
+DC: 29
+DomScore: 0.0000", rank=8];
+165784	[fillcolor=9, label="137438953472 99826532352 37612421120 0.27
+PC: 1
+DC: 7
+DomScore: 0.0000", rank=8];
+165683	[fillcolor=9, label="412316860416 210285625344 202031235072 0.49
+PC: 1
+DC: 29
+DomScore: 0.0000", rank=8];
+165775	[fillcolor=9, label="412316860416 260853202944 151463657472 0.37
+PC: 1
+DC: 29
+DomScore: 0.0000", rank=8];
+165720	[fillcolor=9, label="549755813888 414229463040 135526350848 0.25
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=8];
+165494	[fillcolor=9, label="412316860416 277730033664 134586826752 0.33
+PC: 1
+DC: 29
+DomScore: 0.0000", rank=8];
+}
+{
+graph [rank=same];
+165557	[fillcolor=10, label="206158430208 173921009664 32237420544 0.16
 PC: 1
 DC: 13
-DomScore: 0.0000", rank=12];
-69529	[fillcolor=2, label="67108864 33554432 33554432 0.50
+DomScore: 0.0000", rank=9];
+165606	[fillcolor=10, label="274877906944 205084688384 69793218560 0.25
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=9];
+165588	[fillcolor=10, label="68719476736 66202894336 2516582400 0.04
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=9];
+165527	[fillcolor=10, label="2199023255552 1417339207680 781684047872 0.36
+PC: 6
+DC: 3
+DomScore: 0.0000", rank=9];
+165688	[fillcolor=10, label="68719476736 47060090880 21659385856 0.32
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=9];
+165774	[fillcolor=10, label="206158430208 123075035136 83083395072 0.40
+PC: 1
+DC: 15
+DomScore: 0.0000", rank=9];
+165682	[fillcolor=10, label="206158430208 86054535168 120103895040 0.58
+PC: 1
+DC: 15
+DomScore: 0.0000", rank=9];
+165591	[fillcolor=10, label="68719476736 58393100288 10326376448 0.15
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=9];
+165470	[fillcolor=10, label="206158430208 165641453568 40516976640 0.20
+PC: 1
+DC: 13
+DomScore: 0.0000", rank=9];
+165499	[fillcolor=10, label="68719476736 63015223296 5704253440 0.08
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=9];
+165493	[fillcolor=10, label="206158430208 112088580096 94069850112 0.46
+PC: 1
+DC: 15
+DomScore: 0.0000", rank=9];
+165619	[fillcolor=10, label="274877906944 148981678080 125896228864 0.46
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=9];
+165658	[fillcolor=10, label="206158430208 124231090176 81927340032 0.40
+PC: 1
+DC: 13
+DomScore: 0.0000", rank=9];
+165754	[fillcolor=10, label="206158430208 137778167808 68380262400 0.33
+PC: 1
+DC: 13
+DomScore: 0.0000", rank=9];
+165582	[fillcolor=10, label="206158430208 150491627520 55666802688 0.27
+PC: 1
+DC: 15
+DomScore: 0.0000", rank=9];
+165502	[fillcolor=10, label="68719476736 45164265472 23555211264 0.34
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=9];
+165780	[fillcolor=10, label="68719476736 52363788288 16355688448 0.24
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=9];
+165783	[fillcolor=10, label="68719476736 47462744064 21256732672 0.31
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=9];
+165691	[fillcolor=10, label="68719476736 34334572544 34384904192 0.50
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=9];
+165517	[fillcolor=10, label="274877906944 239175991296 35701915648 0.13
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=9];
+165434	[fillcolor=10, label="274877906944 193273528320 81604378624 0.30
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=9];
+165706	[fillcolor=10, label="274877906944 213808840704 61069066240 0.22
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=9];
+165437	[fillcolor=10, label="2199023255552 412316860416 1786706395136 0.81
+PC: 6
+DC: 1
+DomScore: 0.0000", rank=9];
+165719	[fillcolor=10, label="274877906944 200420622336 74457284608 0.27
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=9];
+}
+{
+graph [rank=same];
+165581	[fillcolor=11, label="103079215104 79045853184 24033361920 0.23
+PC: 1
+DC: 7
+DomScore: 0.0000", rank=10];
+165481	[fillcolor=11, label="103079215104 47412412416 55666802688 0.54
+PC: 1
+DC: 7
+DomScore: 0.0000", rank=10];
+165638	[fillcolor=11, label="103079215104 55754883072 47324332032 0.46
+PC: 1
+DC: 6
+DomScore: 0.0000", rank=10];
+165453	[fillcolor=11, label="103079215104 81235279872 21843935232 0.21
+PC: 1
+DC: 6
+DomScore: 0.0000", rank=10];
+165667	[fillcolor=11, label="103079215104 31595692032 71483523072 0.69
+PC: 1
+DC: 7
+DomScore: 0.0000", rank=10];
+165753	[fillcolor=11, label="103079215104 73775185920 29304029184 0.28
+PC: 1
+DC: 6
+DomScore: 0.0000", rank=10];
+165569	[fillcolor=11, label="103079215104 71445774336 31633440768 0.31
+PC: 1
+DC: 7
+DomScore: 0.0000", rank=10];
+165492	[fillcolor=11, label="103079215104 64676167680 38403047424 0.37
+PC: 1
+DC: 7
+DomScore: 0.0000", rank=10];
+165469	[fillcolor=11, label="103079215104 84406173696 18673041408 0.18
+PC: 1
+DC: 6
+DomScore: 0.0000", rank=10];
+165773	[fillcolor=11, label="103079215104 67024453632 36054761472 0.35
+PC: 1
+DC: 7
+DomScore: 0.0000", rank=10];
+165556	[fillcolor=11, label="103079215104 87677730816 15401484288 0.15
+PC: 1
+DC: 6
+DomScore: 0.0000", rank=10];
+165763	[fillcolor=11, label="103079215104 56050581504 47028633600 0.46
+PC: 1
+DC: 7
+DomScore: 0.0000", rank=10];
+165737	[fillcolor=11, label="103079215104 64002981888 39076233216 0.38
+PC: 1
+DC: 6
+DomScore: 0.0000", rank=10];
+165657	[fillcolor=11, label="103079215104 68476207104 34603008000 0.34
+PC: 1
+DC: 6
+DomScore: 0.0000", rank=10];
+165681	[fillcolor=11, label="103079215104 54458843136 48620371968 0.47
+PC: 1
+DC: 7
+DomScore: 0.0000", rank=10];
+165542	[fillcolor=11, label="103079215104 86243278848 16835936256 0.16
+PC: 1
+DC: 6
+DomScore: 0.0000", rank=10];
+}
+{
+graph [rank=same];
+165577	[fillcolor=1, label="51539607552 39585841152 11953766400 0.23
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=11];
+165637	[fillcolor=1, label="51539607552 27682406400 23857201152 0.46
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=11];
+165654	[fillcolor=1, label="51539607552 34263269376 17276338176 0.34
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=11];
+165491	[fillcolor=1, label="51539607552 32212254720 19327352832 0.38
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=11];
+165477	[fillcolor=1, label="51539607552 24058527744 27481079808 0.53
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=11];
+165666	[fillcolor=1, label="51539607552 15602810880 35936796672 0.70
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=11];
+165450	[fillcolor=1, label="51539607552 40969961472 10569646080 0.21
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=11];
+165690	[fillcolor=1, label="34359738368 21198012416 13161725952 0.38
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=11];
+165568	[fillcolor=1, label="51539607552 35584475136 15955132416 0.31
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=11];
+165466	[fillcolor=1, label="51539607552 42328915968 9210691584 0.18
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=11];
+165680	[fillcolor=1, label="51539607552 27204255744 24335351808 0.47
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=11];
+165587	[fillcolor=1, label="34359738368 33353105408 1006632960 0.03
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=11];
+165769	[fillcolor=1, label="51539607552 33505148928 18034458624 0.35
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=11];
+165734	[fillcolor=1, label="51539607552 32029802496 19509805056 0.38
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=11];
+165762	[fillcolor=1, label="51539607552 27996979200 23542628352 0.46
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=11];
+165663	[fillcolor=1, label="51539607552 15992881152 35546726400 0.69
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=11];
+165759	[fillcolor=1, label="51539607552 28053602304 23486005248 0.46
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=11];
+165778	[fillcolor=1, label="34359738368 24335351808 10024386560 0.29
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=11];
+165772	[fillcolor=1, label="51539607552 33519304704 18020302848 0.35
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=11];
+165779	[fillcolor=1, label="34359738368 28028436480 6331301888 0.18
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=11];
+165752	[fillcolor=1, label="51539607552 36894670848 14644936704 0.28
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=11];
+165553	[fillcolor=1, label="51539607552 43901779968 7637827584 0.15
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=11];
+165586	[fillcolor=1, label="34359738368 32849788928 1509949440 0.04
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=11];
+165750	[fillcolor=1, label="51539607552 36880515072 14659092480 0.28
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=11];
+165580	[fillcolor=1, label="51539607552 39460012032 12079595520 0.23
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=11];
+165689	[fillcolor=1, label="34359738368 13136560128 21223178240 0.62
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=11];
+165687	[fillcolor=1, label="34359738368 25870467072 8489271296 0.25
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=11];
+165782	[fillcolor=1, label="34359738368 25778192384 8581545984 0.25
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=11];
+165498	[fillcolor=1, label="34359738368 32010928128 2348810240 0.07
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=11];
+165501	[fillcolor=1, label="34359738368 25434259456 8925478912 0.26
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=11];
+165589	[fillcolor=1, label="34359738368 27917287424 6442450944 0.19
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=11];
+165781	[fillcolor=1, label="34359738368 21684551680 12675186688 0.37
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=11];
+165468	[fillcolor=1, label="51539607552 42077257728 9462349824 0.18
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=11];
+165565	[fillcolor=1, label="51539607552 35861299200 15678308352 0.30
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=11];
+165541	[fillcolor=1, label="51539607552 42983227392 8556380160 0.17
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=11];
+165488	[fillcolor=1, label="51539607552 32463912960 19075694592 0.37
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=11];
+165497	[fillcolor=1, label="34359738368 31004295168 3355443200 0.10
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=11];
+165635	[fillcolor=1, label="51539607552 28072476672 23467130880 0.46
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=11];
+165500	[fillcolor=1, label="34359738368 19730006016 14629732352 0.43
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=11];
+165736	[fillcolor=1, label="51539607552 31973179392 19566428160 0.38
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=11];
+165539	[fillcolor=1, label="51539607552 43260051456 8279556096 0.16
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=11];
+165555	[fillcolor=1, label="51539607552 43775950848 7763656704 0.15
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=11];
+165480	[fillcolor=1, label="51539607552 23353884672 28185722880 0.55
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=11];
+165656	[fillcolor=1, label="51539607552 34212937728 17326669824 0.34
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=11];
+165686	[fillcolor=1, label="34359738368 21189623808 13170114560 0.38
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=11];
+165590	[fillcolor=1, label="34359738368 30475812864 3883925504 0.11
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=11];
+165677	[fillcolor=1, label="51539607552 27254587392 24285020160 0.47
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=11];
+165452	[fillcolor=1, label="51539607552 40265318400 11274289152 0.22
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=11];
+}
+{
+graph [rank=same];
+165768	[fillcolor=3, label="25769803776 13064208384 12705595392 0.49
 PC: 1
 DC: 1
 DomScore: 0.0000", rank=12];
-69475	[fillcolor=2, label="8053063680 259522560 7793541120 0.97
-PC: 2
-DC: 12
+165761	[fillcolor=3, label="25769803776 10859053056 14910750720 0.58
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=12];
+165634	[fillcolor=3, label="25769803776 10355736576 15414067200 0.60
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=12];
+165679	[fillcolor=3, label="25769803776 10343153664 15426650112 0.60
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=12];
+165579	[fillcolor=3, label="25769803776 16156459008 9613344768 0.37
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=12];
+165451	[fillcolor=3, label="25769803776 14495514624 11274289152 0.44
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=12];
+165538	[fillcolor=3, label="25769803776 17490247680 8279556096 0.32
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=12];
+165449	[fillcolor=3, label="25769803776 15200157696 10569646080 0.41
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=12];
+165749	[fillcolor=3, label="25769803776 15514730496 10255073280 0.40
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=12];
+165676	[fillcolor=3, label="25769803776 10393485312 15376318464 0.60
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=12];
+165490	[fillcolor=3, label="25769803776 12079595520 13690208256 0.53
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=12];
+165636	[fillcolor=3, label="25769803776 9965666304 15804137472 0.61
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=12];
+165655	[fillcolor=3, label="25769803776 13476298752 12293505024 0.48
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=12];
+165662	[fillcolor=3, label="25769803776 4919918592 20849885184 0.81
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=12];
+165751	[fillcolor=3, label="25769803776 15528886272 10240917504 0.40
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=12];
+165735	[fillcolor=3, label="25769803776 13249806336 12519997440 0.49
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=12];
+165653	[fillcolor=3, label="25769803776 13526630400 12243173376 0.48
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=12];
+165771	[fillcolor=3, label="25769803776 13078364160 12691439616 0.49
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=12];
+165564	[fillcolor=3, label="25769803776 14319353856 11450449920 0.44
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=12];
+165758	[fillcolor=3, label="25769803776 10915676160 14854127616 0.58
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=12];
+165540	[fillcolor=3, label="25769803776 17213423616 8556380160 0.33
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=12];
+165554	[fillcolor=3, label="25769803776 18006147072 7763656704 0.30
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=12];
+165552	[fillcolor=3, label="25769803776 18131976192 7637827584 0.30
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=12];
+165665	[fillcolor=3, label="25769803776 4529848320 21239955456 0.82
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=12];
+165576	[fillcolor=3, label="25769803776 16282288128 9487515648 0.37
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=12];
+165733	[fillcolor=3, label="25769803776 13306429440 12463374336 0.48
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=12];
+165476	[fillcolor=3, label="25769803776 7952400384 17817403392 0.69
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=12];
+165465	[fillcolor=3, label="25769803776 16559112192 9210691584 0.36
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=12];
+165567	[fillcolor=3, label="25769803776 14042529792 11727273984 0.46
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=12];
+165467	[fillcolor=3, label="25769803776 16307453952 9462349824 0.37
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=12];
+165479	[fillcolor=3, label="25769803776 7247757312 18522046464 0.72
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=12];
+165487	[fillcolor=3, label="25769803776 12331253760 13438550016 0.52
+PC: 1
+DC: 1
 DomScore: 0.0000", rank=12];
 }
 {
 graph [rank=same];
-69522	[fillcolor=3, label="167772160 153190400 14581760 0.09
+165732	[fillcolor=4, label="30064771072 20742930432 9321840640 0.31
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165743	[fillcolor=4, label="25769803776 10352590848 15417212928 0.60
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165748	[fillcolor=4, label="30064771072 24123015168 5941755904 0.20
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165464	[fillcolor=4, label="30064771072 25954353152 4110417920 0.14
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165718	[fillcolor=4, label="206158430208 163527524352 42630905856 0.21
+PC: 4
+DC: 6
+DomScore: 0.0000", rank=13];
+165675	[fillcolor=4, label="30064771072 17425235968 12639535104 0.42
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165516	[fillcolor=4, label="206158430208 186428424192 19730006016 0.10
+PC: 4
+DC: 5
+DomScore: 0.0000", rank=13];
+165757	[fillcolor=4, label="30064771072 17953718272 12111052800 0.40
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165674	[fillcolor=4, label="25769803776 5851054080 19918749696 0.77
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165770	[fillcolor=4, label="12884901888 9127329792 3757572096 0.29
 PC: 1
-DC: 12
+DC: 1
+DomScore: 0.0000", rank=13];
+165566	[fillcolor=4, label="12884901888 9890168832 2994733056 0.23
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=13];
+165448	[fillcolor=4, label="30064771072 24192745472 5872025600 0.20
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165563	[fillcolor=4, label="30064771072 23722983424 6341787648 0.21
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165458	[fillcolor=4, label="25769803776 10871635968 14898167808 0.58
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165727	[fillcolor=4, label="25769803776 8833204224 16936599552 0.66
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165766	[fillcolor=4, label="25769803776 7902068736 17867735040 0.69
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165612	[fillcolor=4, label="206158430208 88583700480 117574729728 0.57
+PC: 4
+DC: 3
+DomScore: 0.0000", rank=13];
+165633	[fillcolor=4, label="30064771072 16412311552 13652459520 0.45
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165664	[fillcolor=4, label="12884901888 3925868544 8959033344 0.70
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=13];
+165627	[fillcolor=4, label="25769803776 6643777536 19126026240 0.74
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165478	[fillcolor=4, label="12884901888 6039797760 6845104128 0.53
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=13];
+165645	[fillcolor=4, label="25769803776 8984199168 16785604608 0.65
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165760	[fillcolor=4, label="12884901888 7637827584 5247074304 0.41
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=13];
+165618	[fillcolor=4, label="206158430208 134888816640 71269613568 0.35
+PC: 4
+DC: 3
+DomScore: 0.0000", rank=13];
+165575	[fillcolor=4, label="30064771072 26145193984 3919577088 0.13
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165547	[fillcolor=4, label="25769803776 12004098048 13765705728 0.53
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165551	[fillcolor=4, label="30064771072 28303163392 1761607680 0.06
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165428	[fillcolor=4, label="206158430208 128849018880 77309411328 0.38
+PC: 4
+DC: 1
+DomScore: 0.0000", rank=13];
+165652	[fillcolor=4, label="30064771072 21080571904 8984199168 0.30
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165678	[fillcolor=4, label="12884901888 7417626624 5467275264 0.42
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=13];
+165533	[fillcolor=4, label="25769803776 11475615744 14294188032 0.55
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165574	[fillcolor=4, label="25769803776 10154409984 15615393792 0.61
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165511	[fillcolor=4, label="206158430208 172335562752 33822867456 0.16
+PC: 4
+DC: 5
+DomScore: 0.0000", rank=13];
+165578	[fillcolor=4, label="12884901888 11079254016 1805647872 0.14
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=13];
+165562	[fillcolor=4, label="25769803776 8304721920 17465081856 0.68
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165489	[fillcolor=4, label="12884901888 8757706752 4127195136 0.32
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=13];
+165661	[fillcolor=4, label="30064771072 10070523904 19994247168 0.67
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165433	[fillcolor=4, label="206158430208 161061273600 45097156608 0.22
+PC: 4
+DC: 1
+DomScore: 0.0000", rank=13];
+165474	[fillcolor=4, label="25769803776 2415919104 23353884672 0.91
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165712	[fillcolor=4, label="206158430208 137103409152 69055021056 0.33
+PC: 4
+DC: 6
+DomScore: 0.0000", rank=13];
+165537	[fillcolor=4, label="30064771072 27422359552 2642411520 0.09
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165767	[fillcolor=4, label="30064771072 21264072704 8800698368 0.29
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165441	[fillcolor=4, label="25769803776 9663676416 16106127360 0.62
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165486	[fillcolor=4, label="30064771072 21021851648 9042919424 0.30
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165660	[fillcolor=4, label="25769803776 1207959552 24561844224 0.95
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165475	[fillcolor=4, label="30064771072 15737028608 14327742464 0.48
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165756	[fillcolor=4, label="25769803776 6442450944 19327352832 0.75
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=13];
+165485	[fillcolor=4, label="25769803776 6643777536 19126026240 0.74
+PC: 2
+DC: 1
 DomScore: 0.0000", rank=13];
 }
 {
 graph [rank=same];
-69484	[fillcolor=5, label="3372220416 3082420224 289800192 0.09
+165742	[fillcolor=5, label="47244640256 37959499776 9285140480 0.20
+PC: 4
+DC: 5
+DomScore: 0.0000", rank=14];
+165546	[fillcolor=5, label="47244640256 44015026176 3229614080 0.07
+PC: 4
+DC: 4
+DomScore: 0.0000", rank=14];
+165673	[fillcolor=5, label="34359738368 15602810880 18756927488 0.55
+PC: 3
+DC: 6
+DomScore: 0.0000", rank=14];
+165536	[fillcolor=5, label="30064771072 28068282368 1996488704 0.07
 PC: 2
 DC: 3
 DomScore: 0.0000", rank=14];
-69474	[fillcolor=5, label="4026531840 259522560 3767009280 0.94
-PC: 1
-DC: 11
-DomScore: 0.0000", rank=14];
-69521	[fillcolor=5, label="83886080 76513280 7372800 0.09
-PC: 1
-DC: 11
-DomScore: 0.0000", rank=14];
-69494	[fillcolor=5, label="268435456 251133952 17301504 0.06
-PC: 1
-DC: 8
-DomScore: 0.0000", rank=14];
-}
-{
-graph [rank=same];
-69493	[fillcolor=6, label="134217728 129499136 4718592 0.04
-PC: 1
-DC: 4
-DomScore: 0.0000", rank=15];
-69473	[fillcolor=6, label="2013265920 70778880 1942487040 0.96
-PC: 1
-DC: 5
-DomScore: 0.0000", rank=15];
-69489	[fillcolor=6, label="134217728 121634816 12582912 0.09
-PC: 1
-DC: 3
-DomScore: 0.0000", rank=15];
-69515	[fillcolor=6, label="41943040 37355520 4587520 0.11
-PC: 1
-DC: 5
-DomScore: 0.0000", rank=15];
-69478	[fillcolor=6, label="1686110208 1475346432 210763776 0.12
+165526	[fillcolor=5, label="1099511627776 798863917056 300647710720 0.27
 PC: 1
 DC: 1
-DomScore: 0.0000", rank=15];
-69483	[fillcolor=6, label="1686110208 1607073792 79036416 0.05
+DomScore: 0.0000", rank=14];
+165573	[fillcolor=5, label="34359738368 27078426624 7281311744 0.21
+PC: 3
+DC: 4
+DomScore: 0.0000", rank=14];
+165510	[fillcolor=5, label="103079215104 69256347648 33822867456 0.33
+PC: 1
+DC: 4
+DomScore: 0.0000", rank=14];
+165522	[fillcolor=5, label="1099511627776 618475290624 481036337152 0.44
 PC: 1
 DC: 1
-DomScore: 0.0000", rank=15];
-69520	[fillcolor=6, label="41943040 39157760 2785280 0.07
-PC: 1
-DC: 5
-DomScore: 0.0000", rank=15];
-69468	[fillcolor=6, label="2013265920 188743680 1824522240 0.91
-PC: 1
+DomScore: 0.0000", rank=14];
+165644	[fillcolor=5, label="47244640256 32942063616 14302576640 0.30
+PC: 4
 DC: 2
-DomScore: 0.0000", rank=15];
-}
-{
-graph [rank=same];
-69488	[fillcolor=9, label="67108864 54525952 12582912 0.19
-PC: 1
+DomScore: 0.0000", rank=14];
+165626	[fillcolor=5, label="47244640256 24360517632 22884122624 0.48
+PC: 4
 DC: 2
-DomScore: 0.0000", rank=16];
-69519	[fillcolor=9, label="20971520 18186240 2785280 0.13
-PC: 1
+DomScore: 0.0000", rank=14];
+165561	[fillcolor=5, label="34359738368 22145925120 12213813248 0.36
+PC: 3
 DC: 4
-DomScore: 0.0000", rank=16];
-69514	[fillcolor=9, label="20971520 16384000 4587520 0.22
-PC: 1
-DC: 4
-DomScore: 0.0000", rank=16];
-69492	[fillcolor=9, label="67108864 62390272 4718592 0.07
-PC: 1
-DC: 3
-DomScore: 0.0000", rank=16];
-}
-{
-graph [rank=same];
-69482	[fillcolor=2, label="887095296 803930112 83165184 0.09
+DomScore: 0.0000", rank=14];
+165659	[fillcolor=5, label="34359738368 3221225472 31138512896 0.91
 PC: 3
 DC: 1
-DomScore: 0.0000", rank=17];
-69472	[fillcolor=2, label="1006632960 70778880 935854080 0.93
+DomScore: 0.0000", rank=14];
+165600	[fillcolor=5, label="309237645312 212600881152 96636764160 0.31
+PC: 5
+DC: 2
+DomScore: 0.0000", rank=14];
+165515	[fillcolor=5, label="103079215104 83349209088 19730006016 0.19
 PC: 1
 DC: 4
-DomScore: 0.0000", rank=17];
-69491	[fillcolor=2, label="33554432 31981568 1572864 0.05
-PC: 1
-DC: 2
-DomScore: 0.0000", rank=17];
-69518	[fillcolor=2, label="10485760 8683520 1802240 0.17
-PC: 1
-DC: 3
-DomScore: 0.0000", rank=17];
-}
-{
-graph [rank=same];
-69487	[fillcolor=3, label="33554432 29360128 4194304 0.12
-PC: 1
-DC: 1
-DomScore: 0.0000", rank=18];
-69490	[fillcolor=3, label="16777216 15204352 1572864 0.09
-PC: 1
-DC: 1
-DomScore: 0.0000", rank=18];
-69513	[fillcolor=3, label="10485760 8519680 1966080 0.19
-PC: 1
-DC: 3
-DomScore: 0.0000", rank=18];
-69517	[fillcolor=3, label="5242880 3440640 1802240 0.34
-PC: 1
-DC: 2
-DomScore: 0.0000", rank=18];
-}
-{
-graph [rank=same];
-69481	[fillcolor=4, label="454557696 369328128 85229568 0.19
+DomScore: 0.0000", rank=14];
+165765	[fillcolor=5, label="34359738368 21072183296 13287555072 0.39
 PC: 3
+DC: 2
+DomScore: 0.0000", rank=14];
+165651	[fillcolor=5, label="30064771072 21198012416 8866758656 0.29
+PC: 2
 DC: 3
-DomScore: 0.0000", rank=19];
-69512	[fillcolor=4, label="5242880 4587520 655360 0.12
+DomScore: 0.0000", rank=14];
+165717	[fillcolor=5, label="103079215104 78064386048 25014829056 0.24
+PC: 1
+DC: 5
+DomScore: 0.0000", rank=14];
+165711	[fillcolor=5, label="103079215104 62209916928 40869298176 0.40
+PC: 1
+DC: 5
+DomScore: 0.0000", rank=14];
+165632	[fillcolor=5, label="30064771072 17322475520 12742295552 0.42
+PC: 2
+DC: 3
+DomScore: 0.0000", rank=14];
+165731	[fillcolor=5, label="30064771072 20875051008 9189720064 0.31
+PC: 2
+DC: 4
+DomScore: 0.0000", rank=14];
+165705	[fillcolor=5, label="309237645312 256389414912 52848230400 0.17
+PC: 5
+DC: 4
+DomScore: 0.0000", rank=14];
+165747	[fillcolor=5, label="30064771072 24089985024 5974786048 0.20
+PC: 2
+DC: 4
+DomScore: 0.0000", rank=14];
+165700	[fillcolor=5, label="309237645312 224680476672 84557168640 0.27
+PC: 5
+DC: 4
+DomScore: 0.0000", rank=14];
+165532	[fillcolor=5, label="47244640256 42077257728 5167382528 0.11
+PC: 4
+DC: 4
+DomScore: 0.0000", rank=14];
+165755	[fillcolor=5, label="34359738368 17179869184 17179869184 0.50
+PC: 3
+DC: 1
+DomScore: 0.0000", rank=14];
+165726	[fillcolor=5, label="47244640256 32388415488 14856224768 0.31
+PC: 4
+DC: 5
+DomScore: 0.0000", rank=14];
+165550	[fillcolor=5, label="30064771072 28596764672 1468006400 0.05
+PC: 2
+DC: 3
+DomScore: 0.0000", rank=14];
+165611	[fillcolor=5, label="103079215104 17716740096 85362475008 0.83
 PC: 1
 DC: 2
+DomScore: 0.0000", rank=14];
+165617	[fillcolor=5, label="103079215104 51942260736 51136954368 0.50
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=14];
+165605	[fillcolor=5, label="309237645312 248839667712 60397977600 0.20
+PC: 5
+DC: 2
+DomScore: 0.0000", rank=14];
+}
+{
+graph [rank=same];
+165704	[fillcolor=7, label="154618822656 101770592256 52848230400 0.34
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=15];
+165764	[fillcolor=7, label="17179869184 3892314112 13287555072 0.77
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=15];
+165725	[fillcolor=7, label="23622320128 8766095360 14856224768 0.63
+PC: 1
+DC: 4
+DomScore: 0.0000", rank=15];
+165741	[fillcolor=7, label="23622320128 14337179648 9285140480 0.39
+PC: 1
+DC: 4
+DomScore: 0.0000", rank=15];
+165616	[fillcolor=7, label="51539607552 22951231488 28588376064 0.55
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=15];
+165643	[fillcolor=7, label="23622320128 13010731008 10611589120 0.45
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=15];
+165625	[fillcolor=7, label="23622320128 6643777536 16978542592 0.72
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=15];
+165604	[fillcolor=7, label="154618822656 94220845056 60397977600 0.39
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=15];
+165730	[fillcolor=7, label="15032385536 5842665472 9189720064 0.61
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=15];
+165599	[fillcolor=7, label="154618822656 57982058496 96636764160 0.62
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=15];
+165631	[fillcolor=7, label="15032385536 4404019200 10628366336 0.71
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=15];
+165672	[fillcolor=7, label="17179869184 6744440832 10435428352 0.61
+PC: 1
+DC: 5
+DomScore: 0.0000", rank=15];
+165716	[fillcolor=7, label="51539607552 26524778496 25014829056 0.49
+PC: 1
+DC: 4
+DomScore: 0.0000", rank=15];
+165610	[fillcolor=7, label="51539607552 4831838208 46707769344 0.91
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=15];
+165650	[fillcolor=7, label="15032385536 7927234560 7105150976 0.47
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=15];
+165699	[fillcolor=7, label="154618822656 70061654016 84557168640 0.55
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=15];
+165710	[fillcolor=7, label="51539607552 10670309376 40869298176 0.79
+PC: 1
+DC: 4
+DomScore: 0.0000", rank=15];
+165746	[fillcolor=7, label="15032385536 9057599488 5974786048 0.40
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=15];
+}
+{
+graph [rank=same];
+165729	[fillcolor=10, label="7516192768 4903141376 2613051392 0.35
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=16];
+165509	[fillcolor=10, label="51539607552 17716740096 33822867456 0.66
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=16];
+165649	[fillcolor=10, label="7516192768 5108662272 2407530496 0.32
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=16];
+165715	[fillcolor=10, label="25769803776 14847836160 10921967616 0.42
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=16];
+165745	[fillcolor=10, label="7516192768 5651824640 1864368128 0.25
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=16];
+165514	[fillcolor=10, label="51539607552 31809601536 19730006016 0.38
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=16];
+165709	[fillcolor=10, label="25769803776 7449083904 18320719872 0.71
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=16];
+165535	[fillcolor=10, label="15032385536 13035896832 1996488704 0.13
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=16];
+165698	[fillcolor=10, label="77309411328 60397977600 16911433728 0.22
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=16];
+165525	[fillcolor=10, label="680752316416 308465893376 372286423040 0.55
+PC: 6
+DC: 3
+DomScore: 0.0000", rank=16];
+165447	[fillcolor=10, label="45097156608 38755368960 6341787648 0.14
+PC: 3
+DC: 1
+DomScore: 0.0000", rank=16];
+165703	[fillcolor=10, label="77309411328 66739765248 10569646080 0.14
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=16];
+165521	[fillcolor=10, label="672162381824 84020297728 588142084096 0.88
+PC: 5
+DC: 3
+DomScore: 0.0000", rank=16];
+165724	[fillcolor=10, label="11811160064 7289700352 4521459712 0.38
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=16];
+165572	[fillcolor=10, label="17179869184 9898557440 7281311744 0.42
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=16];
+165740	[fillcolor=10, label="11811160064 8985247744 2825912320 0.24
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=16];
+165545	[fillcolor=10, label="23622320128 20392706048 3229614080 0.14
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=16];
+165549	[fillcolor=10, label="15032385536 13564379136 1468006400 0.10
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=16];
+165560	[fillcolor=10, label="17179869184 4966055936 12213813248 0.71
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=16];
+165531	[fillcolor=10, label="23622320128 18454937600 5167382528 0.22
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=16];
+165630	[fillcolor=10, label="7516192768 4404019200 3112173568 0.41
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=16];
+165463	[fillcolor=10, label="45097156608 39812333568 5284823040 0.12
+PC: 3
+DC: 1
+DomScore: 0.0000", rank=16];
+}
+{
+graph [rank=same];
+165723	[fillcolor=3, label="5905580032 3967811584 1937768448 0.33
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=17];
+165548	[fillcolor=3, label="7516192768 7222591488 293601280 0.04
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=17];
+165571	[fillcolor=3, label="8589934592 5469372416 3120562176 0.36
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=17];
+165530	[fillcolor=3, label="11811160064 9596567552 2214592512 0.19
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=17];
+165739	[fillcolor=3, label="5905580032 4694474752 1211105280 0.21
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=17];
+165728	[fillcolor=3, label="3758096384 2789212160 968884224 0.26
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=17];
+165697	[fillcolor=3, label="38654705664 31406948352 7247757312 0.19
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=17];
+165714	[fillcolor=3, label="12884901888 8204058624 4680843264 0.36
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=17];
+165524	[fillcolor=3, label="340376158208 180824834048 159551324160 0.47
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=17];
+165559	[fillcolor=3, label="8589934592 3355443200 5234491392 0.61
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=17];
+165708	[fillcolor=3, label="12884901888 5033164800 7851737088 0.61
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=17];
+165702	[fillcolor=3, label="38654705664 34124857344 4529848320 0.12
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=17];
+165544	[fillcolor=3, label="11811160064 10427039744 1384120320 0.12
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=17];
+165744	[fillcolor=3, label="3758096384 2921332736 836763648 0.22
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=17];
+165513	[fillcolor=3, label="25769803776 17314086912 8455716864 0.33
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=17];
+165534	[fillcolor=3, label="7516192768 7398752256 117440512 0.02
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=17];
+165520	[fillcolor=3, label="336081190912 84020297728 252060893184 0.75
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=17];
+165508	[fillcolor=3, label="25769803776 11274289152 14495514624 0.56
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=17];
+}
+{
+graph [rank=same];
+165519	[fillcolor=4, label="168040595456 84020297728 84020297728 0.50
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=18];
+165738	[fillcolor=4, label="2952790016 2549088256 403701760 0.14
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=18];
+165570	[fillcolor=4, label="4294967296 3254779904 1040187392 0.24
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=18];
+165446	[fillcolor=4, label="26306674688 25484591104 822083584 0.03
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=18];
+165512	[fillcolor=4, label="12884901888 10066329600 2818572288 0.22
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=18];
+165529	[fillcolor=4, label="5905580032 5167382528 738197504 0.12
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=18];
+165701	[fillcolor=4, label="21206401024 19549650944 1656750080 0.08
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=18];
+165523	[fillcolor=4, label="170188079104 117004304384 53183774720 0.31
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=18];
+165543	[fillcolor=4, label="5905580032 5444206592 461373440 0.08
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=18];
+165722	[fillcolor=4, label="2952790016 2306867200 645922816 0.22
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=18];
+165629	[fillcolor=4, label="5637144576 3435134976 2202009600 0.39
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=18];
+165462	[fillcolor=4, label="26306674688 24251465728 2055208960 0.08
+PC: 2
+DC: 2
+DomScore: 0.0000", rank=18];
+165558	[fillcolor=4, label="4294967296 2550136832 1744830464 0.41
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=18];
+165707	[fillcolor=4, label="6442450944 3825205248 2617245696 0.41
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=18];
+165696	[fillcolor=4, label="21206401024 18555600896 2650800128 0.12
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=18];
+165507	[fillcolor=4, label="12884901888 8053063680 4831838208 0.38
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=18];
+165713	[fillcolor=4, label="6442450944 4882169856 1560281088 0.24
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=18];
+165648	[fillcolor=4, label="5637144576 3567255552 2069889024 0.37
+PC: 2
+DC: 3
+DomScore: 0.0000", rank=18];
+}
+{
+graph [rank=same];
+165484	[fillcolor=6, label="66571993088 34326183936 32245809152 0.48
+PC: 7
+DC: 1
 DomScore: 0.0000", rank=19];
-69477	[fillcolor=4, label="909115392 681836544 227278848 0.25
+165615	[fillcolor=6, label="48318382080 24914165760 23404216320 0.48
+PC: 4
+DC: 2
+DomScore: 0.0000", rank=19];
+165603	[fillcolor=6, label="148713242624 125476798464 23236444160 0.16
+PC: 5
+DC: 2
+DomScore: 0.0000", rank=19];
+165461	[fillcolor=6, label="13153337344 11098128384 2055208960 0.16
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=19];
+165436	[fillcolor=6, label="1826166407168 684812402688 1141354004480 0.62
+PC: 9
+DC: 1
+DomScore: 0.0000", rank=19];
+165432	[fillcolor=6, label="199715979264 112340238336 87375740928 0.44
 PC: 5
 DC: 1
 DomScore: 0.0000", rank=19];
-69471	[fillcolor=4, label="503316480 70778880 432537600 0.86
+165647	[fillcolor=6, label="2818572288 1189085184 1629487104 0.58
 PC: 1
+DC: 2
+DomScore: 0.0000", rank=19];
+165642	[fillcolor=6, label="29662117888 21551382528 8110735360 0.27
+PC: 6
 DC: 3
 DomScore: 0.0000", rank=19];
-69516	[fillcolor=4, label="2621440 1310720 1310720 0.50
+165671	[fillcolor=6, label="8589934592 3523215360 5066719232 0.59
 PC: 1
-DC: 1
+DC: 4
 DomScore: 0.0000", rank=19];
-69467	[fillcolor=4, label="1006632960 188743680 817889280 0.81
-PC: 1
+165457	[fillcolor=6, label="121601261568 102601064448 19000197120 0.16
+PC: 10
 DC: 1
 DomScore: 0.0000", rank=19];
 }
 {
 graph [rank=same];
-69470	[fillcolor=6, label="251658240 70778880 180879360 0.72
+165641	[fillcolor=10, label="14831058944 13208911872 1622147072 0.11
 PC: 1
 DC: 2
 DomScore: 0.0000", rank=20];
-69480	[fillcolor=6, label="227278848 142049280 85229568 0.38
+165598	[fillcolor=10, label="223069863936 167302397952 55767465984 0.25
+PC: 6
+DC: 1
+DomScore: 0.0000", rank=20];
+165614	[fillcolor=10, label="24159191040 20384317440 3774873600 0.16
 PC: 1
-DC: 2
+DC: 1
+DomScore: 0.0000", rank=20];
+165609	[fillcolor=10, label="72477573120 13589544960 58888028160 0.81
+PC: 5
+DC: 3
+DomScore: 0.0000", rank=20];
+165646	[fillcolor=10, label="1409286144 528482304 880803840 0.62
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=20];
+165602	[fillcolor=10, label="74356621312 69709332480 4647288832 0.06
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=20];
+165670	[fillcolor=10, label="4294967296 3523215360 771751936 0.18
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=20];
+165624	[fillcolor=10, label="44493176832 25027411968 19465764864 0.44
+PC: 7
+DC: 3
+DomScore: 0.0000", rank=20];
+165628	[fillcolor=10, label="4227858432 1981808640 2246049792 0.53
+PC: 2
+DC: 1
 DomScore: 0.0000", rank=20];
 }
 {
 graph [rank=same];
-69469	[fillcolor=7, label="125829120 23592960 102236160 0.81
+165669	[fillcolor=1, label="2147483648 1711276032 436207616 0.20
 PC: 1
+DC: 2
+DomScore: 0.0000", rank=21];
+165460	[fillcolor=1, label="7281311744 5460983808 1820327936 0.25
+PC: 2
+DC: 2
+DomScore: 0.0000", rank=21];
+165440	[fillcolor=1, label="204648480768 153486360576 51162120192 0.25
+PC: 12
 DC: 1
 DomScore: 0.0000", rank=21];
-69479	[fillcolor=7, label="113639424 85229568 28409856 0.25
-PC: 1
+165456	[fillcolor=1, label="68216160256 63952650240 4263510016 0.06
+PC: 2
 DC: 1
 DomScore: 0.0000", rank=21];
-}
-{
-graph [rank=same];
-69466	[fillcolor=10, label="692060160 259522560 432537600 0.62
+165445	[fillcolor=1, label="21843935232 20478689280 1365245952 0.06
 PC: 3
+DC: 4
+DomScore: 0.0000", rank=21];
+165640	[fillcolor=1, label="7415529472 6256852992 1158676480 0.16
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=21];
+165623	[fillcolor=1, label="22246588416 8342470656 13904117760 0.62
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=21];
+165473	[fillcolor=1, label="99857989632 18723373056 81134616576 0.81
+PC: 8
 DC: 3
+DomScore: 0.0000", rank=21];
+165483	[fillcolor=1, label="35433480192 29896998912 5536481280 0.16
+PC: 2
+DC: 2
+DomScore: 0.0000", rank=21];
+}
+{
+graph [rank=same];
+165427	[fillcolor=2, label="385741750272 96435437568 289306312704 0.75
+PC: 8
+DC: 1
+DomScore: 0.0000", rank=22];
+165472	[fillcolor=2, label="49928994816 6241124352 43687870464 0.88
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=22];
+165668	[fillcolor=2, label="1073741824 838860800 234881024 0.22
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=22];
+165482	[fillcolor=2, label="17716740096 14394851328 3321888768 0.19
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=22];
+165608	[fillcolor=2, label="36238786560 4529848320 31708938240 0.88
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=22];
+165613	[fillcolor=2, label="13153337344 10687086592 2466250752 0.19
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=22];
+165431	[fillcolor=2, label="129654325248 113447534592 16206790656 0.12
+PC: 3
+DC: 1
 DomScore: 0.0000", rank=22];
 }
 {
 graph [rank=same];
-69511	[fillcolor=11, label="2621440 1966080 655360 0.25
+165601	[fillcolor=4, label="47462744064 41529901056 5932843008 0.12
+PC: 3
+DC: 1
+DomScore: 0.0000", rank=23];
+165639	[fillcolor=4, label="4244635648 3448766464 795869184 0.19
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=23];
+165607	[fillcolor=4, label="18119393280 4529848320 13589544960 0.75
 PC: 1
+DC: 1
+DomScore: 0.0000", rank=23];
+165622	[fillcolor=4, label="11123294208 2780823552 8342470656 0.75
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=23];
+165597	[fillcolor=4, label="122658226176 61329113088 61329113088 0.50
+PC: 2
 DC: 1
 DomScore: 0.0000", rank=23];
 }
 {
 graph [rank=same];
-69464	[fillcolor=3, label="346030080 86507520 259522560 0.75
+165426	[fillcolor=6, label="201930571776 100965285888 100965285888 0.50
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=24];
+165459	[fillcolor=6, label="3640655872 1820327936 1820327936 0.50
 PC: 1
+DC: 1
+DomScore: 0.0000", rank=24];
+165455	[fillcolor=6, label="45088768000 39452672000 5636096000 0.12
+PC: 3
 DC: 2
 DomScore: 0.0000", rank=24];
-69465	[fillcolor=3, label="972357632 486178816 486178816 0.50
-PC: 5
+165430	[fillcolor=6, label="1019735965696 764801974272 254933991424 0.25
+PC: 7
+DC: 1
+DomScore: 0.0000", rank=24];
+165444	[fillcolor=6, label="10921967616 9556721664 1365245952 0.12
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=24];
+165471	[fillcolor=6, label="24964497408 6241124352 18723373056 0.75
+PC: 1
 DC: 1
 DomScore: 0.0000", rank=24];
 }
 {
 graph [rank=same];
-69463	[fillcolor=4, label="173015040 86507520 86507520 0.50
+165443	[fillcolor=8, label="5460983808 4095737856 1365245952 0.25
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=25];
+165454	[fillcolor=8, label="22544384000 16908288000 5636096000 0.25
 PC: 1
 DC: 1
 DomScore: 0.0000", rank=25];
+165439	[fillcolor=8, label="120368136192 60184068096 60184068096 0.50
+PC: 3
+DC: 1
+DomScore: 0.0000", rank=25];
+}
+{
+graph [rank=same];
+165442	[fillcolor=9, label="2730491904 1365245952 1365245952 0.50
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=26];
+}
+{
+graph [rank=same];
+165429	[fillcolor=11, label="521140174848 260570087424 260570087424 0.50
+PC: 2
+DC: 1
+DomScore: 0.0000", rank=27];
 }
 0	 [fillcolor=White, label=F, rank=None, shape=doublecircle];
 1	 [fillcolor=White, label=T, rank=None, shape=doublecircle];
-69501 -> 0 		[style=dotted];
-69501 -> 69500
-69475 -> 69474 		[style=dotted];
-69475 -> 1
-69543 -> 69542 		[style=dotted];
-69543 -> 69508
-69465 -> 1 		[style=dotted];
-69465 -> 0
-69541 -> 69540 		[style=dotted];
-69541 -> 1
-69494 -> 69493 		[style=dotted];
-69494 -> 69489
-69557 -> 69556 		[style=dotted];
-69557 -> 69550
-69555 -> 69554 		[style=dotted];
-69555 -> 69552
-69559 -> 69558 		[style=dotted];
-69559 -> 69508
-69468 -> 69467 		[style=dotted];
-69468 -> 1
-69547 -> 69525 		[style=dotted];
-69547 -> 1
-69510 -> 0 		[style=dotted];
-69510 -> 69509
-69520 -> 69519 		[style=dotted];
-69520 -> 0
-69548 -> 69547 		[style=dotted];
-69548 -> 69486
-69506 -> 69505 		[style=dotted];
-69506 -> 69502
-69476 -> 0 		[style=dotted];
-69476 -> 69475
-69544 -> 0 		[style=dotted];
-69544 -> 1
-69539 -> 69486 		[style=dotted];
-69539 -> 69476
-69529 -> 1 		[style=dotted];
-69529 -> 0
-69523 -> 69522 		[style=dotted];
-69523 -> 0
-69517 -> 69481 		[style=dotted];
-69517 -> 69516
-69508 -> 69507 		[style=dotted];
-69508 -> 1
-69537 -> 69525 		[style=dotted];
-69537 -> 69486
-69483 -> 69482 		[style=dotted];
-69483 -> 0
-69536 -> 69535 		[style=dotted];
-69536 -> 1
-69530 -> 69529 		[style=dotted];
-69530 -> 69485
-69486 -> 0 		[style=dotted];
-69486 -> 69485
-69485 -> 69484 		[style=dotted];
-69485 -> 0
-69527 -> 69526 		[style=dotted];
-69527 -> 69486
-69509 -> 1 		[style=dotted];
-69509 -> 69485
-69498 -> 69497 		[style=dotted];
-69498 -> 69486
-69497 -> 0 		[style=dotted];
-69497 -> 69496
-69550 -> 69549 		[style=dotted];
-69550 -> 69476
-69467 -> 69466 		[style=dotted];
-69467 -> 1
-69513 -> 69477 		[style=dotted];
-69513 -> 69512
-69499 -> 69498 		[style=dotted];
-69499 -> 69476
-69492 -> 69482 		[style=dotted];
-69492 -> 69491
-69522 -> 69484 		[style=dotted];
-69522 -> 69521
-69542 -> 69541 		[style=dotted];
-69542 -> 69536
-69478 -> 69477 		[style=dotted];
-69478 -> 0
-69558 -> 69557 		[style=dotted];
-69558 -> 1
-69554 -> 69553 		[style=dotted];
-69554 -> 69486
-69518 -> 0 		[style=dotted];
-69518 -> 69517
-69514 -> 69477 		[style=dotted];
-69514 -> 69513
-69479 -> 69465 		[style=dotted];
-69479 -> 0
-69535 -> 69534 		[style=dotted];
-69535 -> 69528
-69531 -> 0 		[style=dotted];
-69531 -> 69530
-69516 -> 1 		[style=dotted];
-69516 -> 0
-69480 -> 69479 		[style=dotted];
-69480 -> 69465
-69549 -> 69548 		[style=dotted];
-69549 -> 69546
-69525 -> 0 		[style=dotted];
-69525 -> 69524
-69521 -> 69520 		[style=dotted];
-69521 -> 69515
-69515 -> 69514 		[style=dotted];
-69515 -> 0
-69474 -> 69473 		[style=dotted];
-69474 -> 69468
-69502 -> 69501 		[style=dotted];
-69502 -> 69476
-69484 -> 69483 		[style=dotted];
-69484 -> 69478
-69526 -> 69525 		[style=dotted];
-69526 -> 69510
-69560 -> 69559 		[style=dotted];
-69560 -> 69543
-69538 -> 69537 		[style=dotted];
-69538 -> 69476
-69464 -> 69463 		[style=dotted];
-69464 -> 1
-69495 -> 69494 		[style=dotted];
-69495 -> 0
-69490 -> 69481 		[style=dotted];
-69490 -> 0
-69519 -> 69482 		[style=dotted];
-69519 -> 69518
-69496 -> 69485 		[style=dotted];
-69496 -> 69495
-69489 -> 69488 		[style=dotted];
-69489 -> 0
-69545 -> 69525 		[style=dotted];
-69545 -> 69544
-69534 -> 69533 		[style=dotted];
-69534 -> 69476
-69532 -> 69486 		[style=dotted];
-69532 -> 69531
-69511 -> 69465 		[style=dotted];
-69511 -> 0
-69471 -> 69470 		[style=dotted];
-69471 -> 1
-69473 -> 69472 		[style=dotted];
-69473 -> 1
-69463 -> 1 		[style=dotted];
-69463 -> 0
-69470 -> 69469 		[style=dotted];
-69470 -> 69466
-69466 -> 69465 		[style=dotted];
-69466 -> 69464
-69533 -> 69532 		[style=dotted];
-69533 -> 69486
-69477 -> 69465 		[style=dotted];
-69477 -> 0
-69546 -> 69545 		[style=dotted];
-69546 -> 69486
-69540 -> 69539 		[style=dotted];
-69540 -> 69538
-69524 -> 69523 		[style=dotted];
-69524 -> 69485
-69500 -> 69475 		[style=dotted];
-69500 -> 1
-69488 -> 69477 		[style=dotted];
-69488 -> 69487
-69553 -> 69486 		[style=dotted];
-69553 -> 69544
-69487 -> 69477 		[style=dotted];
-69487 -> 0
-69512 -> 69511 		[style=dotted];
-69512 -> 0
-69507 -> 69506 		[style=dotted];
-69507 -> 69499
-69493 -> 69492 		[style=dotted];
-69493 -> 0
-69491 -> 0 		[style=dotted];
-69491 -> 69490
-69469 -> 69466 		[style=dotted];
-69469 -> 1
-69556 -> 69555 		[style=dotted];
-69556 -> 69476
-69472 -> 1 		[style=dotted];
-69472 -> 69471
-69505 -> 69504 		[style=dotted];
-69505 -> 69486
-69551 -> 69486 		[style=dotted];
-69551 -> 69510
-69482 -> 0 		[style=dotted];
-69482 -> 69481
-69552 -> 69551 		[style=dotted];
-69552 -> 69486
-69528 -> 69527 		[style=dotted];
-69528 -> 69476
-69504 -> 0 		[style=dotted];
-69504 -> 69503
-69503 -> 69485 		[style=dotted];
-69503 -> 0
-69481 -> 69480 		[style=dotted];
-69481 -> 0
+165605 -> 165604 		[style=dotted];
+165605 -> 0
+165452 -> 165451 		[style=dotted];
+165452 -> 0
+165719 -> 165718 		[style=dotted];
+165719 -> 165712
+165677 -> 165676 		[style=dotted];
+165677 -> 165618
+165648 -> 165647 		[style=dotted];
+165648 -> 165603
+165487 -> 165486 		[style=dotted];
+165487 -> 165485
+165485 -> 165484 		[style=dotted];
+165485 -> 1
+165621 -> 165437 		[style=dotted];
+165621 -> 165620
+165713 -> 0 		[style=dotted];
+165713 -> 165615
+165542 -> 165541 		[style=dotted];
+165542 -> 165539
+165681 -> 165680 		[style=dotted];
+165681 -> 165677
+165628 -> 1 		[style=dotted];
+165628 -> 165445
+165508 -> 165507 		[style=dotted];
+165508 -> 165427
+165463 -> 165462 		[style=dotted];
+165463 -> 165457
+165756 -> 165755 		[style=dotted];
+165756 -> 1
+165693 -> 165437 		[style=dotted];
+165693 -> 165692
+165437 -> 165436 		[style=dotted];
+165437 -> 1
+165695 -> 165694 		[style=dotted];
+165695 -> 165685
+165590 -> 165575 		[style=dotted];
+165590 -> 165516
+165431 -> 0 		[style=dotted];
+165431 -> 165430
+165520 -> 165519 		[style=dotted];
+165520 -> 1
+165624 -> 165623 		[style=dotted];
+165624 -> 165440
+165686 -> 165633 		[style=dotted];
+165686 -> 165600
+165656 -> 165655 		[style=dotted];
+165656 -> 165605
+165617 -> 165616 		[style=dotted];
+165617 -> 165432
+165494 -> 165493 		[style=dotted];
+165494 -> 165470
+165630 -> 165629 		[style=dotted];
+165630 -> 165624
+165746 -> 165745 		[style=dotted];
+165746 -> 165525
+165710 -> 165709 		[style=dotted];
+165710 -> 165521
+165706 -> 165705 		[style=dotted];
+165706 -> 165700
+165479 -> 165478 		[style=dotted];
+165479 -> 165474
+165657 -> 165656 		[style=dotted];
+165657 -> 165654
+165467 -> 165457 		[style=dotted];
+165467 -> 165458
+165699 -> 165698 		[style=dotted];
+165699 -> 165521
+165613 -> 165601 		[style=dotted];
+165613 -> 165430
+165475 -> 165473 		[style=dotted];
+165475 -> 165447
+165611 -> 165610 		[style=dotted];
+165611 -> 165427
+165567 -> 165566 		[style=dotted];
+165567 -> 165562
+165531 -> 165530 		[style=dotted];
+165531 -> 165440
+165465 -> 165464 		[style=dotted];
+165465 -> 165458
+165480 -> 165479 		[style=dotted];
+165480 -> 165428
+165660 -> 165659 		[style=dotted];
+165660 -> 1
+165534 -> 0 		[style=dotted];
+165534 -> 165446
+165486 -> 165484 		[style=dotted];
+165486 -> 165463
+165483 -> 165482 		[style=dotted];
+165483 -> 165431
+165737 -> 165736 		[style=dotted];
+165737 -> 165734
+165790 -> 0 		[style=dotted];
+165790 -> 165789
+165555 -> 165554 		[style=dotted];
+165555 -> 0
+165786 -> 165785 		[style=dotted];
+165786 -> 165721
+165476 -> 165475 		[style=dotted];
+165476 -> 165474
+165733 -> 165732 		[style=dotted];
+165733 -> 165727
+165650 -> 165649 		[style=dotted];
+165650 -> 165436
+165550 -> 165549 		[style=dotted];
+165550 -> 0
+165441 -> 165440 		[style=dotted];
+165441 -> 1
+165720 -> 165719 		[style=dotted];
+165720 -> 165706
+165670 -> 165669 		[style=dotted];
+165670 -> 165483
+165576 -> 165575 		[style=dotted];
+165576 -> 165574
+165513 -> 165512 		[style=dotted];
+165513 -> 165432
+165767 -> 165765 		[style=dotted];
+165767 -> 165747
+165763 -> 165762 		[style=dotted];
+165763 -> 165759
+165560 -> 165559 		[style=dotted];
+165560 -> 165473
+165726 -> 165725 		[style=dotted];
+165726 -> 0
+165665 -> 165664 		[style=dotted];
+165665 -> 165660
+165597 -> 1 		[style=dotted];
+165597 -> 0
+165539 -> 165538 		[style=dotted];
+165539 -> 0
+165549 -> 165548 		[style=dotted];
+165549 -> 165457
+165537 -> 165532 		[style=dotted];
+165537 -> 165536
+165434 -> 165433 		[style=dotted];
+165434 -> 165428
+165775 -> 165774 		[style=dotted];
+165775 -> 165754
+165736 -> 165735 		[style=dotted];
+165736 -> 165700
+165683 -> 165682 		[style=dotted];
+165683 -> 165658
+165610 -> 165609 		[style=dotted];
+165610 -> 1
+165712 -> 165711 		[style=dotted];
+165712 -> 165700
+165552 -> 165551 		[style=dotted];
+165552 -> 165547
+165554 -> 165546 		[style=dotted];
+165554 -> 165547
+165507 -> 0 		[style=dotted];
+165507 -> 165427
+165545 -> 165544 		[style=dotted];
+165545 -> 165457
+165500 -> 165475 		[style=dotted];
+165500 -> 165428
+165540 -> 165532 		[style=dotted];
+165540 -> 165533
+165784 -> 165783 		[style=dotted];
+165784 -> 165780
+165755 -> 1 		[style=dotted];
+165755 -> 0
+165474 -> 165473 		[style=dotted];
+165474 -> 1
+165635 -> 165634 		[style=dotted];
+165635 -> 165600
+165556 -> 165555 		[style=dotted];
+165556 -> 165553
+165740 -> 165739 		[style=dotted];
+165740 -> 165642
+165497 -> 165448 		[style=dotted];
+165497 -> 0
+165473 -> 165472 		[style=dotted];
+165473 -> 165427
+165684 -> 165437 		[style=dotted];
+165684 -> 165683
+165488 -> 165487 		[style=dotted];
+165488 -> 165433
+165696 -> 0 		[style=dotted];
+165696 -> 165598
+165532 -> 165531 		[style=dotted];
+165532 -> 0
+165585 -> 165584 		[style=dotted];
+165585 -> 165528
+165572 -> 165571 		[style=dotted];
+165572 -> 165484
+165795 -> 165794 		[style=dotted];
+165795 -> 165790
+165791 -> 165585 		[style=dotted];
+165791 -> 165496
+165608 -> 165607 		[style=dotted];
+165608 -> 1
+165433 -> 165432 		[style=dotted];
+165433 -> 0
+165758 -> 165757 		[style=dotted];
+165758 -> 165756
+165724 -> 165723 		[style=dotted];
+165724 -> 165624
+165541 -> 165540 		[style=dotted];
+165541 -> 0
+165716 -> 165715 		[style=dotted];
+165716 -> 165525
+165602 -> 165601 		[style=dotted];
+165602 -> 0
+165565 -> 165564 		[style=dotted];
+165565 -> 165511
+165707 -> 0 		[style=dotted];
+165707 -> 165609
+165661 -> 165659 		[style=dotted];
+165661 -> 165632
+165457 -> 165456 		[style=dotted];
+165457 -> 165440
+165672 -> 165671 		[style=dotted];
+165672 -> 165436
+165700 -> 165699 		[style=dotted];
+165700 -> 0
+165558 -> 0 		[style=dotted];
+165558 -> 165473
+165517 -> 165516 		[style=dotted];
+165517 -> 165511
+165671 -> 165670 		[style=dotted];
+165671 -> 1
+165773 -> 165772 		[style=dotted];
+165773 -> 165769
+165744 -> 165701 		[style=dotted];
+165744 -> 165648
+165596 -> 165595 		[style=dotted];
+165596 -> 165506
+165489 -> 165484 		[style=dotted];
+165489 -> 165457
+165562 -> 165561 		[style=dotted];
+165562 -> 1
+165496 -> 165495 		[style=dotted];
+165496 -> 165438
+165691 -> 165690 		[style=dotted];
+165691 -> 165689
+165468 -> 165467 		[style=dotted];
+165468 -> 0
+165721 -> 165527 		[style=dotted];
+165721 -> 165720
+165631 -> 165630 		[style=dotted];
+165631 -> 1
+165781 -> 165757 		[style=dotted];
+165781 -> 165712
+165747 -> 165746 		[style=dotted];
+165747 -> 0
+165578 -> 165573 		[style=dotted];
+165578 -> 165546
+165462 -> 165461 		[style=dotted];
+165462 -> 0
+165564 -> 165563 		[style=dotted];
+165564 -> 165562
+165599 -> 165598 		[style=dotted];
+165599 -> 1
+165511 -> 165510 		[style=dotted];
+165511 -> 0
+165777 -> 165776 		[style=dotted];
+165777 -> 165721
+165622 -> 1 		[style=dotted];
+165622 -> 165439
+165642 -> 165641 		[style=dotted];
+165642 -> 165624
+165730 -> 165729 		[style=dotted];
+165730 -> 165521
+165574 -> 165573 		[style=dotted];
+165574 -> 1
+165533 -> 165532 		[style=dotted];
+165533 -> 1
+165646 -> 1 		[style=dotted];
+165646 -> 165460
+165589 -> 165563 		[style=dotted];
+165589 -> 165511
+165501 -> 165486 		[style=dotted];
+165501 -> 165433
+165471 -> 165439 		[style=dotted];
+165471 -> 1
+165544 -> 165543 		[style=dotted];
+165544 -> 165457
+165783 -> 165782 		[style=dotted];
+165783 -> 165781
+165705 -> 165704 		[style=dotted];
+165705 -> 0
+165647 -> 165646 		[style=dotted];
+165647 -> 165628
+165771 -> 165770 		[style=dotted];
+165771 -> 165766
+165678 -> 165673 		[style=dotted];
+165678 -> 165644
+165604 -> 165603 		[style=dotted];
+165604 -> 165436
+165482 -> 165455 		[style=dotted];
+165482 -> 165430
+165652 -> 165644 		[style=dotted];
+165652 -> 165651
+165780 -> 165779 		[style=dotted];
+165780 -> 165778
+165521 -> 165520 		[style=dotted];
+165521 -> 1
+165439 -> 0 		[style=dotted];
+165439 -> 1
+165653 -> 165652 		[style=dotted];
+165653 -> 165645
+165703 -> 165702 		[style=dotted];
+165703 -> 165603
+165428 -> 165427 		[style=dotted];
+165428 -> 0
+165609 -> 165608 		[style=dotted];
+165609 -> 165427
+165502 -> 165501 		[style=dotted];
+165502 -> 165500
+165702 -> 165701 		[style=dotted];
+165702 -> 165603
+165584 -> 165527 		[style=dotted];
+165584 -> 165583
+165708 -> 165707 		[style=dotted];
+165708 -> 165609
+165629 -> 165628 		[style=dotted];
+165629 -> 165598
+165551 -> 165546 		[style=dotted];
+165551 -> 165550
+165498 -> 165464 		[style=dotted];
+165498 -> 0
+165582 -> 165581 		[style=dotted];
+165582 -> 165569
+165782 -> 165767 		[style=dotted];
+165782 -> 165718
+165625 -> 165624 		[style=dotted];
+165625 -> 1
+165444 -> 165443 		[style=dotted];
+165444 -> 0
+165735 -> 165726 		[style=dotted];
+165735 -> 165727
+165559 -> 165558 		[style=dotted];
+165559 -> 165473
+165447 -> 165446 		[style=dotted];
+165447 -> 165440
+165722 -> 0 		[style=dotted];
+165722 -> 165624
+165583 -> 165582 		[style=dotted];
+165583 -> 165557
+165543 -> 0 		[style=dotted];
+165543 -> 165457
+165523 -> 0 		[style=dotted];
+165523 -> 165436
+165701 -> 0 		[style=dotted];
+165701 -> 165603
+165528 -> 165527 		[style=dotted];
+165528 -> 165518
+165435 -> 165434 		[style=dotted];
+165435 -> 0
+165687 -> 165652 		[style=dotted];
+165687 -> 165605
+165731 -> 165730 		[style=dotted];
+165731 -> 0
+165632 -> 165631 		[style=dotted];
+165632 -> 165447
+165525 -> 165524 		[style=dotted];
+165525 -> 165436
+165711 -> 165710 		[style=dotted];
+165711 -> 0
+165685 -> 165684 		[style=dotted];
+165685 -> 165621
+165524 -> 165523 		[style=dotted];
+165524 -> 165436
+165751 -> 165742 		[style=dotted];
+165751 -> 165743
+165717 -> 165716 		[style=dotted];
+165717 -> 0
+165692 -> 165691 		[style=dotted];
+165692 -> 165688
+165689 -> 165661 		[style=dotted];
+165689 -> 165612
+165662 -> 165661 		[style=dotted];
+165662 -> 165660
+165651 -> 165650 		[style=dotted];
+165651 -> 165463
+165668 -> 165639 		[style=dotted];
+165668 -> 165430
+165469 -> 165468 		[style=dotted];
+165469 -> 165466
+165442 -> 1 		[style=dotted];
+165442 -> 0
+165432 -> 165431 		[style=dotted];
+165432 -> 165427
+165547 -> 165546 		[style=dotted];
+165547 -> 1
+165776 -> 165527 		[style=dotted];
+165776 -> 165775
+165698 -> 165697 		[style=dotted];
+165698 -> 165598
+165765 -> 165764 		[style=dotted];
+165765 -> 0
+165575 -> 165573 		[style=dotted];
+165575 -> 165550
+165620 -> 165619 		[style=dotted];
+165620 -> 165606
+165580 -> 165579 		[style=dotted];
+165580 -> 165516
+165754 -> 165753 		[style=dotted];
+165754 -> 165737
+165750 -> 165749 		[style=dotted];
+165750 -> 165705
+165714 -> 165713 		[style=dotted];
+165714 -> 165615
+165658 -> 165657 		[style=dotted];
+165658 -> 165638
+165643 -> 165642 		[style=dotted];
+165643 -> 165436
+165430 -> 165429 		[style=dotted];
+165430 -> 0
+165655 -> 165644 		[style=dotted];
+165655 -> 165645
+165586 -> 165537 		[style=dotted];
+165586 -> 0
+165553 -> 165552 		[style=dotted];
+165553 -> 0
+165619 -> 165618 		[style=dotted];
+165619 -> 165612
+165614 -> 165613 		[style=dotted];
+165614 -> 165431
+165493 -> 165492 		[style=dotted];
+165493 -> 165481
+165636 -> 165626 		[style=dotted];
+165636 -> 165627
+165618 -> 165617 		[style=dotted];
+165618 -> 165605
+165752 -> 165751 		[style=dotted];
+165752 -> 165705
+165515 -> 165514 		[style=dotted];
+165515 -> 0
+165499 -> 165498 		[style=dotted];
+165499 -> 165497
+165789 -> 165788 		[style=dotted];
+165789 -> 165596
+165600 -> 165599 		[style=dotted];
+165600 -> 0
+165535 -> 165534 		[style=dotted];
+165535 -> 165440
+165470 -> 165469 		[style=dotted];
+165470 -> 165453
+165518 -> 165517 		[style=dotted];
+165518 -> 0
+165436 -> 165430 		[style=dotted];
+165436 -> 1
+165709 -> 165708 		[style=dotted];
+165709 -> 165609
+165793 -> 165792 		[style=dotted];
+165793 -> 165791
+165787 -> 165786 		[style=dotted];
+165787 -> 165777
+165697 -> 165696 		[style=dotted];
+165697 -> 165598
+165514 -> 165513 		[style=dotted];
+165514 -> 165432
+165429 -> 0 		[style=dotted];
+165429 -> 1
+165779 -> 165748 		[style=dotted];
+165779 -> 165705
+165591 -> 165590 		[style=dotted];
+165591 -> 165589
+165529 -> 0 		[style=dotted];
+165529 -> 165440
+165772 -> 165771 		[style=dotted];
+165772 -> 165718
+165682 -> 165681 		[style=dotted];
+165682 -> 165667
+165492 -> 165491 		[style=dotted];
+165492 -> 165488
+165760 -> 165755 		[style=dotted];
+165760 -> 165726
+165616 -> 165615 		[style=dotted];
+165616 -> 165436
+165490 -> 165489 		[style=dotted];
+165490 -> 165485
+165438 -> 165437 		[style=dotted];
+165438 -> 165435
+165778 -> 165732 		[style=dotted];
+165778 -> 165700
+165645 -> 165644 		[style=dotted];
+165645 -> 1
+165478 -> 165473 		[style=dotted];
+165478 -> 165440
+165728 -> 165696 		[style=dotted];
+165728 -> 165629
+165454 -> 0 		[style=dotted];
+165454 -> 165429
+165785 -> 165527 		[style=dotted];
+165785 -> 165784
+165759 -> 165758 		[style=dotted];
+165759 -> 165712
+165472 -> 165471 		[style=dotted];
+165472 -> 1
+165774 -> 165773 		[style=dotted];
+165774 -> 165763
+165688 -> 165687 		[style=dotted];
+165688 -> 165686
+165663 -> 165662 		[style=dotted];
+165663 -> 165612
+165455 -> 165454 		[style=dotted];
+165455 -> 0
+165762 -> 165761 		[style=dotted];
+165762 -> 165712
+165739 -> 165738 		[style=dotted];
+165739 -> 165642
+165676 -> 165675 		[style=dotted];
+165676 -> 165674
+165694 -> 165693 		[style=dotted];
+165694 -> 165621
+165594 -> 165593 		[style=dotted];
+165594 -> 165528
+165745 -> 165744 		[style=dotted];
+165745 -> 165642
+165659 -> 1 		[style=dotted];
+165659 -> 165473
+165561 -> 165560 		[style=dotted];
+165561 -> 0
+165749 -> 165748 		[style=dotted];
+165749 -> 165743
+165715 -> 165714 		[style=dotted];
+165715 -> 165615
+165530 -> 165529 		[style=dotted];
+165530 -> 165440
+165627 -> 165626 		[style=dotted];
+165627 -> 1
+165569 -> 165568 		[style=dotted];
+165569 -> 165565
+165734 -> 165733 		[style=dotted];
+165734 -> 165700
+165649 -> 165648 		[style=dotted];
+165649 -> 165642
+165623 -> 165622 		[style=dotted];
+165623 -> 165597
+165753 -> 165752 		[style=dotted];
+165753 -> 165750
+165449 -> 165448 		[style=dotted];
+165449 -> 165441
+165538 -> 165537 		[style=dotted];
+165538 -> 165533
+165443 -> 0 		[style=dotted];
+165443 -> 165442
+165664 -> 165659 		[style=dotted];
+165664 -> 165626
+165626 -> 165625 		[style=dotted];
+165626 -> 165440
+165503 -> 165502 		[style=dotted];
+165503 -> 165499
+165451 -> 165440 		[style=dotted];
+165451 -> 165441
+165741 -> 165740 		[style=dotted];
+165741 -> 165525
+165667 -> 165666 		[style=dotted];
+165667 -> 165663
+165794 -> 0 		[style=dotted];
+165794 -> 165793
+165769 -> 165768 		[style=dotted];
+165769 -> 165718
+165640 -> 165639 		[style=dotted];
+165640 -> 165601
+165587 -> 165551 		[style=dotted];
+165587 -> 0
+165598 -> 165597 		[style=dotted];
+165598 -> 0
+165461 -> 165460 		[style=dotted];
+165461 -> 165445
+165453 -> 165452 		[style=dotted];
+165453 -> 165450
+165644 -> 165643 		[style=dotted];
+165644 -> 165457
+165633 -> 165626 		[style=dotted];
+165633 -> 165632
+165571 -> 165570 		[style=dotted];
+165571 -> 165484
+165522 -> 165521 		[style=dotted];
+165522 -> 0
+165510 -> 165509 		[style=dotted];
+165510 -> 0
+165612 -> 165611 		[style=dotted];
+165612 -> 165600
+165593 -> 165527 		[style=dotted];
+165593 -> 165592
+165509 -> 165508 		[style=dotted];
+165509 -> 165427
+165725 -> 165724 		[style=dotted];
+165725 -> 165521
+165603 -> 165602 		[style=dotted];
+165603 -> 165598
+165445 -> 165444 		[style=dotted];
+165445 -> 0
+165766 -> 165765 		[style=dotted];
+165766 -> 1
+165607 -> 1 		[style=dotted];
+165607 -> 165426
+165595 -> 165594 		[style=dotted];
+165595 -> 165585
+165638 -> 165637 		[style=dotted];
+165638 -> 165635
+165512 -> 0 		[style=dotted];
+165512 -> 165432
+165680 -> 165679 		[style=dotted];
+165680 -> 165618
+165466 -> 165465 		[style=dotted];
+165466 -> 0
+165788 -> 165787 		[style=dotted];
+165788 -> 165695
+165727 -> 165726 		[style=dotted];
+165727 -> 1
+165568 -> 165567 		[style=dotted];
+165568 -> 165511
+165792 -> 165777 		[style=dotted];
+165792 -> 165685
+165548 -> 0 		[style=dotted];
+165548 -> 165462
+165458 -> 165457 		[style=dotted];
+165458 -> 1
+165527 -> 165526 		[style=dotted];
+165527 -> 165522
+165504 -> 165437 		[style=dotted];
+165504 -> 165503
+165505 -> 165504 		[style=dotted];
+165505 -> 165438
+165615 -> 165614 		[style=dotted];
+165615 -> 165609
+165506 -> 165505 		[style=dotted];
+165506 -> 165496
+165459 -> 1 		[style=dotted];
+165459 -> 0
+165456 -> 165455 		[style=dotted];
+165456 -> 0
+165588 -> 165587 		[style=dotted];
+165588 -> 165586
+165579 -> 165578 		[style=dotted];
+165579 -> 165574
+165573 -> 165572 		[style=dotted];
+165573 -> 0
+165563 -> 165561 		[style=dotted];
+165563 -> 165536
+165690 -> 165675 		[style=dotted];
+165690 -> 165618
+165592 -> 165591 		[style=dotted];
+165592 -> 165588
+165526 -> 165525 		[style=dotted];
+165526 -> 0
+165450 -> 165449 		[style=dotted];
+165450 -> 0
+165666 -> 165665 		[style=dotted];
+165666 -> 165612
+165448 -> 165440 		[style=dotted];
+165448 -> 165447
+165679 -> 165678 		[style=dotted];
+165679 -> 165674
+165639 -> 165430 		[style=dotted];
+165639 -> 165455
+165634 -> 165633 		[style=dotted];
+165634 -> 165627
+165481 -> 165480 		[style=dotted];
+165481 -> 165477
+165446 -> 165445 		[style=dotted];
+165446 -> 0
+165570 -> 0 		[style=dotted];
+165570 -> 165484
+165566 -> 165561 		[style=dotted];
+165566 -> 165532
+165440 -> 165439 		[style=dotted];
+165440 -> 0
+165770 -> 165765 		[style=dotted];
+165770 -> 165742
+165460 -> 165459 		[style=dotted];
+165460 -> 0
+165674 -> 165673 		[style=dotted];
+165674 -> 1
+165427 -> 165426 		[style=dotted];
+165427 -> 1
+165536 -> 165535 		[style=dotted];
+165536 -> 0
+165764 -> 1 		[style=dotted];
+165764 -> 165525
+165673 -> 165672 		[style=dotted];
+165673 -> 165484
+165761 -> 165760 		[style=dotted];
+165761 -> 165756
+165757 -> 165755 		[style=dotted];
+165757 -> 165731
+165546 -> 165545 		[style=dotted];
+165546 -> 0
+165495 -> 165437 		[style=dotted];
+165495 -> 165494
+165729 -> 165728 		[style=dotted];
+165729 -> 165624
+165516 -> 165515 		[style=dotted];
+165516 -> 0
+165477 -> 165476 		[style=dotted];
+165477 -> 165428
+165426 -> 0 		[style=dotted];
+165426 -> 1
+165606 -> 165605 		[style=dotted];
+165606 -> 165600
+165742 -> 165741 		[style=dotted];
+165742 -> 0
+165675 -> 165673 		[style=dotted];
+165675 -> 165651
+165557 -> 165556 		[style=dotted];
+165557 -> 165542
+165491 -> 165490 		[style=dotted];
+165491 -> 165433
+165723 -> 165722 		[style=dotted];
+165723 -> 165624
+165718 -> 165717 		[style=dotted];
+165718 -> 165705
+165654 -> 165653 		[style=dotted];
+165654 -> 165605
+165641 -> 165640 		[style=dotted];
+165641 -> 165456
+165637 -> 165636 		[style=dotted];
+165637 -> 165600
+165768 -> 165767 		[style=dotted];
+165768 -> 165766
+165704 -> 165703 		[style=dotted];
+165704 -> 165525
+165464 -> 165457 		[style=dotted];
+165464 -> 165463
+165669 -> 165668 		[style=dotted];
+165669 -> 165613
+165601 -> 165430 		[style=dotted];
+165601 -> 0
+165748 -> 165742 		[style=dotted];
+165748 -> 165747
+165743 -> 165742 		[style=dotted];
+165743 -> 1
+165577 -> 165576 		[style=dotted];
+165577 -> 165516
+165738 -> 0 		[style=dotted];
+165738 -> 165642
+165484 -> 165483 		[style=dotted];
+165484 -> 165473
+165732 -> 165726 		[style=dotted];
+165732 -> 165731
+165519 -> 0 		[style=dotted];
+165519 -> 1
+165581 -> 165580 		[style=dotted];
+165581 -> 165577
 }

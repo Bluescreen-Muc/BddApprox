@@ -10,3 +10,8 @@ bdd.png
 *.pkl
 OCaml/_build/_log
 OCaml/_build/sanitize.sh
+OCaml/test.dot
+OCaml/test.dot
+OCaml/test.txt
+OCaml/test2.dot
+*.dot
