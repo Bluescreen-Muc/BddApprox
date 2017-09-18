@@ -6,217 +6,205 @@ digraph "" {
 		];
 {
 graph [rank=same];
-192636	[fillcolor=2, label="131072 90240 40832 0.31
+123333	[fillcolor=2, label="131072 89632 41440 0.32
 PC: 0
-DC: 27
+DC: 25
 DomScore: 0.0000", rank=1];
 }
 {
 graph [rank=same];
-192635	[fillcolor=3, label="65536 24704 40832 0.62
+123332	[fillcolor=3, label="65536 24096 41440 0.63
 PC: 1
-DC: 27
+DC: 25
 DomScore: 0.0000", rank=2];
 }
 {
 graph [rank=same];
-192634	[fillcolor=4, label="32768 18464 14304 0.44
+123331	[fillcolor=4, label="32768 18160 14608 0.45
 PC: 1
 DC: 1
 DomScore: 0.0000", rank=3];
-192633	[fillcolor=4, label="32768 6240 26528 0.81
+123330	[fillcolor=4, label="32768 5936 26832 0.82
 PC: 1
-DC: 7
+DC: 9
 DomScore: 0.0000", rank=3];
 }
 {
 graph [rank=same];
-192626	[fillcolor=7, label="32768 4160 28608 0.87
+123321	[fillcolor=7, label="32768 3552 29216 0.89
 PC: 2
-DC: 11
+DC: 9
 DomScore: 0.0000", rank=4];
-192632	[fillcolor=7, label="16384 4160 12224 0.75
+123329	[fillcolor=7, label="16384 4160 12224 0.75
 PC: 1
-DC: 6
+DC: 8
 DomScore: 0.0000", rank=4];
 }
 {
 graph [rank=same];
-192631	[fillcolor=8, label="8192 2368 5824 0.71
-PC: 1
-DC: 3
-DomScore: 0.0000", rank=5];
-192625	[fillcolor=8, label="16384 2816 13568 0.83
+123328	[fillcolor=8, label="8192 2368 5824 0.71
 PC: 1
 DC: 5
 DomScore: 0.0000", rank=5];
+123320	[fillcolor=8, label="16384 2208 14176 0.87
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=5];
 }
 {
 graph [rank=same];
-192624	[fillcolor=9, label="8192 2144 6048 0.74
-PC: 1
-DC: 4
-DomScore: 0.0000", rank=6];
-192630	[fillcolor=9, label="4096 1472 2624 0.64
-PC: 1
-DC: 2
-DomScore: 0.0000", rank=6];
-192616	[fillcolor=9, label="24576 2016 22560 0.92
+123315	[fillcolor=9, label="24576 2016 22560 0.92
 PC: 2
 DC: 5
 DomScore: 0.0000", rank=6];
-192628	[fillcolor=9, label="12288 2688 9600 0.78
+123323	[fillcolor=9, label="12288 2688 9600 0.78
 PC: 2
+DC: 2
+DomScore: 0.0000", rank=6];
+123327	[fillcolor=9, label="4096 1472 2624 0.64
+PC: 1
+DC: 4
+DomScore: 0.0000", rank=6];
+123319	[fillcolor=9, label="8192 1536 6656 0.81
+PC: 1
 DC: 2
 DomScore: 0.0000", rank=6];
 }
 {
 graph [rank=same];
-192629	[fillcolor=10, label="2048 960 1088 0.53
+123322	[fillcolor=10, label="6144 2688 3456 0.56
 PC: 1
 DC: 1
 DomScore: 0.0000", rank=7];
-192623	[fillcolor=10, label="4096 1120 2976 0.73
-PC: 1
-DC: 3
-DomScore: 0.0000", rank=7];
-192615	[fillcolor=10, label="12288 2016 10272 0.84
+123314	[fillcolor=10, label="12288 2016 10272 0.84
 PC: 1
 DC: 4
 DomScore: 0.0000", rank=7];
-192627	[fillcolor=10, label="6144 2688 3456 0.56
+123318	[fillcolor=10, label="4096 512 3584 0.88
 PC: 1
 DC: 1
+DomScore: 0.0000", rank=7];
+123326	[fillcolor=10, label="2048 960 1088 0.53
+PC: 1
+DC: 3
 DomScore: 0.0000", rank=7];
 }
 {
 graph [rank=same];
-192622	[fillcolor=11, label="2048 608 1440 0.70
-PC: 1
-DC: 2
-DomScore: 0.0000", rank=8];
-192614	[fillcolor=11, label="6144 2016 4128 0.67
+123313	[fillcolor=11, label="6144 2016 4128 0.67
 PC: 1
 DC: 3
 DomScore: 0.0000", rank=8];
 }
 {
 graph [rank=same];
-192621	[fillcolor=1, label="1024 352 672 0.66
-PC: 1
-DC: 1
-DomScore: 0.0000", rank=9];
-192613	[fillcolor=1, label="3072 2016 1056 0.34
+123312	[fillcolor=1, label="3072 2016 1056 0.34
 PC: 1
 DC: 2
 DomScore: 0.0000", rank=9];
 }
 {
 graph [rank=same];
-192618	[fillcolor=2, label="10240 2560 7680 0.75
-PC: 5
+123325	[fillcolor=2, label="1024 704 320 0.31
+PC: 1
 DC: 2
 DomScore: 0.0000", rank=10];
-192620	[fillcolor=2, label="1536 1056 480 0.31
-PC: 2
+123317	[fillcolor=2, label="9216 2304 6912 0.75
+PC: 4
 DC: 2
 DomScore: 0.0000", rank=10];
 }
 {
 graph [rank=same];
-192612	[fillcolor=3, label="1536 672 864 0.56
+123311	[fillcolor=3, label="1536 672 864 0.56
 PC: 1
 DC: 1
 DomScore: 0.0000", rank=11];
 }
 {
 graph [rank=same];
-192611	[fillcolor=4, label="6144 5376 768 0.12
-PC: 4
-DC: 3
-DomScore: 0.0000", rank=12];
-192619	[fillcolor=4, label="768 384 384 0.50
+123324	[fillcolor=4, label="512 256 256 0.50
 PC: 1
 DC: 1
+DomScore: 0.0000", rank=12];
+123310	[fillcolor=4, label="5888 5152 736 0.12
+PC: 4
+DC: 3
 DomScore: 0.0000", rank=12];
 }
 {
 graph [rank=same];
-192610	[fillcolor=5, label="3072 2304 768 0.25
+123309	[fillcolor=5, label="2944 2208 736 0.25
 PC: 1
 DC: 2
 DomScore: 0.0000", rank=13];
 }
 {
 graph [rank=same];
-192609	[fillcolor=6, label="1536 768 768 0.50
+123308	[fillcolor=6, label="1472 736 736 0.50
 PC: 1
 DC: 1
 DomScore: 0.0000", rank=14];
 }
 {
 graph [rank=same];
-192617	[fillcolor=7, label="5120 2560 2560 0.50
+123316	[fillcolor=7, label="4608 2304 2304 0.50
 PC: 1
 DC: 1
 DomScore: 0.0000", rank=15];
 }
 0	 [fillcolor=White, label=F, rank=None, shape=doublecircle];
 1	 [fillcolor=White, label=T, rank=None, shape=doublecircle];
-192628 -> 192627 		[style=dotted];
-192628 -> 1
-192625 -> 192616 		[style=dotted];
-192625 -> 192624
-192616 -> 192615 		[style=dotted];
-192616 -> 1
-192609 -> 0 		[style=dotted];
-192609 -> 1
-192627 -> 192611 		[style=dotted];
-192627 -> 1
-192612 -> 192611 		[style=dotted];
-192612 -> 1
-192615 -> 192614 		[style=dotted];
-192615 -> 1
-192614 -> 1 		[style=dotted];
-192614 -> 192613
-192622 -> 192618 		[style=dotted];
-192622 -> 192621
-192619 -> 1 		[style=dotted];
-192619 -> 0
-192635 -> 192634 		[style=dotted];
-192635 -> 192633
-192633 -> 192632 		[style=dotted];
-192633 -> 192626
-192631 -> 192628 		[style=dotted];
-192631 -> 192630
-192617 -> 1 		[style=dotted];
-192617 -> 0
-192613 -> 192611 		[style=dotted];
-192613 -> 192612
-192621 -> 192620 		[style=dotted];
-192621 -> 1
-192634 -> 0 		[style=dotted];
-192634 -> 192626
-192620 -> 192619 		[style=dotted];
-192620 -> 192611
-192636 -> 0 		[style=dotted];
-192636 -> 192635
-192610 -> 192609 		[style=dotted];
-192610 -> 0
-192623 -> 192622 		[style=dotted];
-192623 -> 192618
-192611 -> 192610 		[style=dotted];
-192611 -> 0
-192630 -> 192629 		[style=dotted];
-192630 -> 192618
-192618 -> 192617 		[style=dotted];
-192618 -> 1
-192632 -> 192631 		[style=dotted];
-192632 -> 192628
-192629 -> 192620 		[style=dotted];
-192629 -> 192618
-192626 -> 192625 		[style=dotted];
-192626 -> 192616
-192624 -> 192623 		[style=dotted];
-192624 -> 192618
+123329 -> 123328 		[style=dotted];
+123329 -> 123323
+123320 -> 123315 		[style=dotted];
+123320 -> 123319
+123310 -> 123309 		[style=dotted];
+123310 -> 0
+123308 -> 0 		[style=dotted];
+123308 -> 1
+123326 -> 123325 		[style=dotted];
+123326 -> 123317
+123319 -> 123318 		[style=dotted];
+123319 -> 123317
+123317 -> 123316 		[style=dotted];
+123317 -> 1
+123311 -> 123310 		[style=dotted];
+123311 -> 1
+123333 -> 0 		[style=dotted];
+123333 -> 123332
+123324 -> 1 		[style=dotted];
+123324 -> 0
+123318 -> 1 		[style=dotted];
+123318 -> 123317
+123327 -> 123326 		[style=dotted];
+123327 -> 123317
+123323 -> 123322 		[style=dotted];
+123323 -> 1
+123314 -> 123313 		[style=dotted];
+123314 -> 1
+123322 -> 123310 		[style=dotted];
+123322 -> 1
+123316 -> 1 		[style=dotted];
+123316 -> 0
+123325 -> 123324 		[style=dotted];
+123325 -> 123310
+123330 -> 123329 		[style=dotted];
+123330 -> 123321
+123313 -> 1 		[style=dotted];
+123313 -> 123312
+123328 -> 123323 		[style=dotted];
+123328 -> 123327
+123332 -> 123331 		[style=dotted];
+123332 -> 123330
+123321 -> 123320 		[style=dotted];
+123321 -> 123315
+123312 -> 123310 		[style=dotted];
+123312 -> 123311
+123331 -> 0 		[style=dotted];
+123331 -> 123321
+123315 -> 123314 		[style=dotted];
+123315 -> 1
+123309 -> 123308 		[style=dotted];
+123309 -> 0
 }

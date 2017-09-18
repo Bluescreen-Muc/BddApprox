@@ -28,6 +28,7 @@ type bdd = { mutable uid: int; mutable node : node }
 and node = True | False | Node of {mutable var: int; mutable low: bdd; mutable high: bdd; mutable info: node_info} 
 type bdd_info = {mutable depth: int; mutable truth_rate: float; mutable true_paths: int; mutable false_paths: int ; mutable node_count: int; mutable root: bdd; fillrate: int}
 
+let copy_bdd_info info = {depth=info.depth;truth_rate=info.truth_rate; true_paths=info.true_paths; false_paths=info.false_paths ; node_count=info.node_count; root=info.root; fillrate=info.fillrate} 
 let cur_uid = ref (2)
 let genuid = fun () -> incr cur_uid
 
@@ -210,11 +211,11 @@ let opnot table bdd = let to_do = ref [] in
 	List.iter (fun (x,y) -> switch_terminals y; Hashtbl.add table (hash y.node) y) !to_do;
 	bdd
 
-let create_random_bdd ?(n = 5) depth =
+let create_random_bdd ?(n = 3) depth =
 	let table = ref (create_empty_bdd ()) in 
 	let vars = Helper.create_random_rumbers n depth in 
 	let bdds = ref [] in 
-	IntSet.iter (fun x -> bdds := [create_single_bdd x] @ !bdds) vars;
+	IntSet.iter (fun x -> bdds := (create_single_bdd x)::!bdds) vars;
 	List.fold_left (fun acc x -> let funct = random_funct() in 
 		if funct == NOT then apply (random_funct ~opnot: false ()) (opnot !table acc) (fst x) !table
 		else apply funct acc (fst x) !table) (fst (List.hd !bdds)) (List.tl !bdds)
@@ -499,7 +500,9 @@ module BddData = struct
 					table := (create_empty_bdd());
  					let tmp = create_random_bdd depth in 
  					result := apply funct !result tmp (!table);
- 				end
+ 				end;
+ 			print_int (Hashtbl.length !table);
+ 			print_newline ();
 		done;
 		if compress ==true  then let new_data = var_realloc !table !result in create (Helper.first new_data) {depth=(Helper.third new_data); truth_rate=0.0; node_count=0; root=(Helper.second new_data); true_paths=0; false_paths=0;fillrate=0}
 		else create !table {depth=depth; truth_rate=0.0; node_count=0; root=(!result); true_paths=0; false_paths=0; fillrate=0}
@@ -721,6 +724,7 @@ module BddData = struct
 			begin
 				!bdd.uid <- 1; 
 				!bdd.node <- True; 
+				count_false_true data;
 			end
 		end
 			| _ -> ()) !bdd_list;
@@ -738,6 +742,7 @@ module BddData = struct
 			begin
 				!bdd.uid <- if y > 0 then 1 else 0; 
 				!bdd.node <- if y > 0 then True else False; 
+				count_false_true data;
 			end
 		end
 			| _ -> ()) !bdd_list;
@@ -763,12 +768,10 @@ module BddData = struct
 			let relative_error =  float_of_int(new_true_paths - old_true_paths) /. float_of_int(new_true_paths) in
 			Printf.printf "Node_reduction: %f	Error_rate: %f Relative_error: %f"  node_reduction error_rate relative_error
 		in
-		
 		fill_info data;
-		let info_old = data.info in 
+		let info_old = copy_bdd_info data.info in 
 		approx_funct data;
-		let info_new = data.info in 
-		evaluate_one_sided info_old info_new
+		evaluate_one_sided info_old data.info
 
 	let approx_two_sided data approx_funct =
 
@@ -788,7 +791,33 @@ module BddData = struct
 		approx_funct data;
 		evaluate_two_sided old_data data
 
+	let tmp_uid = ref 2	
+	let incr_uid = incr tmp_uid; !tmp_uid
+	let create2 i j = 
+		let new_bdd () = {uid=incr_uid; node=Node{var=0;low=zero;high=zero;info=empty_node_info()}} in 
+		 let matrix =  Array.make_matrix i (j-1) zero in 
+		 for y = 0 to (j-2) do
+		 	for x = 0 to (i-1) do
+		 	matrix.(x).(y) <- {uid=incr_uid; node=Node{var=0;low=zero;high=zero;info=empty_node_info()}};
+		 done;
+		done;
 
+		 for y = (j-3) downto 0 do
+		 	for x = (i-1) downto 0 do
+		 		match matrix.(x).(y).node with 
+		 		| Node n -> n.low <-matrix.(Random.int i).(y+1); n.high <-matrix.(Random.int i).(y+1); n.var <- y+2
+		 		| _ -> raise (ExpectationVsRealityError "create2");
+		 	done;
+		done;
+		for x = 0 to (i-1) do
+			match matrix.(x).(j-2).node with
+			Node n -> n.low <- random_terminal (); n.high <- random_terminal ()
+			| _ -> raise (ExpectationVsRealityError "creat2")
+		done;
+		let table = ref (create_empty_bdd()) in let root = {uid=(-1); node=Node{var=1;low=matrix.(Random.int i).(0);high=matrix.(Random.int i).(0);info=empty_node_info()}} in
+		let result = ref (apply AND (root) one !table) in
+		print_int (count_nodes (create !table {depth=j; truth_rate=0.0; node_count=0; root=(!result); true_paths=0; false_paths=0; fillrate=0}));
+		print_newline ()
 end
 
 module Approx = struct
@@ -853,19 +882,6 @@ let speed_test2 () =
 	Printf.printf "Execution time: %fs\n" (Sys.time() -. t)
 
 
-let test x = 
-	Random.init 1234;
-	let data = BddData.create_random_function 60 x in 
-	BddData.fill_parents data;
-	let t = Sys.time () in 
-	BddData.approx_dom 0.3 data; 
-	Printf.printf "Execution time: %fs\n" (Sys.time() -. t);
-	BddData.to_dot_file  ~lf:NodeLabel.all_info_label "test.dot" data; 
-	(* BddData.approx_one_sided data (BddData.rounding_up_remap 10); *)
-	BddData.save_bdd "test.txt" data; 
-	(* BddData.approx_one_sided data (BddData.rounding 50 get_low);  *)
-	BddData.to_dot_file  "test2.dot" data
-
 let test3 x = 
 	Random.init 1234;
 	let data = BddData.create_random_function 60 x in 
@@ -880,12 +896,10 @@ let test4 x =
 	Random.init 1234;
 	let data = BddData.create_random_function 60 x in 
 	print_int (BddData.get_depth data);
-	BddData.count_false_true data;
-
-	BddData.to_dot_file  ~lf:NodeLabel.all_info_label "test.dot" data;  
 	BddData.approx_one_sided data (BddData.approx_dom 0.01);
+	Random.init 1234;
+	let data = BddData.create_random_function 60 x in 
+	print_int (BddData.get_depth data);
 	BddData.approx_two_sided data (BddData.approx_dom ~side:2 0.01);
-	BddData.save_bdd "test.txt" data; 
-	(* BddData.approx_one_sided data (BddData.rounding 50 get_low);  *)
-	BddData.to_dot_file  ~lf:NodeLabel.all_info_label "test3.dot" data;
+	
 	BddData.print_info data
