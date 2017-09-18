@@ -15,7 +15,7 @@ type node_info = {mutable paths: int; mutable true_paths:int; mutable false_path
 
 let empty_node_info () = {paths=0; true_paths=0; false_paths=0; parent_count=0; dominate_count=0; score=0.0}
 
-type funny = AND | OR | NOT | IMP
+type funny = AND | OR | NOT | IMP | EQ
 
 let functions = [|AND; OR; IMP; NOT|]
 
@@ -79,6 +79,10 @@ let hash = function
   | False -> 0
   | Node n -> abs (n.var + max_nodes * n.low.uid + max_nodes * max_nodes * n.high.uid)
 
+let hash_bdd bdd = 
+	hash(bdd.node)
+
+
 let cur_uid = ref (2)
 let genuid = fun () -> incr cur_uid
 
@@ -121,6 +125,11 @@ let false_paths bdd =
 	| Node x -> x.info.false_paths
 	| True | False -> raise (NoTerminalAllowed (Printf.sprintf "false_paths %d" bdd.uid))
 
+let paths bdd = 
+	match bdd.node with 
+	| Node x -> x.info.paths
+	| True | False -> raise (NoTerminalAllowed (Printf.sprintf "paths %d" bdd.uid))
+
 let print_table table = 
 	Hashtbl.iter  (fun x y  -> print_node y)  table 
 
@@ -153,6 +162,12 @@ let op_bool funct t1 t2 =
 			| _, True -> one
 			| _, _ -> zero	
 			end
+	| EQ -> begin
+			match t1, t2 with
+			| False, True -> zero
+			| True, False -> zero
+			| _, _ -> one	
+			end
 	| _ -> raise (ExpectedUnaryError)
 
 let connected_to_terminal node = if node.uid == 1 || node.uid == 0 then 0 else let output = ref 0 in 
@@ -163,11 +178,9 @@ let connected_to_terminal node = if node.uid == 1 || node.uid == 0 then 0 else l
 	!output
 
 let is_terminal bdd =
-	 match bdd.node with 
-	| Node x -> false
-	| True | False -> true
+	bdd.uid == 1 || bdd.uid == 0
 
-let switch_terminal terminal = if terminal == zero then one else if terminal == one then zero else raise (BddInputError "switch_terminals")
+let switch_terminal terminal = if (terminal.uid == 0) then one else if (terminal.uid == 1) then zero else raise (ExpectationVsRealityError "switch terminal" )
 
 let switch_terminals bdd = match bdd.node with
 	| Node n -> 
@@ -225,7 +238,7 @@ let sort_table_keys ?(reverse=false) table = let output = ref [] in
 module NodeLabel = struct
 	
 	let path_label bdd = match bdd.node with 
-		| Node n ->Printf.sprintf "\"%d %d %.2f\"" (n.info.false_paths) (n.info.true_paths) (float_of_int(n.info.true_paths) /. float_of_int(n.info.false_paths + n.info.true_paths))
+		| Node n ->Printf.sprintf "\"%d %d %d %.2f\"" (n.info.paths) (n.info.false_paths) (n.info.true_paths) (float_of_int(n.info.true_paths) /. float_of_int(n.info.false_paths + n.info.true_paths))
 		| True -> "T"
 		| False -> "F"
 	
@@ -281,13 +294,6 @@ module BddData = struct
 	let empty () = { bdd = create_empty_bdd (); info = empty_bdd_info ()}
 
 	let create x y = {bdd = x; info = y}
-
-	let add_node data node = let table = ref data.bdd in let bdd = {uid = !cur_uid; node=node} in  
-  		if var bdd > (get_depth data) then set_depth data (var bdd); 
-  		if (low bdd == high bdd) then low bdd else 
- 		 try 
-  			Hashtbl.find !table (hash bdd.node)
-  		 with _ -> genuid (); Hashtbl.add !table (hash bdd.node) bdd; bdd
 	
   	let print_nodes data = let table = ref data.bdd in 
   		Hashtbl.iter (fun x y -> print_node y) !table
@@ -295,7 +301,7 @@ module BddData = struct
 	let create_single_bdd var = let data = ref (empty ()) in let table = ref !data.bdd in 
 		ignore(Hashtbl.add !table 0 zero);
     	ignore(Hashtbl.add !table 1 one);
-    	let root = add_node !data (Node{var=var; low=zero; high=one;info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}})
+    	let root = add_node !data.bdd (Node{var=var; low=zero; high=one;info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}})
 		in { bdd = !table; info = {depth=var; truth_rate=0.0; node_count= 0; root=root; true_paths=0; false_paths=0; fillrate=0}}
     
 	let count_nodes x = x.info.node_count <- Hashtbl.length x.bdd; x.info.node_count
@@ -319,16 +325,11 @@ module BddData = struct
 			| Node n -> n.info.paths <- n.info.paths + paths; inner_count_paths n.low (paths / 2); inner_count_paths n.high (paths/2)
 			in let info = ref data.info 
 			in let root = ref (get_root data) in let depth = !info.depth 
-			in inner_count_paths !root (Helper.pow 2 depth);
-			match !root.node with 
-			| Node n1 -> n1.info.paths
-			| _ -> 0
+			in inner_count_paths !root (Helper.pow 2 depth)
 
 	let count_false_true data =
-
 		let table = ref data.bdd in let info = ref data.info in let var_map = create_var_map !table in
 		let depth = !info.depth  in
-
 		let reset_paths table= 
 			Hashtbl.iter (fun x y -> 
 			match y.node with
@@ -341,26 +342,30 @@ module BddData = struct
 			| True | False -> () ) table
 		in reset_paths !table;
 
+		count_paths data;
 		for i = depth downto 1 do
 			try
   				let values = Hashtbl.find_all var_map i in 
   				List.iter (fun x -> match x.node with
   				| Node n -> begin
-  						if low x == zero || high x == zero then n.info.false_paths <- n.info.false_paths + (Helper.pow 2 (depth-(var x)));
-						if low x == one || high x == one then n.info.true_paths <- n.info.true_paths + (Helper.pow 2 (depth-(var x)));
+
+  						if low x == zero || high x == zero then n.info.false_paths <- n.info.paths / 2;
+						if low x == one || high x == one then n.info.true_paths <- n.info.paths / 2;
+
+
 						if not (is_terminal (low x)) then 
 						begin
-							let var_diff = (var n.low) - (var x) in 
-								n.info.true_paths <- n.info.true_paths + (Helper.pow 2 (var_diff - 1)) * (true_paths (low x));
-								n.info.false_paths <- n.info.false_paths + (Helper.pow 2 (var_diff - 1)) * (false_paths (low x));
+								let sum = float_of_int((true_paths (low x)) + false_paths (low x) )in 
+								n.info.true_paths <- int_of_float(float_of_int (n.info.true_paths) +. float_of_int(n.info.paths) *. (float_of_int (true_paths (low x))) /. 2.0 /. sum);
+								n.info.false_paths <- int_of_float(float_of_int (n.info.false_paths) +. float_of_int(n.info.paths) *. (float_of_int (false_paths (low x))) /. 2.0 /. sum);
 						end;
 						if not (is_terminal (high x)) then 
 						begin
-							let var_diff = (var n.high) - (var x) in 
-								n.info.true_paths <- n.info.true_paths + (Helper.pow 2 (var_diff - 1)) * (true_paths (high x));
-								n.info.false_paths <- n.info.false_paths + (Helper.pow 2 (var_diff - 1)) * (false_paths (high x));
+								let sum = float_of_int((true_paths (high x)) + false_paths (high x) )in 
+								n.info.true_paths <- int_of_float(float_of_int (n.info.true_paths) +. float_of_int(n.info.paths) *. (float_of_int (true_paths (high x))) /. 2.0 /. sum);
+								n.info.false_paths <- int_of_float(float_of_int (n.info.false_paths) +. float_of_int(n.info.paths) *. (float_of_int (false_paths (high x))) /. 2.0 /. sum);
   						end;
-  						n.info.paths <- n.info.true_paths + n.info.false_paths; 
+  			
   					end
   				| True | False -> raise  (NoTerminalAllowed "count_false_true")
   				) values
@@ -376,9 +381,17 @@ module BddData = struct
 		!info.truth_rate <- float_of_int(!info.true_paths) /. float_of_int(!info.true_paths + !info.false_paths)
 
 	
-	let fill_parents data = Hashtbl.iter (fun x y -> match y.node with
+	let fill_parents data = 
+		let reset_parents table= 
+			Hashtbl.iter (fun x y -> 
+			match y.node with
+			| Node n -> n.info.parent_count <- 0
+			| True | False -> () ) table in 
+
+		reset_parents data.bdd;
+		Hashtbl.iter (fun x y -> match y.node with
 		| Node n -> begin
-			begin
+		begin
 			match n.low.node with 
 			| Node nlow -> nlow.info.parent_count <- nlow.info.parent_count + 1;
 			| _ -> ();
@@ -447,6 +460,8 @@ module BddData = struct
 		fill_parents data;
 		fill_dominate data
 
+	let replace_bdd data old_bdd new_bdd =  let bdd = ref (Hashtbl.find data.bdd (hash_bdd (old_bdd))) in  !bdd.uid <- new_bdd.uid; !bdd.node <- new_bdd.node
+
 	let create_random_function ?(compress=true) depth n =
 
 		let var_realloc table bdd = let s = ref (IntSet.empty) in 
@@ -458,6 +473,7 @@ module BddData = struct
 			let l = IntSet.elements !s in 
 			let len = (List.length l) in 
 			let output = ref (Hashtbl.create len) in 
+			print_newline ();
 			for i = 1 to len do
 				Hashtbl.add !output (List.nth l (i-1)) i;
 			done;
@@ -483,8 +499,6 @@ module BddData = struct
 					table := (create_empty_bdd());
  					let tmp = create_random_bdd depth in 
  					result := apply funct !result tmp (!table);
- 					print_int (Hashtbl.length !table);
- 					print_newline()
  				end
 		done;
 		if compress ==true  then let new_data = var_realloc !table !result in create (Helper.first new_data) {depth=(Helper.third new_data); truth_rate=0.0; node_count=0; root=(Helper.second new_data); true_paths=0; false_paths=0;fillrate=0}
@@ -649,7 +663,7 @@ module BddData = struct
 
 	let approx_dom max_error data = 
 		
-		let neg_compare_score bdd1 bdd2 = 
+		let neg_compare_score (bdd1, _) (bdd2, _) = 
 			match bdd1.node, bdd2.node with 
 			| Node n1, Node n2 -> -(compare n1.info.score n2.info.score)
 			|Node n1, True | Node n1, False -> raise (NoTerminalAllowed "neg_compare_score")
@@ -660,20 +674,24 @@ module BddData = struct
 		count_false_true data;
 		fill_parents data;
 		let sum_paths = data.info.true_paths + data.info.false_paths in
-		let max_false = int_of_float (max_error *. float_of_int sum_paths) in let bdd_list = ref [] in 
+		let max_false = int_of_float (max_error *. float_of_int sum_paths) in print_int max_false; let bdd_list = ref [] in 
 		Hashtbl.iter (fun x y -> 
 		match y.node with
-		| Node n -> if n.info.false_paths <= max_false then bdd_list := y::(!bdd_list)
+		| Node n -> if n.info.false_paths <= max_false then bdd_list := (y, hash(y.node))::(!bdd_list)
 		| _ -> ()) data.bdd;
-		List.iter (fun x -> let count = ref 1 in let l = ref [] in match x.node with 
-		| Node n -> inner_fill_dominate x l count;  n.info.dominate_count <- !count; n.info.score <- float_of_int (n.info.dominate_count * sum_paths) /. float_of_int(n.info.false_paths)
+		List.iter (fun (x,y) -> let count = ref 0 in let l = ref [] in match x.node with 
+		| Node n -> inner_fill_dominate x l count;  n.info.dominate_count <- 1 + !count; n.info.score <- float_of_int (n.info.dominate_count * sum_paths) /. float_of_int(n.info.false_paths);
 		| _ -> ()) !bdd_list;
 		bdd_list := List.sort neg_compare_score !bdd_list;
 		let cur_false = ref 0 in 
-		List.iter (fun x -> 
+		List.iter (fun (x,y) -> 
 			match x.node with 
-			| Node n -> cur_false := !cur_false + n.info.false_paths
-			| _ -> ()) !bdd_list
+			| Node n -> cur_false := !cur_false + n.info.false_paths; 
+			if !cur_false < max_false then let bdd = ref (Hashtbl.find data.bdd y) in  !bdd.uid <- 1; !bdd.node <- True
+			| _ -> ()) !bdd_list;
+		rebuild data;
+		fill_info data
+		
 		
 
 	let print_info data = Printf.printf "Depth: %d Truth_rate: %f Nodes: %d Root: %d" (get_depth data) (get_truth_rate data) data.info.node_count data.info.root.uid
@@ -701,26 +719,21 @@ module BddData = struct
 
 	let approx_two_sided data approx_funct =
 
-		let evaluate_two_sided info_old info_new bdd_old bdd_new table_new table_old = 
+		let evaluate_two_sided old_data new_data = 
+			let info_new = new_data.info in let info_old = old_data.info in 
 			let node_reduction = 1.0 -. (float_of_int (info_new.node_count) /. float_of_int(info_old.node_count))  in
-			let table = ref(create_empty_bdd ()) in let result = ref(apply AND bdd_old bdd_new !table) in
-			let correct_true_data = create !table {depth=info_old.depth; truth_rate=0.0; node_count=0; root=(!result); true_paths=0; false_paths=0;fillrate=0} in
-			let table = ref(create_empty_bdd ()) in ignore(opnot table_old bdd_old); ignore(opnot table_new bdd_new); let result =  ref(apply AND bdd_old bdd_new !table)in
-			let correct_false_data = create !table {depth=info_old.depth; truth_rate=0.0; node_count=0; root=(!result); true_paths=0; false_paths=0; fillrate=0} in
-			count_false_true correct_true_data;
-			count_false_true correct_false_data;
-			let error_rate = float_of_int(abs(info_old.true_paths - correct_true_data.info.true_paths) + abs(info_old.false_paths - correct_false_data.info.true_paths)) /. float_of_int(info_old.true_paths + info_old.false_paths) in 
-			Printf.printf "Node_reduction: %f	Error_rate: %f ctdf: %d cfdf: %d"  node_reduction error_rate correct_true_data.info.false_paths correct_false_data.info.false_paths in 
+			let table = ref(create_empty_bdd ()) in let result = ref(apply EQ (get_root old_data) (get_root new_data) !table) in
+			let comparison = create !table {depth=info_old.depth; truth_rate=0.0; node_count=0; root=(!result); true_paths=0; false_paths=0;fillrate=0} in
+			count_false_true comparison;
+			let error_rate = float_of_int(comparison.info.false_paths)  /. float_of_int(info_old.true_paths + info_old.false_paths) in 
+			Printf.printf "Node_reduction: %f	Error_rate: %f "  node_reduction error_rate in 
 		
 		fill_info data;
-		let info_old = data.info in 
-		let table_old = Hashtbl.copy data.bdd in 
-		let bdd_old = get_root data in 
+		let table = ref(create_empty_bdd ()) in let result = ref(apply AND (get_root data) one !table) in
+		let old_data = create !table {depth=data.info.depth; truth_rate=data.info.truth_rate; node_count=data.info.node_count; root=(!result); true_paths=data.info.true_paths;
+		false_paths=data.info.false_paths;fillrate=data.info.fillrate} in 
 		approx_funct data;
-		let info_new = data.info in 
-		let table_new = data.bdd in
-		let bdd_new = get_root data in 
-		evaluate_two_sided info_old info_new bdd_old bdd_new table_new table_old
+		evaluate_two_sided old_data data
 
 
 end
@@ -793,18 +806,21 @@ let test3 x =
 	let data = BddData.create_random_function 60 x in 
 	BddData.count_false_true data;
 	BddData.to_dot_file  "test.dot" data; 
-	BddData.approx_one_sided data (BddData.rounding_up_replace 10);
+	BddData.approx_one_sided data (BddData.rounding_up_remap 10);
 	BddData.save_bdd "test.txt" data; 
 	(* BddData.approx_one_sided data (BddData.rounding 50 get_low);  *)
 	BddData.to_dot_file  "test2.dot" data
 
 let test4 x = 
-	(* Random.init 1234; *)
+	Random.init 1234;
 	let data = BddData.create_random_function 60 x in 
+	print_int (BddData.get_depth data);
 	BddData.count_false_true data;
-	BddData.to_dot_file  "test.dot" data; 
-	BddData.approx_two_sided data (BddData.rounding_remap 10);
+
+	BddData.to_dot_file  ~lf:NodeLabel.all_info_label "test.dot" data;  
+	BddData.approx_two_sided data (BddData.approx_dom 0.01);
+	BddData.to_dot_file  ~lf:NodeLabel.all_info_label "test2.dot" data;  
 	BddData.save_bdd "test.txt" data; 
 	(* BddData.approx_one_sided data (BddData.rounding 50 get_low);  *)
-	BddData.to_dot_file  "test2.dot" data
+	(* BddData.to_dot_file  ~lf:NodeLabel.all_info_label "test2.dot" data *)
 
