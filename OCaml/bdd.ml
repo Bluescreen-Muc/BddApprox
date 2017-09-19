@@ -139,13 +139,16 @@ let create_empty_bdd () = let t = Hashtbl.create 10 in
     let _ = Hashtbl.add t 1 one in 
     t
 
-let add_node table node = let bdd = {uid = !cur_uid; node=node} in  
-  if var bdd > !max_var then max_var := var bdd; 
-  if (low bdd == high bdd) then low bdd else 
-  (* let b2 = if Ht.mem table node then W.merge table bdd in b2 *)
-  try 
-  Hashtbl.find table (hash bdd.node)
-  with _ -> genuid (); Hashtbl.add table (hash bdd.node) bdd; bdd
+let add_node table node = 
+	match node with 
+	|Node n -> begin
+  	if (n.low == n.high) then n.low else 
+  	let node_hash = hash node in  
+  	try
+  		Hashtbl.find table (node_hash)
+  	with _ -> let bdd = {uid = !cur_uid; node=node} in genuid (); Hashtbl.add table (node_hash) bdd; bdd
+	end
+  	| _ -> raise (ExpectationVsRealityError "add_node")
 
 let create_single_bdd var = 
 	let t = ref (Hashtbl.create 10) in 
@@ -153,8 +156,34 @@ let create_single_bdd var =
     ignore(Hashtbl.add !t 1 one);
     (add_node !t (Node{var=var; low=zero; high=one;info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}}), !t)
 
-let op_bool funct t1 t2 = 
-	match funct with 
+let connected_to_terminal node = if node.uid == 1 || node.uid == 0 then 0 else let output = ref 0 in 
+	begin
+		if (low node).node == True || (high node).node == True then output := !output + 2;
+		if (low node).node == False || (high node).node == False then output := !output + 1;
+	end;
+	!output
+
+
+let rec add_bdd table node = match node with 
+	| Node n1 -> (add_node table (Node{var=n1.var;low=(add_bdd table n1.low.node);high=(add_bdd table n1.high.node);info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}}))
+	| t -> if t == True then one else zero
+
+let rec apply funct bdd1 bdd2 table =
+	match funct, bdd1.node, bdd2.node with
+	| _, Node n1, Node n2 -> 
+		if n1.var < n2.var then add_node table (Node{var=n1.var; low=(apply funct n1.low bdd2 table); high=(apply funct n1.high bdd2 table); info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}}) 
+		else if n1.var > n2.var then add_node table (Node{var=n2.var; low=(apply funct bdd1 n2.low table); high=(apply funct bdd1 n2.high table); info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}}) 
+		else add_node table (Node{var=n1.var; low=(apply funct n1.low n2.low table); high=(apply funct n1.high n2.high table); info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}}) 
+	| AND, _ , False | AND, False , _ ->  zero  
+	| AND, Node n1 , True -> add_bdd table bdd1.node
+	| AND, True, Node n1 -> add_bdd table bdd2.node
+	| OR, _ , True | OR, True , _ ->  one
+	| OR, Node n1 , False -> add_bdd table bdd1.node
+	| OR, False, Node n1 -> add_bdd table bdd2.node
+	| IMP, False, _ | IMP, _, True ->  one
+	| _, Node n1, t -> add_node table (Node{var=n1.var; low=(apply funct n1.low bdd2 table); high=(apply funct n1.high bdd2 table); info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}}) 
+	| _, t, Node n1 -> add_node table (Node{var=n1.var; low=(apply funct bdd1 n1.low table); high=(apply funct bdd1 n1.high table); info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}}) 
+	| _, t1, t2 -> match funct with 
 	| AND -> if t1 == True && t2 == True then one else zero
 	| OR -> if t1 == True || t2 == True then one else zero 
 	| IMP -> begin
@@ -171,12 +200,6 @@ let op_bool funct t1 t2 =
 			end
 	| _ -> raise (ExpectedUnaryError)
 
-let connected_to_terminal node = if node.uid == 1 || node.uid == 0 then 0 else let output = ref 0 in 
-	begin
-		if (low node).node == True || (high node).node == True then output := !output + 2;
-		if (low node).node == False || (high node).node == False then output := !output + 1;
-	end;
-	!output
 
 let is_terminal bdd =
 	bdd.uid == 1 || bdd.uid == 0
@@ -191,21 +214,12 @@ let switch_terminals bdd = match bdd.node with
 		end;
 	| _ -> ()
 
-let rec apply funct bdd1 bdd2 table =
-	match bdd1.node, bdd2.node with
-	| Node n1, Node n2 -> 
-		if n1.var < n2.var then add_node table (Node{var=n1.var; low=(apply funct n1.low bdd2 table); high=(apply funct n1.high bdd2 table); info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}}) 
-		else if n1.var > n2.var then add_node table (Node{var=n2.var; low=(apply funct bdd1 n2.low table); high=(apply funct bdd1 n2.high table); info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}}) 
-		else add_node table (Node{var=n1.var; low=(apply funct n1.low n2.low table); high=(apply funct n1.high n2.high table); info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}}) 
-	| Node n1, t -> add_node table (Node{var=n1.var; low=(apply funct n1.low bdd2 table ); high=(apply funct n1.high bdd2 table); info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}}) 
-	| t, Node n1 -> add_node table (Node{var=n1.var; low=(apply funct n1.low bdd1 table); high=(apply funct n1.high bdd1 table); info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}}) 
-	| t1, t2 -> op_bool funct t1 t2
-
 let opnot table bdd = let to_do = ref [] in 
 	Hashtbl.iter (fun x y -> 
 		if (connected_to_terminal y > 0) then 
 		begin
-			to_do := (x,y)::!to_do;
+			Hashtbl.remove table x;
+			to_do := y::!to_do;
 		end) table;
 	List.iter (fun (x,y) -> Hashtbl.remove table x) !to_do;
 	List.iter (fun (x,y) -> switch_terminals y; Hashtbl.add table (hash y.node) y) !to_do;
@@ -865,7 +879,7 @@ let speed_test () =
 	Random.init 12345;
 	for i = 1 to 10 do
 	
-		 data := BddData.create_random_function 60 29;
+		 data := BddData.create_random_function 100 29;
 
 	done;
 	Printf.printf "Execution time: %fs\n" (Sys.time() -. t)
