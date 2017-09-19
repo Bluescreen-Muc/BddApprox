@@ -154,10 +154,10 @@ let add_node table node =
   	| _ -> raise (ExpectationVsRealityError "add_node")
 
 let create_single_bdd var = 
-	let t = ref (Hashtbl.create 3) in 
-    ignore(Hashtbl.add !t  0 zero);
-    ignore(Hashtbl.add !t 1 one);
-    add_node !t (Node{var=var; low=zero; high=one;info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}})
+	let t = Hashtbl.create 3 in 
+    ignore(Hashtbl.add t  0 zero);
+    ignore(Hashtbl.add t 1 one);
+    add_node t (Node{var=var; low=zero; high=one;info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}})
 
 let connected_to_terminal node = if node.uid == 1 || node.uid == 0 then 0 else let output = ref 0 in 
 	begin
@@ -222,13 +222,13 @@ let opnot table bdd = let to_do = ref [] in
 		match y.node with 
 		|Node n -> begin
 			match n.low.node, n.high.node with
-			| Node c1, Node c2 -> ();
-			| _, _ -> to_do := (x,y)::!to_do;
+			| Node c1, Node c2 -> ()
+			| _, _ -> to_do := (x,y)::!to_do
 		
 		end
 		| _ -> () 
 	) table;
-	print_int (List.length !to_do);
+	if (List.length !to_do) == 0 then Hashtbl.iter (fun x y -> print_node y; print_newline();) table;
 	print_newline();
 	List.iter (fun (x,y) -> Hashtbl.remove table x) !to_do;
 	List.iter (fun (x,y) -> match y.node with 
@@ -252,15 +252,20 @@ let opnot table bdd = let to_do = ref [] in
 	List.iter (fun (x,y) -> switch_terminals y; Hashtbl.add table (hash y.node) y) !to_do;
 	bdd *)
 let create_random_bdd ?(n = 3) depth =
-	let table = Hashtbl.create (n+2) in 
-    ignore(Hashtbl.add table  0 zero);
-    ignore(Hashtbl.add table 1 one); 
+	let table = create_empty_bdd () in 
 	let vars = Helper.create_random_rumbers n depth in 
 	let bdds = ref [] in 
 	IntSet.iter (fun x -> bdds := (create_single_bdd x)::!bdds) vars;
-	List.fold_left (fun acc x -> let funct = random_funct() in 
-		if funct == NOT then apply (random_funct ~opnot: false ()) (opnot table acc) x table
-		else apply funct acc x table) (List.hd !bdds) (List.tl !bdds)
+	List.fold_left (fun acc x -> let funct = ref (random_funct()) in 
+		if !funct == NOT then  begin
+			match x.node with 
+		| Node n -> 
+			n.low <- one;
+			n.high <- zero; 
+			funct :=  random_funct ~opnot:false ();
+		| _ -> raise (ExpectationVsRealityError "create_random_bdd");
+	end;
+		apply !funct acc x table) (List.hd !bdds) (List.tl !bdds)
 
 let node_count table = Hashtbl.length table
 
@@ -931,7 +936,7 @@ let speedtest () =
 	let t = Sys.time () in 
 	for i = 1 to 50000 do
 	
-		 ignore(BddData.count_paths2 data);
+		 ignore(BddData.count_paths data);
 
 	done;
 	Printf.printf "Execution time: %fs\n" (Sys.time() -. t);
@@ -964,11 +969,9 @@ let test4 x =
 	Random.init 1234;
 	let data = BddData.create_random_function 60 x in 
 	BddData.to_dot_file ~lf:NodeLabel.path_label "test1.dot" data;
-	print_int (BddData.get_depth data);
 	BddData.approx_one_sided data (BddData.approx_dom 0.01);
 	Random.init 1234;
 	let data = BddData.create_random_function 60 x in 
-	print_int (BddData.get_depth data);
 	BddData.approx_two_sided data (BddData.approx_dom ~side:2 0.1);
 	BddData.to_dot_file ~lf:NodeLabel.path_label "test2.dot" data;
 	BddData.print_info data
