@@ -886,14 +886,16 @@ let speed_test () =
 	done;
 	Printf.printf "Execution time: %fs\n" (Sys.time() -. t)
 
-let speed_test2 () =
-	Random.init 12345;
-	let data = BddData.create_random_function 60 18 in
-	print_int (BddData.count_nodes data);
+let speed_test () =
 	let t = Sys.time () in 
-	for i = 1 to 5 do
-			BddData.fill_parents data;
-		 	BddData.fill_dominate data;
+	
+	let data = ref (BddData.empty ()) in 
+	Random.init 12345;
+	for i = 1 to 10 do
+	
+		 data := BddData.create_random_function 100 29;
+		 BddData.approx_two_sided !data (BddData.approx_dom ~side:2 0.01);
+
 	done;
 	Printf.printf "Execution time: %fs\n" (Sys.time() -. t)
 
