@@ -6,217 +6,244 @@ digraph "" {
 		];
 {
 graph [rank=same];
-127	[fillcolor=2, label="1814 14570 0.89
-PC: 0
-DC: 35
-DomScore: 0.0000", rank=1];
+62191	[fillcolor=2, label="0 0 0 nan", rank=1];
 }
 {
 graph [rank=same];
-126	[fillcolor=3, label="1814 6378 0.78
-PC: 1
-DC: 35
-DomScore: 0.0000", rank=2];
+62172	[fillcolor=3, label="0 0 0 nan", rank=2];
+62190	[fillcolor=3, label="0 0 0 nan", rank=2];
 }
 {
 graph [rank=same];
-125	[fillcolor=4, label="1018 3078 0.75
-PC: 1
-DC: 16
-DomScore: 0.0000", rank=3];
-109	[fillcolor=4, label="796 3300 0.81
-PC: 1
-DC: 8
-DomScore: 0.0000", rank=3];
+62189	[fillcolor=4, label="0 0 0 nan", rank=3];
+62155	[fillcolor=4, label="0 0 0 nan", rank=3];
+62171	[fillcolor=4, label="0 0 0 nan", rank=3];
+62173	[fillcolor=4, label="0 0 0 nan", rank=3];
 }
 {
 graph [rank=same];
-124	[fillcolor=5, label="1018 1030 0.50
-PC: 1
-DC: 15
-DomScore: 0.0000", rank=4];
-96	[fillcolor=5, label="320 1728 0.84
-PC: 1
-DC: 1
-DomScore: 0.0000", rank=4];
-108	[fillcolor=5, label="476 1572 0.77
-PC: 1
-DC: 5
-DomScore: 0.0000", rank=4];
+62188	[fillcolor=5, label="0 0 0 nan", rank=4];
+62184	[fillcolor=5, label="0 0 0 nan", rank=4];
+62170	[fillcolor=5, label="0 0 0 nan", rank=4];
+62166	[fillcolor=5, label="0 0 0 nan", rank=4];
 }
 {
 graph [rank=same];
-104	[fillcolor=6, label="284 740 0.72
-PC: 1
-DC: 2
-DomScore: 0.0000", rank=5];
-123	[fillcolor=6, label="936 88 0.09
-PC: 1
-DC: 6
-DomScore: 0.0000", rank=5];
-117	[fillcolor=6, label="82 942 0.92
-PC: 1
-DC: 6
-DomScore: 0.0000", rank=5];
-107	[fillcolor=6, label="192 832 0.81
-PC: 1
-DC: 2
-DomScore: 0.0000", rank=5];
+62165	[fillcolor=6, label="0 0 0 nan", rank=5];
+62154	[fillcolor=6, label="0 0 0 nan", rank=5];
+62142	[fillcolor=6, label="0 0 0 nan", rank=5];
+62169	[fillcolor=6, label="0 0 0 nan", rank=5];
+62187	[fillcolor=6, label="0 0 0 nan", rank=5];
+62183	[fillcolor=6, label="0 0 0 nan", rank=5];
 }
 {
 graph [rank=same];
-116	[fillcolor=7, label="82 430 0.84
-PC: 1
-DC: 5
-DomScore: 0.0000", rank=6];
-122	[fillcolor=7, label="424 88 0.17
-PC: 1
-DC: 5
-DomScore: 0.0000", rank=6];
-103	[fillcolor=7, label="124 388 0.76
-PC: 1
-DC: 1
-DomScore: 0.0000", rank=6];
-106	[fillcolor=7, label="192 320 0.62
-PC: 1
-DC: 1
-DomScore: 0.0000", rank=6];
+62168	[fillcolor=7, label="0 0 0 nan", rank=6];
+62182	[fillcolor=7, label="0 0 0 nan", rank=6];
+62186	[fillcolor=7, label="0 0 0 nan", rank=6];
+62164	[fillcolor=7, label="0 0 0 nan", rank=6];
 }
 {
 graph [rank=same];
-115	[fillcolor=8, label="82 174 0.68
-PC: 1
-DC: 4
-DomScore: 0.0000", rank=7];
-121	[fillcolor=8, label="168 88 0.34
-PC: 1
-DC: 4
-DomScore: 0.0000", rank=7];
+62167	[fillcolor=8, label="0 0 0 nan", rank=7];
+62185	[fillcolor=8, label="0 0 0 nan", rank=7];
+62148	[fillcolor=8, label="0 0 0 nan", rank=7];
+62153	[fillcolor=8, label="0 0 0 nan", rank=7];
 }
 {
 graph [rank=same];
-105	[fillcolor=9, label="96 32 0.25
-PC: 2
-DC: 1
-DomScore: 0.0000", rank=8];
-114	[fillcolor=9, label="60 68 0.53
-PC: 1
-DC: 3
-DomScore: 0.0000", rank=8];
-102	[fillcolor=9, label="22 106 0.83
-PC: 2
-DC: 5
-DomScore: 0.0000", rank=8];
-120	[fillcolor=9, label="72 56 0.44
-PC: 1
-DC: 3
-DomScore: 0.0000", rank=8];
+62163	[fillcolor=9, label="0 0 0 nan", rank=8];
+62181	[fillcolor=9, label="0 0 0 nan", rank=8];
+62147	[fillcolor=9, label="0 0 0 nan", rank=8];
+62135	[fillcolor=9, label="0 0 0 nan", rank=8];
+62152	[fillcolor=9, label="0 0 0 nan", rank=8];
+62141	[fillcolor=9, label="0 0 0 nan", rank=8];
 }
 {
 graph [rank=same];
-119	[fillcolor=10, label="16 48 0.75
-PC: 1
-DC: 1
-DomScore: 1024.0000", rank=9];
-95	[fillcolor=10, label="20 44 0.69
-PC: 3
-DC: 1
-DomScore: 0.0000", rank=9];
-101	[fillcolor=10, label="22 42 0.66
-PC: 1
-DC: 4
-DomScore: 0.0000", rank=9];
-118	[fillcolor=10, label="56 8 0.12
-PC: 1
-DC: 1
-DomScore: 0.0000", rank=9];
-113	[fillcolor=10, label="36 28 0.44
-PC: 1
-DC: 1
-DomScore: 0.0000", rank=9];
-111	[fillcolor=10, label="24 40 0.62
-PC: 1
-DC: 1
-DomScore: 0.0000", rank=9];
+62151	[fillcolor=10, label="0 0 0 nan", rank=9];
+62162	[fillcolor=10, label="0 0 0 nan", rank=9];
+62146	[fillcolor=10, label="0 0 0 nan", rank=9];
+62134	[fillcolor=10, label="0 0 0 nan", rank=9];
+62180	[fillcolor=10, label="0 0 0 nan", rank=9];
+62140	[fillcolor=10, label="0 0 0 nan", rank=9];
 }
 {
 graph [rank=same];
-112	[fillcolor=11, label="16 16 0.50
-PC: 2
-DC: 1
-DomScore: 1024.0000", rank=10];
-110	[fillcolor=11, label="24 8 0.25
-PC: 2
-DC: 1
-DomScore: 0.0000", rank=10];
+62150	[fillcolor=11, label="0 0 0 nan", rank=10];
+62149	[fillcolor=11, label="0 0 0 nan", rank=10];
+62143	[fillcolor=11, label="0 0 0 nan", rank=10];
+62161	[fillcolor=11, label="0 0 0 nan", rank=10];
+62145	[fillcolor=11, label="0 0 0 nan", rank=10];
+62158	[fillcolor=11, label="0 0 0 nan", rank=10];
+62176	[fillcolor=11, label="0 0 0 nan", rank=10];
+62179	[fillcolor=11, label="0 0 0 nan", rank=10];
+62144	[fillcolor=11, label="0 0 0 nan", rank=10];
 }
 {
 graph [rank=same];
-94	[fillcolor=1, label="10 6 0.38
-PC: 2
-DC: 3
-DomScore: 4915.2000", rank=11];
+62175	[fillcolor=1, label="0 0 0 nan", rank=11];
+62160	[fillcolor=1, label="0 0 0 nan", rank=11];
+62157	[fillcolor=1, label="0 0 0 nan", rank=11];
+62137	[fillcolor=1, label="0 0 0 nan", rank=11];
+62139	[fillcolor=1, label="0 0 0 nan", rank=11];
+62133	[fillcolor=1, label="0 0 0 nan", rank=11];
+62131	[fillcolor=1, label="0 0 0 nan", rank=11];
+62178	[fillcolor=1, label="0 0 0 nan", rank=11];
+}
+{
+graph [rank=same];
+62159	[fillcolor=2, label="0 0 0 nan", rank=12];
+62156	[fillcolor=2, label="0 0 0 nan", rank=12];
+62177	[fillcolor=2, label="0 0 0 nan", rank=12];
+62174	[fillcolor=2, label="0 0 0 nan", rank=12];
+}
+{
+graph [rank=same];
+62132	[fillcolor=3, label="0 0 0 nan", rank=13];
+62138	[fillcolor=3, label="0 0 0 nan", rank=13];
+}
+{
+graph [rank=same];
+62136	[fillcolor=4, label="0 0 0 nan", rank=14];
+62130	[fillcolor=4, label="0 0 0 nan", rank=14];
+}
+{
+graph [rank=same];
+62129	[fillcolor=5, label="0 0 0 nan", rank=15];
+}
+{
+graph [rank=same];
+62128	[fillcolor=6, label="0 0 0 nan", rank=16];
 }
 0	 [fillcolor=White, label=F, rank=None, shape=doublecircle];
 1	 [fillcolor=White, label=T, rank=None, shape=doublecircle];
-127 -> 126 		[style=dotted];
-127 -> 1
-108 -> 107 		[style=dotted];
-108 -> 104
-110 -> 0 		[style=dotted];
-110 -> 1
-112 -> 1 		[style=dotted];
-112 -> 0
-106 -> 1 		[style=dotted];
-106 -> 105
-103 -> 95 		[style=dotted];
-103 -> 102
-94 -> 1 		[style=dotted];
-94 -> 0
-120 -> 119 		[style=dotted];
-120 -> 118
-107 -> 106 		[style=dotted];
-107 -> 1
-122 -> 0 		[style=dotted];
-122 -> 121
-111 -> 110 		[style=dotted];
-111 -> 1
-121 -> 120 		[style=dotted];
-121 -> 105
-102 -> 1 		[style=dotted];
-102 -> 101
-117 -> 116 		[style=dotted];
-117 -> 1
-109 -> 108 		[style=dotted];
-109 -> 96
-115 -> 114 		[style=dotted];
-115 -> 102
-116 -> 1 		[style=dotted];
-116 -> 115
-114 -> 113 		[style=dotted];
-114 -> 111
-113 -> 112 		[style=dotted];
-113 -> 94
-118 -> 110 		[style=dotted];
-118 -> 0
-101 -> 1 		[style=dotted];
-101 -> 1
-126 -> 125 		[style=dotted];
-126 -> 109
-125 -> 124 		[style=dotted];
-125 -> 1
-96 -> 1 		[style=dotted];
-96 -> 95
-95 -> 1 		[style=dotted];
-95 -> 94
-124 -> 123 		[style=dotted];
-124 -> 117
-123 -> 122 		[style=dotted];
-123 -> 0
-104 -> 103 		[style=dotted];
-104 -> 95
-119 -> 112 		[style=dotted];
-119 -> 1
-105 -> 0 		[style=dotted];
-105 -> 1
+62140 -> 62139 		[style=dotted];
+62140 -> 1
+62166 -> 62165 		[style=dotted];
+62166 -> 62142
+62183 -> 62141 		[style=dotted];
+62183 -> 62182
+62144 -> 1 		[style=dotted];
+62144 -> 0
+62178 -> 62177 		[style=dotted];
+62178 -> 1
+62153 -> 62152 		[style=dotted];
+62153 -> 62141
+62131 -> 62130 		[style=dotted];
+62131 -> 1
+62187 -> 62153 		[style=dotted];
+62187 -> 62186
+62180 -> 62179 		[style=dotted];
+62180 -> 62176
+62164 -> 62163 		[style=dotted];
+62164 -> 62135
+62148 -> 62147 		[style=dotted];
+62148 -> 62135
+62179 -> 62139 		[style=dotted];
+62179 -> 62178
+62134 -> 62133 		[style=dotted];
+62134 -> 1
+62186 -> 62185 		[style=dotted];
+62186 -> 62153
+62141 -> 62140 		[style=dotted];
+62141 -> 62137
+62170 -> 62169 		[style=dotted];
+62170 -> 62154
+62133 -> 62132 		[style=dotted];
+62133 -> 1
+62139 -> 62138 		[style=dotted];
+62139 -> 1
+62128 -> 1 		[style=dotted];
+62128 -> 0
+62130 -> 62129 		[style=dotted];
+62130 -> 1
+62138 -> 1 		[style=dotted];
+62138 -> 62136
+62173 -> 62153 		[style=dotted];
+62173 -> 62141
+62152 -> 62151 		[style=dotted];
+62152 -> 62149
+62191 -> 62190 		[style=dotted];
+62191 -> 62172
+62171 -> 62170 		[style=dotted];
+62171 -> 62166
+62185 -> 62152 		[style=dotted];
+62185 -> 62181
+62169 -> 62153 		[style=dotted];
+62169 -> 62168
+62155 -> 62154 		[style=dotted];
+62155 -> 62142
+62146 -> 62145 		[style=dotted];
+62146 -> 62144
+62190 -> 62189 		[style=dotted];
+62190 -> 62173
+62136 -> 62128 		[style=dotted];
+62136 -> 1
+62176 -> 1 		[style=dotted];
+62176 -> 62175
+62158 -> 1 		[style=dotted];
+62158 -> 62157
+62182 -> 62181 		[style=dotted];
+62182 -> 62141
+62142 -> 62141 		[style=dotted];
+62142 -> 62135
+62174 -> 1 		[style=dotted];
+62174 -> 62136
+62145 -> 62133 		[style=dotted];
+62145 -> 0
+62161 -> 62133 		[style=dotted];
+62161 -> 62160
+62172 -> 62171 		[style=dotted];
+62172 -> 62155
+62132 -> 1 		[style=dotted];
+62132 -> 62130
+62135 -> 62134 		[style=dotted];
+62135 -> 62131
+62189 -> 62188 		[style=dotted];
+62189 -> 62184
+62177 -> 62138 		[style=dotted];
+62177 -> 62136
+62168 -> 62167 		[style=dotted];
+62168 -> 62148
+62147 -> 62146 		[style=dotted];
+62147 -> 62143
+62143 -> 62131 		[style=dotted];
+62143 -> 0
+62137 -> 62136 		[style=dotted];
+62137 -> 1
+62157 -> 62156 		[style=dotted];
+62157 -> 1
+62156 -> 1 		[style=dotted];
+62156 -> 62130
+62184 -> 62183 		[style=dotted];
+62184 -> 62141
+62162 -> 62161 		[style=dotted];
+62162 -> 62158
+62160 -> 62159 		[style=dotted];
+62160 -> 1
+62167 -> 62147 		[style=dotted];
+62167 -> 62163
+62149 -> 62137 		[style=dotted];
+62149 -> 0
+62181 -> 62180 		[style=dotted];
+62181 -> 62137
+62151 -> 62150 		[style=dotted];
+62151 -> 62144
+62163 -> 62162 		[style=dotted];
+62163 -> 62131
+62129 -> 62128 		[style=dotted];
+62129 -> 1
+62175 -> 62174 		[style=dotted];
+62175 -> 1
+62159 -> 62132 		[style=dotted];
+62159 -> 62130
+62150 -> 62139 		[style=dotted];
+62150 -> 0
+62188 -> 62187 		[style=dotted];
+62188 -> 62153
+62154 -> 62153 		[style=dotted];
+62154 -> 62148
+62165 -> 62141 		[style=dotted];
+62165 -> 62164
 }
