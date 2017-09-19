@@ -76,6 +76,9 @@ module Helper = struct
 			s := IntSet.add ((Random.int max) + 1) !s;
 		done;
 		!s 
+
+	let max_nodes depth = ((pow 2 ((depth/2) + 1) -1) + pow 2 ((depth + 1)/2))
+	
 end
 
 let max_var : int ref = ref 0
@@ -221,8 +224,7 @@ let opnot table bdd = let to_do = ref [] in
 			Hashtbl.remove table x;
 			to_do := y::!to_do;
 		end) table;
-	List.iter (fun (x,y) -> Hashtbl.remove table x) !to_do;
-	List.iter (fun (x,y) -> switch_terminals y; Hashtbl.add table (hash y.node) y) !to_do;
+	List.iter (fun x -> switch_terminals x; Hashtbl.add table (hash x.node) x) !to_do;
 	bdd
 
 let create_random_bdd ?(n = 3) depth =
