@@ -153,11 +153,10 @@ let add_node table node =
 	end
   	| _ -> raise (ExpectationVsRealityError "add_node")
 
-let create_single_bdd var = 
-	let t = ref (Hashtbl.create 10) in 
+let create_singel_bdd = let t = ref (Hashtbl.create 10) in 
     ignore(Hashtbl.add !t  0 zero);
     ignore(Hashtbl.add !t 1 one);
-    (add_node !t (Node{var=var; low=zero; high=one;info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}}), !t)
+    add_node !t (Node{var=var; low=zero; high=one;info={paths=0;true_paths=0;false_paths=0; parent_count=0; dominate_count=0; score=0.0}})
 
 let connected_to_terminal node = if node.uid == 1 || node.uid == 0 then 0 else let output = ref 0 in 
 	begin
@@ -201,30 +200,29 @@ let rec apply funct bdd1 bdd2 table =
 			| True, False -> zero
 			| _, _ -> one	
 			end
-	| _ -> raise (ExpectedUnaryError)
+	| _ -> raise (ExpectationVsRealityError "apply")
 
-
-let is_terminal bdd =
-	bdd.uid == 1 || bdd.uid == 0
-
-let switch_terminal terminal = if (terminal.uid == 0) then one else if (terminal.uid == 1) then zero else raise (ExpectationVsRealityError "switch terminal" )
-
-let switch_terminals bdd = match bdd.node with
-	| Node n -> 
-		begin
-			if (is_terminal n.low) then n.low <- (switch_terminal n.low); 
-			if (is_terminal n.high) then n.high <- (switch_terminal n.high);
-		end;
-	| _ -> ()
+	
 
 let opnot table bdd = let to_do = ref [] in 
 	Hashtbl.iter (fun x y -> 
-		if (connected_to_terminal y > 0) then 
-		begin
+		match y.node with
+		| Node n -> begin
+			match n.low.node, n.high.node with
+				
+			| Node _, Node _ -> ()
+			| _ -> 
 			Hashtbl.remove table x;
+			if n.low == zero then n.low <- one;
+			if n.low == one then n.low <- zero;
+			if n.high == zero then n.high <- one;
+			if n.high == one then n.high <- zero;
 			to_do := y::!to_do;
-		end) table;
-	List.iter (fun x -> switch_terminals x; Hashtbl.add table (hash x.node) x) !to_do;
+		
+		end
+		| _ -> ()) table;
+		
+	List.iter (fun x -> Hashtbl.add table (hash x.node) x) !to_do;
 	bdd
 
 let create_random_bdd ?(n = 3) depth =
@@ -233,8 +231,8 @@ let create_random_bdd ?(n = 3) depth =
 	let bdds = ref [] in 
 	IntSet.iter (fun x -> bdds := (create_single_bdd x)::!bdds) vars;
 	List.fold_left (fun acc x -> let funct = random_funct() in 
-		if funct == NOT then apply (random_funct ~opnot: false ()) (opnot !table acc) (fst x) !table
-		else apply funct acc (fst x) !table) (fst (List.hd !bdds)) (List.tl !bdds)
+		if funct == NOT then apply (random_funct ~opnot: false ()) (opnot !table acc)  x !table
+		else apply funct acc x !table) (List.hd !bdds) (List.tl !bdds)
 
 let node_count table = Hashtbl.length table
 
@@ -244,7 +242,7 @@ let get_bdd_id str = let reg = Str.regexp "\\(^[0-9]+\\), " in
 	output
 
 let create_var_map table = let var_table = ref (Hashtbl.create 10) in 
-	Hashtbl.iter(fun x y -> if not (is_terminal y) then  Hashtbl.add !var_table (var y) (y)) table;
+	Hashtbl.iter(fun x y -> if y.uid <>0 && y.uid <> 1 then  Hashtbl.add !var_table (var y) (y)) table;
 	!var_table
 
 
@@ -747,17 +745,17 @@ module BddData = struct
 		end
 		else  begin
 		let cur_false = ref 0 in
-		List.iter (fun (x,y) ->  let bdd = ref (Hashtbl.find data.bdd (abs y)) in   (* if not (List.mem y !removed_node_hashes) then  *)
+		List.iter (fun (x,y) ->  let bdd = Hashtbl.find data.bdd (abs y) in   (* if not (List.mem y !removed_node_hashes) then  *)
 			match x.node with 
 			| Node n ->  
-				if (get_false_paths !bdd) > 0 then 
+				if (get_false_paths bdd) > 0 then 
 				begin
-			let error_paths = if y > 0 then (get_false_paths !bdd) else (get_true_paths !bdd) in 
+			let error_paths = if y > 0 then (get_false_paths bdd) else (get_true_paths bdd) in 
 			cur_false := !cur_false + error_paths;
 			if !cur_false < max_false then 
 			begin
-				!bdd.uid <- if y > 0 then 1 else 0; 
-				!bdd.node <- if y > 0 then True else False; 
+				bdd.uid <- if y > 0 then 1 else 0; 
+				bdd.node <- if y > 0 then True else False; 
 				count_false_true data;
 			end
 		end
@@ -859,7 +857,7 @@ module Formula = struct
 	let rec build = let table = ref (create_empty_bdd ()) in function
   	| Ffalse -> (zero, !table)
   	| Ftrue -> (one, !table)
-  	| Fvar var -> create_single_bdd var
+  	(* | Fvar var -> create_single_bdd var *)
   	| Fand (f1, f2) -> (apply AND (fst(build f1)) (fst(build f2)) (!table), !table)
   	| For (f1, f2) -> (apply OR (fst(build f1)) (fst(build f2)) (!table), !table)
   	(* | Fnot f -> opnot (build f) *)
