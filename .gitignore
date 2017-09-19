@@ -15,3 +15,5 @@ OCaml/test.dot
 OCaml/test.txt
 OCaml/test2.dot
 *.dot
+*.dot
+*.txt
