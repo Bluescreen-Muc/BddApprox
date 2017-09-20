@@ -376,36 +376,58 @@ module BddData = struct
 		info.truth_rate <- (float_of_int !true_hits) /. ((float_of_int !true_hits) +. (float_of_int !false_hits));
 		info.truth_rate
 
-	let count_paths data = 
+	(* let count_paths_old data = 
+		let rec inner_count_paths bdd paths = 
+			match bdd.node with 
+			| Node n -> 
+				n.info.paths <- n.info.paths + paths;
+				inner_count_paths n.low (paths / 2); 
+				inner_count_paths n.high (paths/2)
+			| True | False -> ()
+		
+		in let info = ref data.info 
+		in let root = ref (get_root data) in let depth = !info.depth 	
+		in inner_count_paths !root (Helper.pow 2 depth) *)
+		
+
+		let count_paths data = 
 		let info = ref data.info 
 		in let root = get_root data in let depth = !info.depth in	let var_map = create_var_map data.bdd in
 		 match root.node with
-		| Node n -> begin 
-		for i = depth downto 1 do
+			| Node n -> begin 
+
+			n.info.paths <- Helper.pow 2 depth;
+			for i = 1 to depth  do
 			try
   				let values = Hashtbl.find_all var_map i in 
-				n.info.paths <- Helper.pow 2 depth;
-				List.iter (fun x -> match x.node with 
+			List.iter (fun x -> match x.node with 
 				| Node n -> 
 				begin
-				match n.low.node, n.high.node with 
-				|Node lc, Node hc -> begin
-				lc.info.paths <- lc.info.paths + n.info.paths / 2;
-				hc.info.paths <- hc.info.paths + n.info.paths / 2;
-				end;
-				| Node lc, _ -> lc.info.paths <-  lc.info.paths + n.info.paths / 2
-				| _,  Node hc-> hc.info.paths <-   hc.info.paths + n.info.paths / 2
-				| _ -> ()
+					match n.low.node, n.high.node with 
+					|Node lc, Node hc -> begin
+						lc.info.paths <- lc.info.paths + n.info.paths / 2;
+						hc.info.paths <- hc.info.paths + n.info.paths / 2;
+					end;
+					| Node lc, _ -> lc.info.paths <-  lc.info.paths + n.info.paths / 2
+					| _,  Node hc-> hc.info.paths <-   hc.info.paths + n.info.paths / 2
+					| _ -> ()
+			
 				end
 				| _ -> ())values;
 			with Not_found -> ()
 		done;
+
+
 		end
 			| _ -> ()
 
+	let bdd_iterator data = let l = ref [] in Hashtbl.iter (fun x y -> if y.uid <> 0 && y.uid <> 1 then l := (ref y)::!l) data.bdd; 
+		l := List.sort (fun b1 b2 -> match (!b1).node, (!b2).node with | Node n1, Node n2 -> compare n1.var n2.var | _ -> raise (ExpectationVsRealityError "iterator")) !l;
+		!l
+
 	let count_false_true data =
-		let table = data.bdd in let info = data.info in let var_map = create_var_map table in
-		let depth = info.depth  in
+		let table = ref data.bdd in let info = ref data.info in let var_map = create_var_map !table in
+		let depth = !info.depth  in
 		let reset_paths table= 
 			Hashtbl.iter (fun x y -> 
 			match y.node with
@@ -416,7 +438,7 @@ module BddData = struct
 				n.info.paths <- 0;
 			end
 			| True | False -> () ) table
-		in reset_paths table;
+		in reset_paths !table;
 
 		count_paths data;
 		for i = depth downto 1 do
@@ -424,8 +446,10 @@ module BddData = struct
   				let values = Hashtbl.find_all var_map i in 
   				List.iter (fun x -> match x.node with
   				| Node n -> begin
+
   						if n.low.uid == 0 || n.high.uid == 0 then n.info.false_paths <- n.info.paths / 2;
 						if n.low.uid == 1 || n.high.uid == 1 then n.info.true_paths <- n.info.paths / 2;
+
 
 						if  (n.low.uid <> 0) && (n.low.uid <> 1) then 
 						begin
@@ -433,13 +457,13 @@ module BddData = struct
 								n.info.true_paths <- int_of_float(float_of_int (n.info.true_paths) +. float_of_int(n.info.paths) *. (float_of_int (true_paths (low x))) /. 2.0 /. sum);
 								n.info.false_paths <- int_of_float(float_of_int (n.info.false_paths) +. float_of_int(n.info.paths) *. (float_of_int (get_false_paths (low x))) /. 2.0 /. sum);
 						end;
-						
 						if  n.high.uid <> 0 && n.high.uid <> 1 then 
 						begin
 								let sum = float_of_int((true_paths (high x)) + get_false_paths (high x) )in 
 								n.info.true_paths <- int_of_float(float_of_int (n.info.true_paths) +. float_of_int(n.info.paths) *. (float_of_int (true_paths (high x))) /. 2.0 /. sum);
 								n.info.false_paths <- int_of_float(float_of_int (n.info.false_paths) +. float_of_int(n.info.paths) *. (float_of_int (get_false_paths (high x))) /. 2.0 /. sum);
   						end;
+  			
   					end
   				| True | False -> raise  (NoTerminalAllowed "count_false_true")
   				) values
@@ -447,12 +471,12 @@ module BddData = struct
 		done;
 		match (get_root data).node with
 		|Node n -> begin
-			info.true_paths <- (Helper.pow 2 (n.var - 1)) * n.info.true_paths;
-			info.false_paths <- (Helper.pow 2 (n.var - 1)) * n.info.false_paths;
+			!info.true_paths <- (Helper.pow 2 (n.var - 1)) * n.info.true_paths;
+			!info.false_paths <- (Helper.pow 2 (n.var - 1)) * n.info.false_paths;
 			end;
-		| False -> info.false_paths <- Helper.pow 2 (get_depth data);
-		| True -> info.true_paths <- Helper.pow 2 (get_depth data);
-		info.truth_rate <- float_of_int(info.true_paths) /. float_of_int(info.true_paths + info.false_paths)
+		| False -> !info.false_paths <- Helper.pow 2 (get_depth data);
+		| True -> !info.true_paths <- Helper.pow 2 (get_depth data);
+		!info.truth_rate <- float_of_int(!info.true_paths) /. float_of_int(!info.true_paths + !info.false_paths)
 
 	
 	let fill_parents data = 
@@ -867,6 +891,7 @@ module BddData = struct
 	let tmp_uid = ref 2	
 	let incr_uid = incr tmp_uid; !tmp_uid
 	let create2 i j = 
+		let new_bdd () = {uid=incr_uid; node=Node{var=0;low=zero;high=zero;info=empty_node_info()}} in 
 		 let matrix =  Array.make_matrix i (j-1) zero in 
 		 for y = 0 to (j-2) do
 		 	for x = 0 to (i-1) do
