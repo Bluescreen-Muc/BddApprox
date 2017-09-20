@@ -6,13 +6,20 @@ digraph "" {
 		];
 {
 graph [rank=same];
+<<<<<<< HEAD
 26513	[fillcolor=2, label="281474976710656 214462741086208 67012235624448 0.24
 PC: 0
 DC: 356
+=======
+123333	[fillcolor=2, label="131072 89632 41440 0.32
+PC: 0
+DC: 25
+>>>>>>> Ocaml2.0
 DomScore: 0.0000", rank=1];
 }
 {
 graph [rank=same];
+<<<<<<< HEAD
 26264	[fillcolor=3, label="140737488355328 132250716864512 8486771490816 0.06
 PC: 1
 DC: 103
@@ -20,10 +27,16 @@ DomScore: 0.0000", rank=2];
 26512	[fillcolor=3, label="140737488355328 82212024221696 58525464133632 0.42
 PC: 1
 DC: 248
+=======
+123332	[fillcolor=3, label="65536 24096 41440 0.63
+PC: 1
+DC: 25
+>>>>>>> Ocaml2.0
 DomScore: 0.0000", rank=2];
 }
 {
 graph [rank=same];
+<<<<<<< HEAD
 26230	[fillcolor=4, label="70368744177664 66084413636608 4284330541056 0.06
 PC: 1
 DC: 20
@@ -39,10 +52,20 @@ DomScore: 0.0000", rank=3];
 26511	[fillcolor=4, label="70368744177664 41172563132416 29196181045248 0.41
 PC: 1
 DC: 42
+=======
+123331	[fillcolor=4, label="32768 18160 14608 0.45
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=3];
+123330	[fillcolor=4, label="32768 5936 26832 0.82
+PC: 1
+DC: 9
+>>>>>>> Ocaml2.0
 DomScore: 0.0000", rank=3];
 }
 {
 graph [rank=same];
+<<<<<<< HEAD
 26510	[fillcolor=5, label="35184372088832 21532751429632 13651620659200 0.39
 PC: 1
 DC: 30
@@ -66,10 +89,20 @@ DomScore: 0.0000", rank=4];
 26480	[fillcolor=5, label="35184372088832 19639811702784 15544560386048 0.44
 PC: 1
 DC: 10
+=======
+123321	[fillcolor=7, label="32768 3552 29216 0.89
+PC: 2
+DC: 9
+DomScore: 0.0000", rank=4];
+123329	[fillcolor=7, label="16384 4160 12224 0.75
+PC: 1
+DC: 8
+>>>>>>> Ocaml2.0
 DomScore: 0.0000", rank=4];
 }
 {
 graph [rank=same];
+<<<<<<< HEAD
 26261	[fillcolor=6, label="17592186044416 13389745094656 4202440949760 0.24
 PC: 1
 DC: 31
@@ -93,10 +126,20 @@ DomScore: 0.0000", rank=5];
 26467	[fillcolor=6, label="17592186044416 13201093689344 4391092355072 0.25
 PC: 1
 DC: 58
+=======
+123328	[fillcolor=8, label="8192 2368 5824 0.71
+PC: 1
+DC: 5
+DomScore: 0.0000", rank=5];
+123320	[fillcolor=8, label="16384 2208 14176 0.87
+PC: 1
+DC: 3
+>>>>>>> Ocaml2.0
 DomScore: 0.0000", rank=5];
 }
 {
 graph [rank=same];
+<<<<<<< HEAD
 26227	[fillcolor=7, label="8796093022208 6470267568128 2325825454080 0.26
 PC: 1
 DC: 17
@@ -112,10 +155,28 @@ DomScore: 0.0000", rank=6];
 26260	[fillcolor=7, label="8796093022208 6552157159424 2243935862784 0.26
 PC: 1
 DC: 30
+=======
+123315	[fillcolor=9, label="24576 2016 22560 0.92
+PC: 2
+DC: 5
+DomScore: 0.0000", rank=6];
+123323	[fillcolor=9, label="12288 2688 9600 0.78
+PC: 2
+DC: 2
+DomScore: 0.0000", rank=6];
+123327	[fillcolor=9, label="4096 1472 2624 0.64
+PC: 1
+DC: 4
+DomScore: 0.0000", rank=6];
+123319	[fillcolor=9, label="8192 1536 6656 0.81
+PC: 1
+DC: 2
+>>>>>>> Ocaml2.0
 DomScore: 0.0000", rank=6];
 }
 {
 graph [rank=same];
+<<<<<<< HEAD
 26375	[fillcolor=8, label="8796093022208 4473745309696 4322347712512 0.49
 PC: 1
 DC: 85
@@ -144,9 +205,32 @@ PC: 1
 DC: 29
 DomScore: 0.0000", rank=8];
 26374	[fillcolor=9, label="4398046511104 2117418876928 2280627634176 0.52
+=======
+123322	[fillcolor=10, label="6144 2688 3456 0.56
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=7];
+123314	[fillcolor=10, label="12288 2016 10272 0.84
+PC: 1
+DC: 4
+DomScore: 0.0000", rank=7];
+123318	[fillcolor=10, label="4096 512 3584 0.88
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=7];
+123326	[fillcolor=10, label="2048 960 1088 0.53
+PC: 1
+DC: 3
+DomScore: 0.0000", rank=7];
+}
+{
+graph [rank=same];
+123313	[fillcolor=11, label="6144 2016 4128 0.67
+>>>>>>> Ocaml2.0
 PC: 1
 DC: 16
 DomScore: 0.0000", rank=8];
+<<<<<<< HEAD
 26478	[fillcolor=9, label="8796093022208 4521526820864 4274566201344 0.49
 PC: 1
 DC: 8
@@ -201,6 +285,14 @@ DomScore: 0.0000", rank=9];
 26452	[fillcolor=10, label="1099511627776 423591149568 675920478208 0.61
 PC: 1
 DC: 1
+=======
+}
+{
+graph [rank=same];
+123312	[fillcolor=1, label="3072 2016 1056 0.34
+PC: 1
+DC: 2
+>>>>>>> Ocaml2.0
 DomScore: 0.0000", rank=9];
 26407	[fillcolor=10, label="1099511627776 437080031232 662431596544 0.60
 PC: 1
@@ -217,10 +309,15 @@ DomScore: 0.0000", rank=9];
 }
 {
 graph [rank=same];
+<<<<<<< HEAD
 26406	[fillcolor=11, label="549755813888 154685931520 395069882368 0.72
+=======
+123325	[fillcolor=2, label="1024 704 320 0.31
+>>>>>>> Ocaml2.0
 PC: 1
 DC: 12
 DomScore: 0.0000", rank=10];
+<<<<<<< HEAD
 26288	[fillcolor=11, label="1099511627776 122406567936 977105059840 0.89
 PC: 1
 DC: 8
@@ -272,18 +369,28 @@ DomScore: 0.0000", rank=10];
 26449	[fillcolor=11, label="1099511627776 1035120672768 64390955008 0.06
 PC: 1
 DC: 4
+=======
+123317	[fillcolor=2, label="9216 2304 6912 0.75
+PC: 4
+DC: 2
+>>>>>>> Ocaml2.0
 DomScore: 0.0000", rank=10];
 }
 {
 graph [rank=same];
+<<<<<<< HEAD
 26355	[fillcolor=1, label="1099511627776 988379348992 111132278784 0.10
 PC: 1
 DC: 18
 DomScore: 0.0000", rank=11];
 26458	[fillcolor=1, label="274877906944 217432719360 57445187584 0.21
+=======
+123311	[fillcolor=3, label="1536 672 864 0.56
+>>>>>>> Ocaml2.0
 PC: 1
 DC: 3
 DomScore: 0.0000", rank=11];
+<<<<<<< HEAD
 26405	[fillcolor=1, label="274877906944 13488881664 261389025280 0.95
 PC: 1
 DC: 11
@@ -2256,4 +2363,93 @@ DomScore: 0.0000", rank=36];
 26353 -> 26346
 26241 -> 26240 		[style=dotted];
 26241 -> 26238
+=======
+}
+{
+graph [rank=same];
+123324	[fillcolor=4, label="512 256 256 0.50
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=12];
+123310	[fillcolor=4, label="5888 5152 736 0.12
+PC: 4
+DC: 3
+DomScore: 0.0000", rank=12];
+}
+{
+graph [rank=same];
+123309	[fillcolor=5, label="2944 2208 736 0.25
+PC: 1
+DC: 2
+DomScore: 0.0000", rank=13];
+}
+{
+graph [rank=same];
+123308	[fillcolor=6, label="1472 736 736 0.50
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=14];
+}
+{
+graph [rank=same];
+123316	[fillcolor=7, label="4608 2304 2304 0.50
+PC: 1
+DC: 1
+DomScore: 0.0000", rank=15];
+}
+0	 [fillcolor=White, label=F, rank=None, shape=doublecircle];
+1	 [fillcolor=White, label=T, rank=None, shape=doublecircle];
+123329 -> 123328 		[style=dotted];
+123329 -> 123323
+123320 -> 123315 		[style=dotted];
+123320 -> 123319
+123310 -> 123309 		[style=dotted];
+123310 -> 0
+123308 -> 0 		[style=dotted];
+123308 -> 1
+123326 -> 123325 		[style=dotted];
+123326 -> 123317
+123319 -> 123318 		[style=dotted];
+123319 -> 123317
+123317 -> 123316 		[style=dotted];
+123317 -> 1
+123311 -> 123310 		[style=dotted];
+123311 -> 1
+123333 -> 0 		[style=dotted];
+123333 -> 123332
+123324 -> 1 		[style=dotted];
+123324 -> 0
+123318 -> 1 		[style=dotted];
+123318 -> 123317
+123327 -> 123326 		[style=dotted];
+123327 -> 123317
+123323 -> 123322 		[style=dotted];
+123323 -> 1
+123314 -> 123313 		[style=dotted];
+123314 -> 1
+123322 -> 123310 		[style=dotted];
+123322 -> 1
+123316 -> 1 		[style=dotted];
+123316 -> 0
+123325 -> 123324 		[style=dotted];
+123325 -> 123310
+123330 -> 123329 		[style=dotted];
+123330 -> 123321
+123313 -> 1 		[style=dotted];
+123313 -> 123312
+123328 -> 123323 		[style=dotted];
+123328 -> 123327
+123332 -> 123331 		[style=dotted];
+123332 -> 123330
+123321 -> 123320 		[style=dotted];
+123321 -> 123315
+123312 -> 123310 		[style=dotted];
+123312 -> 123311
+123331 -> 0 		[style=dotted];
+123331 -> 123321
+123315 -> 123314 		[style=dotted];
+123315 -> 1
+123309 -> 123308 		[style=dotted];
+123309 -> 0
+>>>>>>> Ocaml2.0
 }

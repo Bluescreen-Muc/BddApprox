@@ -10,6 +10,7 @@ bdd.png
 *.pkl
 OCaml/_build/_log
 OCaml/_build/sanitize.sh
+<<<<<<< HEAD
 OCaml/test.dot
 OCaml/test.dot
 OCaml/test.txt
@@ -17,3 +18,8 @@ OCaml/test2.dot
 *.dot
 *.dot
 *.txt
+=======
+*.dot
+>>>>>>> Ocaml2.0
+*.dot
+*.dot
