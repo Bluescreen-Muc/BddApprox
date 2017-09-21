@@ -25,7 +25,7 @@ let random_funct ?(opnot = true) ()=
 
 type variable = int (* 1..max_var *)
 type bdd = { mutable uid: int; mutable node : node }
-and node = True | False | FakeTrue| FakeFalse | Node of {mutable var: int; mutable low: bdd; mutable high: bdd; mutable info: node_info} 
+and node = True | False | Node of {mutable var: int; mutable low: bdd; mutable high: bdd; mutable info: node_info} 
 type bdd_info = {mutable depth: int; mutable truth_rate: float; mutable true_paths: int; mutable false_paths: int ; mutable node_count: int; mutable root: bdd; fillrate: int}
 
 let copy_bdd_info info = {depth=info.depth;truth_rate=info.truth_rate; true_paths=info.true_paths; false_paths=info.false_paths ; node_count=info.node_count; root=info.root; fillrate=info.fillrate} 
@@ -43,10 +43,11 @@ let set_dom_count bdd x = match bdd.node with
 
 let get_false_paths bdd = match bdd.node with 
 	| Node n -> n.info.false_paths
-	| _ -> raise (ExpectationVsRealityError "get_false_paths")
+	| True | False -> raise (ExpectationVsRealityError "get_false_paths")
+
 let get_true_paths bdd = match bdd.node with 
 	| Node n -> n.info.true_paths
-	| _ -> raise (ExpectationVsRealityError "get_true_paths")
+	| True | False -> raise (ExpectationVsRealityError "get_false_paths")
 
 module Helper = struct
 
@@ -91,18 +92,18 @@ let equal x y = match x, y with
       n1.var == n2.var && n1.low == n2.low && n1.high == n2.high
   | _ -> x == y
 
-let hash n = match n with 
+let hash = function
   | True -> 1
   | False -> 0
   | Node n -> abs (n.var + max_nodes * n.low.uid + max_nodes * max_nodes * n.high.uid)
-  | _ -> raise (ExpectationVsRealityError "hash")
+
 let hash_bdd bdd = 
 	hash(bdd.node)
 
 let var bdd = match bdd.node with
   | False | True -> !max_var + 1
   | Node n -> n.var
-  | _ -> raise (ExpectationVsRealityError "hash")
+
 let low bdd = match bdd.node with
   | Node n -> n.low
   | _ -> bdd
@@ -126,12 +127,12 @@ let print_node x = match x.node with
 let true_paths bdd = 
 	match bdd.node with 
 	| Node x -> x.info.true_paths
-	| _ -> raise (ExpectationVsRealityError "true_paths")
+	| True | False -> raise (NoTerminalAllowed (Printf.sprintf "true_paths %d" bdd.uid))
 
 let paths bdd = 
 	match bdd.node with 
 	| Node x -> x.info.paths
-	| _ -> raise (ExpectationVsRealityError "paths")
+	| True | False -> raise (NoTerminalAllowed (Printf.sprintf "paths %d" bdd.uid))
 
 let print_table table = 
 	Hashtbl.iter  (fun x y  -> print_node y)  table 
@@ -290,31 +291,26 @@ module NodeLabel = struct
 		| Node n ->Printf.sprintf "\"%d %d %d %.2f\"" (n.info.paths) (n.info.false_paths) (n.info.true_paths) (float_of_int(n.info.true_paths) /. float_of_int(n.info.false_paths + n.info.true_paths))
 		| True -> "T"
 		| False -> "F"
-		| _ -> raise (ExpectationVsRealityError "labels")
-
+	
 	let var_label bdd = match bdd.node with 
 		| Node n -> Printf.sprintf "\"V: %d\"" (var bdd) 
 		| True -> "T"
 		| False -> "F"
-		| _ -> raise (ExpectationVsRealityError "labels")
 
 	let parent_label bdd = match bdd.node with 
 		| Node n -> Printf.sprintf "\"PC: %d\"" n.info.parent_count 
 		| True -> "T"
 		| False -> "F"
-		| _ -> raise (ExpectationVsRealityError "labels")
 
 	let dominate_label bdd = match bdd.node with 
 		| Node n -> Printf.sprintf "\"DC: %d\"" n.info.dominate_count 
 		| True -> "T"
 		| False -> "F"
-		| _ -> raise (ExpectationVsRealityError "labels")
 
 	let score_label bdd = match bdd.node with 
 		| Node n -> Printf.sprintf "\"DomScore: %.4f\"" n.info.score
 		| True -> "T"
 		| False -> "F"
-		| _ -> raise (ExpectationVsRealityError "labels")
 
 	let all_info_label bdd = 
 		let text = Helper.trim_parenthesis (Printf.sprintf "%s\n%s\n%s\n%s" (path_label bdd) (parent_label bdd) (dominate_label bdd) (score_label bdd)) in 
@@ -322,7 +318,7 @@ module NodeLabel = struct
 		| Node n -> Printf.sprintf "\"%s\"" text
 		| True -> "T"
 		| False -> "F"
-		| _ -> raise (ExpectationVsRealityError "labels")
+
 end
 
 
@@ -441,7 +437,7 @@ module BddData = struct
 				n.info.false_paths <- 0;
 				n.info.paths <- 0;
 			end
-			| _ -> () ) table
+			| True | False -> () ) table
 		in reset_paths !table;
 
 		count_paths data;
@@ -469,7 +465,7 @@ module BddData = struct
   						end;
   			
   					end
-  				| _ -> raise  (NoTerminalAllowed "count_false_true")
+  				| True | False -> raise  (NoTerminalAllowed "count_false_true")
   				) values
   			with Not_found -> ()
 		done;
@@ -481,14 +477,14 @@ module BddData = struct
 		| False -> !info.false_paths <- Helper.pow 2 (get_depth data);
 		| True -> !info.true_paths <- Helper.pow 2 (get_depth data);
 		!info.truth_rate <- float_of_int(!info.true_paths) /. float_of_int(!info.true_paths + !info.false_paths)
-		| _ -> raise (ExpectationVsRealityError "count_false_true")
+
 	
 	let fill_parents data = 
 		let reset_parents table= 
 			Hashtbl.iter (fun x y -> 
 			match y.node with
 			| Node n -> n.info.parent_count <- 0
-			| _ -> () ) table in 
+			| True | False -> () ) table in 
 
 		reset_parents data.bdd;
 		Hashtbl.iter (fun x y -> match y.node with
@@ -670,7 +666,6 @@ module BddData = struct
 				| False ,  n1 -> n.high <- one
 				| Node n1, False -> n.low <- one
 				| Node n1, Node n2 -> if n1.info.true_paths > n2.info.true_paths then n.low <- one else n.high <- one
-				| _ -> raise (ExpectationVsRealityError "remap_lowest")
 				end
 			|_ -> () in 
 
@@ -720,11 +715,10 @@ module BddData = struct
 				match n.low.node with 
 				| True | False  -> ();
 				| Node n1 -> if n1.info.true_paths > n1.info.false_paths then n.low <- one else n.low <- zero;
-				| _ -> raise (ExpectationVsRealityError "labels"); ;
 				match n.high.node with 
 				| True | False  -> ()
 				| Node n1 -> if n1.info.true_paths > n1.info.false_paths then n.high <- one else n.high <- zero
-				| _ -> raise (ExpectationVsRealityError "remap")
+				
 				end
 			|_ -> () in 
 
@@ -748,12 +742,11 @@ module BddData = struct
 				| True | False -> ()
 				| Node n1 -> if n1.info.true_paths > n1.info.false_paths then let test = ref (Hashtbl.find table (hash (n.low.node))) in !test.uid <- 1; !test.node <- True
 					else  let test = ref (Hashtbl.find table (hash (n.low.node))) in  !test.uid <- 0; !test.node <- False;
-				| _ -> raise (ExpectationVsRealityError "replace_lowest"); ;
+				
 				match n.high.node with 
 				| True | False -> ()
 				| Node n1 -> if n1.info.true_paths > n1.info.false_paths then let test = ref (Hashtbl.find table (hash (n.high.node))) in !test.uid <- 1; !test.node <- True
 					else  let test = ref (Hashtbl.find table (hash (n.high.node))) in  !test.uid <- 0; !test.node <- False;
-				| _ -> raise (ExpectationVsRealityError "labels"); ;
 			end
 			|_ -> () in 
 
@@ -829,7 +822,6 @@ module BddData = struct
 				!bdd.uid <- 1; 
 				!bdd.node <- True; 
 				count_false_true data;
-				print_float (float_of_int(!cur_false) /. float_of_int(sum_paths)); print_newline();
 			end
 		end
 			| _ -> ()) !bdd_list;
