@@ -24,3 +24,5 @@ OCaml/test2.dot
 *.dot
 *.dot
 *.dot
+*.dot
+*.png

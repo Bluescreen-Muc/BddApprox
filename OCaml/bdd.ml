@@ -445,26 +445,19 @@ module BddData = struct
 			try
   				let values = Hashtbl.find_all var_map i in 
   				List.iter (fun x -> match x.node with
-  				| Node n -> begin
-
-  						if n.low.uid == 0 || n.high.uid == 0 then n.info.false_paths <- n.info.paths / 2;
-						if n.low.uid == 1 || n.high.uid == 1 then n.info.true_paths <- n.info.paths / 2;
-
-
-						if  (n.low.uid <> 0) && (n.low.uid <> 1) then 
-						begin
-								let sum = float_of_int((true_paths (low x)) + get_false_paths (low x) )in 
-								n.info.true_paths <- int_of_float(float_of_int (n.info.true_paths) +. float_of_int(n.info.paths) *. (float_of_int (true_paths (low x))) /. 2.0 /. sum);
-								n.info.false_paths <- int_of_float(float_of_int (n.info.false_paths) +. float_of_int(n.info.paths) *. (float_of_int (get_false_paths (low x))) /. 2.0 /. sum);
-						end;
-						if  n.high.uid <> 0 && n.high.uid <> 1 then 
-						begin
-								let sum = float_of_int((true_paths (high x)) + get_false_paths (high x) )in 
-								n.info.true_paths <- int_of_float(float_of_int (n.info.true_paths) +. float_of_int(n.info.paths) *. (float_of_int (true_paths (high x))) /. 2.0 /. sum);
-								n.info.false_paths <- int_of_float(float_of_int (n.info.false_paths) +. float_of_int(n.info.paths) *. (float_of_int (get_false_paths (high x))) /. 2.0 /. sum);
-  						end;
-  			
-  					end
+  				| Node n -> 
+  					match n.low.node with
+  					| Node nlow -> let sum = float_of_int((nlow.info.true_paths) + nlow.info.false_paths ) in 
+						n.info.true_paths <- int_of_float(float_of_int (n.info.true_paths) +. float_of_int(n.info.paths) *. (float_of_int (nlow.info.true_paths)) /. 2.0 /. sum);
+						n.info.false_paths <- int_of_float(float_of_int (n.info.false_paths) +. float_of_int(n.info.paths) *. (float_of_int (nlow.info.false_paths)) /. 2.0 /. sum);
+  					| True -> n.info.true_paths <- n.info.true_paths + n.info.paths / 2;
+  					| False ->  n.info.false_paths <- n.info.false_paths + n.info.paths / 2; ;
+  					match n.high.node with
+  					| Node nhigh -> let sum = float_of_int((nhigh.info.true_paths) + nhigh.info.false_paths ) in 
+						n.info.true_paths <- int_of_float(float_of_int (n.info.true_paths) +. float_of_int(n.info.paths) *. (float_of_int (nhigh.info.true_paths)) /. 2.0 /. sum);
+						n.info.false_paths <- int_of_float(float_of_int (n.info.false_paths) +. float_of_int(n.info.paths) *. (float_of_int (nhigh.info.false_paths)) /. 2.0 /. sum);
+  					| True -> n.info.true_paths <- n.info.true_paths + n.info.paths / 2;
+  					| False ->  n.info.false_paths <- n.info.false_paths + n.info.paths / 2; ;
   				| True | False -> raise  (NoTerminalAllowed "count_false_true")
   				) values
   			with Not_found -> ()
@@ -891,7 +884,7 @@ module BddData = struct
 	let tmp_uid = ref 2	
 	let incr_uid = incr tmp_uid; !tmp_uid
 	let create2 i j = 
-		let new_bdd () = {uid=incr_uid; node=Node{var=0;low=zero;high=zero;info=empty_node_info()}} in 
+		
 		 let matrix =  Array.make_matrix i (j-1) zero in 
 		 for y = 0 to (j-2) do
 		 	for x = 0 to (i-1) do
@@ -959,7 +952,6 @@ let speedtest () =
 
 	Random.init 12345;
 	let data = BddData.create_random_function 63 20 in 
-	let table = BddData.get_table data in 
 	let t = Sys.time () in 
 	for i = 1 to 1000 do
 		BddData.count_paths data;
@@ -999,6 +991,6 @@ let test4 x =
 	BddData.approx_one_sided data (BddData.approx_dom 0.01);
 	Random.init 1234;
 	let data = BddData.create_random_function 60 x in 
-	BddData.approx_two_sided data (BddData.approx_dom ~side:2 0.1);
+	BddData.approx_two_sided data (BddData.approx_dom ~side:2 0.01);
 	BddData.to_dot_file ~lf:NodeLabel.path_label "test2.dot" data;
 	BddData.print_info data
