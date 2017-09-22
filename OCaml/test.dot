@@ -6,16 +6,163 @@ digraph "" {
 		];
 {
 graph [rank=same];
-5	[fillcolor=4, label=3, rank=1];
+140562	[fillcolor=2, label=1, rank=1];
 }
 {
 graph [rank=same];
-4	[fillcolor=11, label=10, rank=2];
+140561	[fillcolor=3, label=2, rank=2];
+}
+{
+graph [rank=same];
+140560	[fillcolor=4, label=3, rank=3];
+140541	[fillcolor=4, label=3, rank=3];
+}
+{
+graph [rank=same];
+140559	[fillcolor=5, label=4, rank=4];
+140553	[fillcolor=5, label=4, rank=4];
+140540	[fillcolor=5, label=4, rank=4];
+140528	[fillcolor=5, label=4, rank=4];
+}
+{
+graph [rank=same];
+140552	[fillcolor=6, label=5, rank=5];
+140536	[fillcolor=6, label=5, rank=5];
+140547	[fillcolor=6, label=5, rank=5];
+140539	[fillcolor=6, label=5, rank=5];
+}
+{
+graph [rank=same];
+140551	[fillcolor=7, label=6, rank=6];
+140546	[fillcolor=7, label=6, rank=6];
+140538	[fillcolor=7, label=6, rank=6];
+140535	[fillcolor=7, label=6, rank=6];
+}
+{
+graph [rank=same];
+140558	[fillcolor=8, label=7, rank=7];
+140550	[fillcolor=8, label=7, rank=7];
+140556	[fillcolor=8, label=7, rank=7];
+140545	[fillcolor=8, label=7, rank=7];
+}
+{
+graph [rank=same];
+140537	[fillcolor=9, label=8, rank=8];
+140544	[fillcolor=9, label=8, rank=8];
+140534	[fillcolor=9, label=8, rank=8];
+140549	[fillcolor=9, label=8, rank=8];
+}
+{
+graph [rank=same];
+140543	[fillcolor=10, label=9, rank=9];
+140557	[fillcolor=10, label=9, rank=9];
+140555	[fillcolor=10, label=9, rank=9];
+140548	[fillcolor=10, label=9, rank=9];
+140533	[fillcolor=10, label=9, rank=9];
+140527	[fillcolor=10, label=9, rank=9];
+}
+{
+graph [rank=same];
+140542	[fillcolor=11, label=10, rank=10];
+140554	[fillcolor=11, label=10, rank=10];
+}
+{
+graph [rank=same];
+140526	[fillcolor=1, label=11, rank=11];
+140532	[fillcolor=1, label=11, rank=11];
+}
+{
+graph [rank=same];
+140531	[fillcolor=2, label=12, rank=12];
+140525	[fillcolor=2, label=12, rank=12];
+}
+{
+graph [rank=same];
+140524	[fillcolor=3, label=13, rank=13];
+140530	[fillcolor=3, label=13, rank=13];
+}
+{
+graph [rank=same];
+140529	[fillcolor=4, label=14, rank=14];
 }
 0	 [fillcolor=White, label=F, rank=None, shape=doublecircle];
 1	 [fillcolor=White, label=T, rank=None, shape=doublecircle];
-5 -> 0 		[style=dotted];
-5 -> 4
-4 -> 0 		[style=dotted];
-4 -> 1
+140527 -> 0 		[style=dotted];
+140527 -> 140526
+140545 -> 140544 		[style=dotted];
+140545 -> 140534
+140539 -> 140538 		[style=dotted];
+140539 -> 0
+140532 -> 140531 		[style=dotted];
+140532 -> 1
+140525 -> 0 		[style=dotted];
+140525 -> 140524
+140562 -> 140561 		[style=dotted];
+140562 -> 140528
+140526 -> 140525 		[style=dotted];
+140526 -> 1
+140561 -> 140560 		[style=dotted];
+140561 -> 140541
+140535 -> 140534 		[style=dotted];
+140535 -> 140527
+140533 -> 140529 		[style=dotted];
+140533 -> 140532
+140547 -> 140546 		[style=dotted];
+140547 -> 140527
+140536 -> 140535 		[style=dotted];
+140536 -> 140527
+140548 -> 140542 		[style=dotted];
+140548 -> 0
+140538 -> 140537 		[style=dotted];
+140538 -> 0
+140528 -> 0 		[style=dotted];
+140528 -> 140527
+140530 -> 140529 		[style=dotted];
+140530 -> 1
+140554 -> 0 		[style=dotted];
+140554 -> 1
+140549 -> 140548 		[style=dotted];
+140549 -> 0
+140555 -> 140554 		[style=dotted];
+140555 -> 140526
+140531 -> 140529 		[style=dotted];
+140531 -> 140530
+140529 -> 0 		[style=dotted];
+140529 -> 1
+140556 -> 140555 		[style=dotted];
+140556 -> 1
+140541 -> 1 		[style=dotted];
+140541 -> 140540
+140550 -> 140549 		[style=dotted];
+140550 -> 140537
+140540 -> 140539 		[style=dotted];
+140540 -> 140536
+140534 -> 140533 		[style=dotted];
+140534 -> 140527
+140557 -> 140554 		[style=dotted];
+140557 -> 0
+140544 -> 140543 		[style=dotted];
+140544 -> 140527
+140537 -> 140529 		[style=dotted];
+140537 -> 0
+140558 -> 140557 		[style=dotted];
+140558 -> 1
+140553 -> 140552 		[style=dotted];
+140553 -> 140547
+140559 -> 140558 		[style=dotted];
+140559 -> 140556
+140552 -> 140551 		[style=dotted];
+140552 -> 0
+140542 -> 0 		[style=dotted];
+140542 -> 140529
+140543 -> 140542 		[style=dotted];
+140543 -> 140526
+140546 -> 140545 		[style=dotted];
+140546 -> 140527
+140560 -> 140559 		[style=dotted];
+140560 -> 140553
+140551 -> 140550 		[style=dotted];
+140551 -> 0
+140524 -> 0 		[style=dotted];
+140524 -> 1
 }
