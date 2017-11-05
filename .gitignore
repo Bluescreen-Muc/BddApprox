@@ -13,4 +13,4 @@ OCaml/_build/sanitize.sh
 *.dot
 *.txt
 *.png
-*.csv
+*.msh
